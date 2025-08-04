@@ -169,5 +169,27 @@
       "titulo": "Fim do Dia 1",
       "descricao": "🕯️ Você sobreviveu ao Tohu VaVohu. Mas algo dentro de você quebrou e outra coisa se fortaleceu. O que será?"
     }
-  ]
+  ],
+  "tooltips": {
+    "virtuoso": {
+      "texto": "🕊️ Seu espírito se eleva. Você é um farol.",
+      "cor": "#6ef2b1",
+      "aura": "verde-dourado"
+    },
+    "profano": {
+      "texto": "🔥 Algo em você arde contra si mesmo.",
+      "cor": "#f85b5b",
+      "aura": "vermelho-escuro"
+    },
+    "anomalia": {
+      "texto": "⚡ Você não se encaixa. E isso muda tudo.",
+      "cor": "#a87ef8",
+      "aura": "violeta-glitch"
+    }
+  },
+  "frasesFinais": {
+    "virtuoso": "Mesmo ferido, você escolhe não ferir.",
+    "profano": "Negar o chamado também é um tipo de resposta.",
+    "anomalia": "Quem sente demais, às vezes quebra para não ser moldado."
+  }
 }

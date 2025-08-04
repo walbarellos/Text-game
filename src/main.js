@@ -74,6 +74,8 @@ async function carregarDia(numeroDia) {
   } catch (erro) {
     console.error('❌ Erro ao carregar o dia:', erro);
     eventoContainer.innerHTML = `<p class="erro">⚠️ Dia não encontrado ou JSON inválido.</p>`;
+    return; // ⬅️ ISSO AQUI É O QUE FALTAVA!
+
   }
 }
 
@@ -127,7 +129,6 @@ document.addEventListener('opcaoSelecionada', (e) => {
 
 // ⏭️ Escuta clique no botão de avanço de dia
 document.addEventListener('avancarDia', () => {
-  estado.diaAtual++;
   avancarDia(estado);
 });
 

@@ -1,7 +1,6 @@
 // 📦 Importação dos tooltips simbólicos externos
 import { buildTooltips } from './tooltip.js';
 
-
 /**
  * Atualiza o cabeçalho da HUD com nome do dia e estilo baseado na build ativa.
  * Também adiciona tooltip, classe global ao body, e animação visual ao mudar de build.
@@ -24,8 +23,15 @@ export function atualizarHUD(nomeDia, build) {
   // ➡️ Build dominante (badge da direita)
   hudBuild.textContent = formatarBuild(build);
   hudBuild.className = `badge build ${build}`;
-  hudBuild.setAttribute('data-tooltip', buildTooltips[build] || '');
-  hudBuild.setAttribute('title', buildTooltips[build] || '');
+
+  const tooltipData = buildTooltips[build];
+  if (tooltipData) {
+    hudBuild.setAttribute('data-tooltip', tooltipData.texto);
+    hudBuild.setAttribute('title', tooltipData.texto);
+  } else {
+    hudBuild.removeAttribute('data-tooltip');
+    hudBuild.removeAttribute('title');
+  }
 
   // 🌐 Atualiza o <body> com classe de build (para estilos globais)
   document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');

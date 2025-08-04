@@ -1,6 +1,28 @@
 {
   "nome": "Dia 3",
   "descricao": "No terceiro dia, surge a separação. O que antes era um só caos começa a dividir-se em margens, bordas, limites. A consciência aprende a dizer: isso sou eu, isso não sou eu.",
+  "tooltips": {
+    "virtuoso": {
+      "texto": "🕊️ Seu espírito se eleva. Você é um farol.",
+      "cor": "#6ef2b1",
+      "aura": "verde-dourado"
+    },
+    "profano": {
+      "texto": "🔥 Algo em você arde contra si mesmo.",
+      "cor": "#f85b5b",
+      "aura": "vermelho-escuro"
+    },
+    "anomalia": {
+      "texto": "⚡ Você não se encaixa. E isso muda tudo.",
+      "cor": "#a87ef8",
+      "aura": "violeta-glitch"
+    }
+  },
+  "frasesFinais": {
+    "virtuoso": "Mesmo ferido, você escolhe não ferir.",
+    "profano": "Negar o chamado também é um tipo de resposta.",
+    "anomalia": "Quem sente demais, às vezes quebra para não ser moldado."
+  },
   "blocos": [
     {
       "tipo": "historia",
@@ -10,19 +32,20 @@
         {
           "texto": "Responder na mesma moeda (duelo verbal)",
           "proximo": "rotina1",
-          "build": "profano"
+          "buildImpact": "profano"
         },
         {
           "texto": "Fingir que não ouviu",
           "proximo": "rotina1",
-          "build": "anomalia"
+          "buildImpact": "anomalia"
         },
         {
           "texto": "*após ponderar sobre o preço da guerra* Levantar e sair da sala com dignidade",
           "proximo": "rotina1",
-          "build": "virtuoso"
+          "buildImpact": "virtuoso"
         }
-      ]
+      ],
+      "id": "dia3_bloco0"
     },
     {
       "tipo": "rotina",
@@ -41,7 +64,31 @@
           "texto": "Se misturar aos grupos com esforço",
           "proximo": "historia2"
         }
-      ]
+      ],
+      "id": "rotina1"
+    },
+    {
+      "tipo": "evento",
+      "titulo": "O Meme Vivo",
+      "descricao": "No banheiro, alguém colou um meme na porta da cabine. É a sua cara, literalmente. Alguém usou IA pra te colocar numa piada bizarra sobre cebolas e existencialismo.",
+      "opcoes": [
+        {
+          "texto": "Rir e tirar uma foto",
+          "proximo": "evento1",
+          "buildImpact": "virtuoso"
+        },
+        {
+          "texto": "Arrancar o papel e rasgar com raiva",
+          "proximo": "evento1",
+          "buildImpact": "profano"
+        },
+        {
+          "texto": "Adicionar um post-it escrito 'só piora'",
+          "proximo": "evento1",
+          "buildImpact": "anomalia"
+        }
+      ],
+      "id": "evento_comico1"
     },
     {
       "tipo": "historia",
@@ -60,7 +107,8 @@
           "texto": "Fechar os olhos e respirar fundo",
           "proximo": "evento1"
         }
-      ]
+      ],
+      "id": "historia2"
     },
     {
       "tipo": "evento",
@@ -79,7 +127,8 @@
           "texto": "Deixá-la onde está",
           "proximo": "rotina2"
         }
-      ]
+      ],
+      "id": "evento1"
     },
     {
       "tipo": "rotina",
@@ -98,7 +147,8 @@
           "texto": "Olhar o céu pela janela",
           "proximo": "fim"
         }
-      ]
+      ],
+      "id": "rotina2"
     },
     {
       "id": "fim",
