@@ -130,6 +130,20 @@ document.addEventListener('avancarDia', () => {
 
 document.addEventListener('DOMContentLoaded', iniciarJogo);
 
+
+
+// ✨ Aplica build ao body e glow
+const titulo = document.querySelector('.titulo-animado');
+if (titulo && !titulo.classList.contains('glow')) {
+  const texto = titulo.textContent || '';
+  titulo.style.animation = `
+  typing 3.5s steps(${texto.length}, end) forwards,
+  blink-caret 0.75s step-end infinite
+  `;
+  setTimeout(() => {
+    titulo.classList.add('glow');
+  }, 3600);
+}
 // ✨ Aplica build ao body e glow
 function atualizarGlowTitulo(build) {
   document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');
@@ -149,3 +163,5 @@ document.addEventListener('DOMContentLoaded', () => {
     tituloRitual.style.pointerEvents = 'none';
   }
 });
+
+

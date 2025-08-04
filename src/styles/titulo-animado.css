@@ -1,15 +1,14 @@
 /* src/styles/titulo-animado.css */
-
 .titulo-ritual {
     position: absolute;
-    top: 0.6vh; /* 🔼 mais acima para não interferir na HUD */
-    left: 50%;
-    transform: translateX(-50%);
-    width: clamp(640px, 60%, 900px);
+    top: 1.5vh;
+    left: 0;
+    right: 0;
     text-align: center;
-    z-index: 5;
-    padding: 0.8rem 1rem;
+    z-index: 1000; /* Para ficar sempre acima da HUD */
     pointer-events: none;
+    padding: 0.5rem;
+    height: 3.5rem; /* Garante espaço fixo no topo */
 }
 
 .titulo-animado {

@@ -10,9 +10,10 @@ import { buildTooltips } from './tooltip.js';
 export function atualizarHUD(nomeDia, build) {
   const hudDia = document.getElementById('hud-dia');
   const hudBuild = document.getElementById('hud-build');
+  const tooltip = document.getElementById('tooltip-ritual');
 
-  if (!hudDia || !hudBuild) {
-    console.warn('⚠️ HUD não encontrada no DOM.');
+  if (!hudDia || !hudBuild || !tooltip) {
+    console.warn('⚠️ HUD ou tooltip não encontrada no DOM.');
     return;
   }
 
@@ -24,13 +25,12 @@ export function atualizarHUD(nomeDia, build) {
   hudBuild.textContent = formatarBuild(build);
   hudBuild.className = `badge build ${build}`;
 
+  // 🧠 Tooltip simbólica da build
   const tooltipData = buildTooltips[build];
   if (tooltipData) {
     hudBuild.setAttribute('data-tooltip', tooltipData.texto);
-    hudBuild.setAttribute('title', tooltipData.texto);
   } else {
     hudBuild.removeAttribute('data-tooltip');
-    hudBuild.removeAttribute('title');
   }
 
   // 🌐 Atualiza o <body> com classe de build (para estilos globais)
@@ -40,6 +40,17 @@ export function atualizarHUD(nomeDia, build) {
   // ✨ Animação sutil ao trocar de build
   hudBuild.classList.add('changed');
   setTimeout(() => hudBuild.classList.remove('changed'), 400);
+
+  // 🔮 Tooltip ritualística ao passar o mouse
+  hudDia.addEventListener('mouseenter', () => {
+    const frase = hudDia.dataset.frase || '⚡ Frase ritualística não disponível.';
+    tooltip.textContent = frase;
+    tooltip.classList.add('visible');
+  });
+
+  hudDia.addEventListener('mouseleave', () => {
+    tooltip.classList.remove('visible');
+  });
 }
 
 /**

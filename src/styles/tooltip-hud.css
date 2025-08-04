@@ -1,0 +1,24 @@
+/* src/styles/tooltip-hud.css */
+
+.tooltip-ritual {
+  position: fixed;
+  bottom: 2vh;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.06);
+  color: #eee;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.9rem;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 6px #ffffff11;
+  backdrop-filter: blur(6px);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 999;
+}
+
+.tooltip-ritual.visible {
+  opacity: 1;
+}

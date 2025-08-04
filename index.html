@@ -13,6 +13,7 @@
   <!-- Estilos do Título e Efeitos -->
   <link rel="stylesheet" href="./src/styles/titulo-animado.css" />
   <link rel="stylesheet" href="./src/styles/aura.css" />
+  <link rel="stylesheet" href="./src/styles/tooltip-hud.css" />
 
   <!-- Fonte ritualística -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -29,15 +30,19 @@
     <h1 class="titulo-animado">What Is Life ☉</h1>
   </div>
 
-  <!-- Container do Jogo -->
+  <!-- Wrapper do Jogo -->
   <div id="wrapper-jogo">
-    <!-- HUD -->
+    <!-- Névoa etérea -->
     <canvas id="etereal-fog"></canvas>
 
+    <!-- HUD -->
     <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
-      <div id="hud-dia" class="hud-dia" aria-live="polite" title="Clique para uma dica ritualística">Dia 1</div>
+      <div id="hud-dia" class="hud-dia" aria-live="polite">Dia 1</div>
       <div id="hud-build" class="hud-build profano" aria-label="Build atual">⚪ Profano</div>
     </header>
+
+    <!-- Tooltip personalizada -->
+    <div id="tooltip-ritual" class="tooltip-ritual" aria-hidden="true"></div>
 
     <!-- Narrativa -->
     <main id="evento" class="evento-container" role="main" aria-label="Narrativa interativa do jogo"></main>
@@ -88,6 +93,20 @@
       `;
 
       titulo.parentElement?.prepend(svg);
+
+      // Tooltip ritualística
+      const hudDia = document.getElementById('hud-dia');
+      const tooltip = document.getElementById('tooltip-ritual');
+
+      hudDia?.addEventListener('mouseenter', () => {
+        const frase = hudDia.dataset.frase || '⚡ Frase ritualística não disponível.';
+        tooltip.textContent = frase;
+        tooltip.classList.add('visible');
+      });
+
+      hudDia?.addEventListener('mouseleave', () => {
+        tooltip.classList.remove('visible');
+      });
     });
   </script>
 </body>

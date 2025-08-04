@@ -12,12 +12,11 @@ header.hud {
   font-size: 0.75rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
   position: sticky;
-  top: 0;
-  z-index: 50;
+  top: 4.5rem; /* Deslocado para baixo do título animado */
+  z-index: 950;
 }
 
 /* 🏷️ Badges genéricas */
-
 .badge.build.changed {
   transform: scale(1.08);
   transition: transform 0.2s ease;
@@ -67,7 +66,7 @@ opacity: 0;
 pointer-events: none;
 transition: opacity 0.3s ease;
 box-shadow: 0 0 10px rgba(0,0,0,0.4);
-z-index: 999;
+z-index: 1001;
 }
 
 #hud-dia::before {
@@ -78,7 +77,7 @@ left: 50%;
 transform: translateX(-50%);
 border: 6px solid transparent;
 border-top-color: rgba(20, 20, 20, 0.95);
-z-index: 999;
+z-index: 1001;
 opacity: 0;
 transition: opacity 0.3s ease;
 }
@@ -120,7 +119,7 @@ border: 1px solid #444;
 opacity: 0;
 pointer-events: none;
 transition: opacity 0.3s ease;
-z-index: 1000;
+z-index: 1001;
 }
 
 #hud-build:hover::after {
@@ -150,18 +149,15 @@ border: 1px solid #a855f7;
 box-shadow: 0 0 6px #a855f788;
 }
 
-
-
-/* EFEITO NÉVOA */
-
+/* 🌫️ Efeito Névoa */
 #etereal-fog {
 position: fixed;
 top: 0;
 left: 0;
 width: 100vw;
 height: 100vh;
-z-index: 0; /* atrás de tudo */
+z-index: 0;
 pointer-events: none;
-opacity: 0.1; /* ajuste para mais/menos fumaça */
+opacity: 0.1;
 filter: blur(4px);
 }
