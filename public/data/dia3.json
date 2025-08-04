@@ -1,6 +1,175 @@
 {
   "nome": "Dia 3",
-  "descricao": "No terceiro dia, surge a separação. O que antes era um só caos começa a dividir-se em margens, bordas, limites. A consciência aprende a dizer: isso sou eu, isso não sou eu.",
+  "fraseInspiradora": "🌒 Você não venceu o mundo, mas sobreviveu a si mesmo.",
+  "descricao": "No terceiro dia, surge a separação. O que antes era um só caos começa a dividir-se em margens, bordas, limites. A consciência aprende a dizer: isso sou eu, isso não sou eu. E às vezes, o que sobra do 'eu' não cabe num tweet.",
+  "blocos": [
+    {
+      "id": "historia1",
+      "tipo": "historia",
+      "titulo": "O Limite da Água",
+      "descricao": "Você está em sala de aula. O professor fala sobre equações que só um robô emocional entenderia. Um colega zoa sua roupa. Riso em efeito dominó. Você pensa: ‘Será que o problema é a camiseta… ou meu gene de existir?’ Uma voz interna, com sotaque britânico e tédio cósmico, sussurra: 'A melhor guerra é vencida antes de ser notada.'",
+      "opcoes": [
+        {
+          "texto": "Responder na mesma moeda (duelo verbal)",
+          "proximo": "rotina1",
+          "buildImpact": "profano",
+          "dica": "Seja fogo, mesmo que queime você.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "choque"
+        },
+        {
+          "texto": "Fingir que não ouviu e rezar pra não viralizar",
+          "proximo": "rotina1",
+          "buildImpact": "anomalia",
+          "dica": "Ignorar é sobreviver com juros.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "camada"
+        },
+        {
+          "texto": "*respira fundo* Levantar e sair da sala como se fosse CEO do próprio trauma",
+          "proximo": "rotina1",
+          "buildImpact": "virtuoso",
+          "dica": "Sua dignidade é a resposta silenciosa.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "limite"
+        }
+      ]
+    },
+    {
+      "id": "rotina1",
+      "tipo": "rotina",
+      "titulo": "Pátio Fragmentado",
+      "descricao": "O pátio virou um reality show sem prêmio. Grupos se formam por afinidade traumática. Você é uma ilha cercada por memes e nicotina. Uma garota te encara como se você fosse spoiler de um livro que ela odeia, mas quer terminar.",
+      "opcoes": [
+        {
+          "texto": "Tentar conversar com ela usando linguagem humana",
+          "proximo": "historia2",
+          "buildImpact": "virtuoso",
+          "dica": "A ponte mais difícil é a primeira palavra.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "contato"
+        },
+        {
+          "texto": "Olhar pro céu como se estivesse esperando sinal de vida inteligente",
+          "proximo": "historia2",
+          "buildImpact": "anomalia",
+          "dica": "Seu sarcasmo é seu satélite.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "refugio"
+        },
+        {
+          "texto": "Entrar no grupo errado só pra não estar só",
+          "proximo": "historia2",
+          "buildImpact": "profano",
+          "dica": "Melhor mal acompanhado do que esquecido.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "negociacao"
+        }
+      ]
+    },
+    {
+      "id": "historia2",
+      "tipo": "historia",
+      "titulo": "Divisão",
+      "descricao": "Lembrança: a mala na calçada. O grito que virou eco. Você achava que amor era pra sempre... até virar guarda compartilhada e horário de visita. A separação não foi física. Foi uma linha invisível entre quem você era e quem nunca mais poderia ser.",
+      "opcoes": [
+        {
+          "texto": "Prometer nunca repetir esse ciclo",
+          "proximo": "evento1",
+          "buildImpact": "virtuoso",
+          "dica": "Ruptura não precisa ser herança.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "ciclo"
+        },
+        {
+          "texto": "Culpar a si mesmo em silêncio e fingir que está tudo bem",
+          "proximo": "evento1",
+          "buildImpact": "profano",
+          "dica": "Você acredita que é culpa sua.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "eco"
+        },
+        {
+          "texto": "Fechar os olhos e imaginar outro final",
+          "proximo": "evento1",
+          "buildImpact": "anomalia",
+          "dica": "A fuga mental também é protesto.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "vazio"
+        }
+      ]
+    },
+    {
+      "id": "evento1",
+      "tipo": "evento",
+      "titulo": "A Pedra se Parte",
+      "descricao": "Você encontra a Pedra no fundo da mochila. Ela rachou. De dentro: luz pulsante. A pedra sussurra: ‘Separar não é o fim. É abrir espaço pra se olhar sem espelho.’ A rachadura brilha como se dissesse: ‘Você ainda está inteiro. Só com outra forma.’",
+      "opcoes": [
+        {
+          "texto": "Guardar o fragmento como amuleto",
+          "proximo": "rotina2",
+          "buildImpact": "virtuoso",
+          "dica": "O que brilha em você já esteve quebrado.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "renascimento"
+        },
+        {
+          "texto": "Enterrar a pedra e todos os sentimentos junto",
+          "proximo": "rotina2",
+          "buildImpact": "profano",
+          "dica": "O esquecimento também é ritual.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "desapego"
+        },
+        {
+          "texto": "Deixá-la no bebedouro com bilhete: 'Pra quem precisa mais que eu'",
+          "proximo": "rotina2",
+          "buildImpact": "anomalia",
+          "dica": "Às vezes, compartilhar é libertar.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "oferta"
+        }
+      ]
+    },
+    {
+      "id": "rotina2",
+      "tipo": "rotina",
+      "titulo": "Dois Lados do Mesmo Bolso",
+      "descricao": "No bolso: um fragmento. No coração: o resto. Você caminha, e cada passo parece costurar uma cicatriz invisível. A pedra pulsa. O dia termina como quem fecha uma ferida com linha de pensamento. Sua última escolha é íntima. Como um sussurro pra si mesmo.",
+      "opcoes": [
+        {
+          "texto": "Escrever no caderno: 'Sobrevivi. De novo.'",
+          "proximo": "fim1",
+          "buildImpact": "virtuoso",
+          "dica": "Registrar é validar sua existência.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "diario"
+        },
+        {
+          "texto": "Olhar o teto e ensaiar um sorriso honesto",
+          "proximo": "fim1",
+          "buildImpact": "anomalia",
+          "dica": "Sorrisos falsos são ensaio de verdade.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "tentativa"
+        },
+        {
+          "texto": "Deitar e escutar o próprio silêncio",
+          "proximo": "fim1",
+          "buildImpact": "profano",
+          "dica": "Silêncio também é resposta.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "desligamento"
+        }
+      ]
+    },
+    {
+      "id": "fim1",
+      "tipo": "fim",
+      "titulo": "Fim do Dia 3",
+      "descricao": "🌒 O terceiro dia termina. Você não venceu o mundo, mas sobreviveu a si mesmo. E isso, convenhamos, já é obra divina. Como diria a pedra: 'Ninguém é inteiro depois da primeira rachadura. Mas dá pra brilhar pelas frestas.'"
+    }
+  ],
   "tooltips": {
     "virtuoso": {
       "texto": "🕊️ Seu espírito se eleva. Você é um farol.",
@@ -22,140 +191,5 @@
     "virtuoso": "Mesmo ferido, você escolhe não ferir.",
     "profano": "Negar o chamado também é um tipo de resposta.",
     "anomalia": "Quem sente demais, às vezes quebra para não ser moldado."
-  },
-  "blocos": [
-    {
-      "tipo": "historia",
-      "titulo": "O Limite da Água",
-      "descricao": "Você está em sala de aula. O professor fala sobre equações, mas sua mente divaga. Um colega zoa sua roupa. O riso espalha. Algo em você transborda. Mas você segura. A batalha se desenha: responder, calar ou fugir. Uma voz interior sussurra: 'A melhor guerra é vencida antes de começar.'",
-      "opcoes": [
-        {
-          "texto": "Responder na mesma moeda (duelo verbal)",
-          "proximo": "rotina1",
-          "buildImpact": "profano"
-        },
-        {
-          "texto": "Fingir que não ouviu",
-          "proximo": "rotina1",
-          "buildImpact": "anomalia"
-        },
-        {
-          "texto": "*após ponderar sobre o preço da guerra* Levantar e sair da sala com dignidade",
-          "proximo": "rotina1",
-          "buildImpact": "virtuoso"
-        }
-      ],
-      "id": "dia3_bloco0"
-    },
-    {
-      "tipo": "rotina",
-      "titulo": "Pátio Fragmentado",
-      "descricao": "O pátio parece um campo de guerra emocional. Grupos se formam. Você é um continente à parte. Uma menina te olha. Você desvia. Outra voz sutil em sua mente diz: 'Ataques frontais sem estudo do terreno são suicidas.'",
-      "opcoes": [
-        {
-          "texto": "Tentar conversar com ela com cautela",
-          "proximo": "historia2"
-        },
-        {
-          "texto": "Olhar para o céu e fugir mentalmente",
-          "proximo": "historia2"
-        },
-        {
-          "texto": "Se misturar aos grupos com esforço",
-          "proximo": "historia2"
-        }
-      ],
-      "id": "rotina1"
-    },
-    {
-      "tipo": "evento",
-      "titulo": "O Meme Vivo",
-      "descricao": "No banheiro, alguém colou um meme na porta da cabine. É a sua cara, literalmente. Alguém usou IA pra te colocar numa piada bizarra sobre cebolas e existencialismo.",
-      "opcoes": [
-        {
-          "texto": "Rir e tirar uma foto",
-          "proximo": "evento1",
-          "buildImpact": "virtuoso"
-        },
-        {
-          "texto": "Arrancar o papel e rasgar com raiva",
-          "proximo": "evento1",
-          "buildImpact": "profano"
-        },
-        {
-          "texto": "Adicionar um post-it escrito 'só piora'",
-          "proximo": "evento1",
-          "buildImpact": "anomalia"
-        }
-      ],
-      "id": "evento_comico1"
-    },
-    {
-      "tipo": "historia",
-      "titulo": "Divisão",
-      "descricao": "Você lembra do dia em que separaram seus pais. A mala na calçada. O grito abafado. O som do zíper ecoa ainda hoje. O medo virou um biombo entre você e o mundo. Não havia plano de fuga. Só a derrota muda de forma.",
-      "opcoes": [
-        {
-          "texto": "Prometer que nunca abandonará ninguém",
-          "proximo": "evento1"
-        },
-        {
-          "texto": "Culpar a si mesmo em silêncio",
-          "proximo": "evento1"
-        },
-        {
-          "texto": "Fechar os olhos e respirar fundo",
-          "proximo": "evento1"
-        }
-      ],
-      "id": "historia2"
-    },
-    {
-      "tipo": "evento",
-      "titulo": "A Pedra se Parte",
-      "descricao": "Você reencontra a pedra que guardou. Ela está rachada agora. De dentro dela, escorre luz. A pedra diz: 'Separar não é romper. É criar margem para o encontro.' Uma rachadura pode ser uma linha de fuga, mas também de crescimento. Você sente o calor do fragmento pulsando como um coração.",
-      "opcoes": [
-        {
-          "texto": "Guardar o fragmento de luz no bolso",
-          "proximo": "rotina2"
-        },
-        {
-          "texto": "Enterrar a pedra de vez",
-          "proximo": "rotina2"
-        },
-        {
-          "texto": "Deixá-la onde está",
-          "proximo": "rotina2"
-        }
-      ],
-      "id": "evento1"
-    },
-    {
-      "tipo": "rotina",
-      "titulo": "Dois Lados do Mesmo Bolso",
-      "descricao": "Você caminha pra casa com a luz do fragmento escondida no bolso. Sente seu calor suave. Pela primeira vez, entende que há um dentro e um fora. E que ambos podem ser cuidados. A Pedra não te pertence mais. Mas o que ela revelou, sim. Uma nova voz ecoa: 'A verdadeira vitória é vencer a si mesmo todos os dias.'",
-      "opcoes": [
-        {
-          "texto": "Meditar antes de dormir",
-          "proximo": "fim"
-        },
-        {
-          "texto": "Escrever algo no caderno",
-          "proximo": "fim"
-        },
-        {
-          "texto": "Olhar o céu pela janela",
-          "proximo": "fim"
-        }
-      ],
-      "id": "rotina2"
-    },
-    {
-      "id": "fim",
-      "tipo": "fim",
-      "titulo": "Fim do Dia 3",
-      "descricao": "🌒 O terceiro dia termina. Você aprendeu a se separar sem se perder. Uma margem foi criada. E nela, algo novo poderá nascer. Como disse o Mestre: 'Conhece a ti mesmo, e não haverá guerra que te derrote.'",
-      "fraseChave": "margem"
-    }
-  ]
+  }
 }

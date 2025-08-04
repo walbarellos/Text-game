@@ -1,129 +1,218 @@
 {
   "nome": "Dia 4",
+  "fraseInspiradora": "🌞 Cada luz tem sua hora. Até o Sol sabe a hora de se pôr.",
   "descricao": "No quarto dia, surgem os luminares. O Sol para o dia, a Lua para a noite, as estrelas para os ciclos. É o dia em que a luz ganha direção. A consciência agora busca se orientar.",
+  "tooltips": {
+    "virtuoso": {
+      "texto": "🕊️ Seu espírito se eleva. Você é um farol.",
+      "cor": "#6ef2b1",
+      "aura": "verde-dourado"
+    },
+    "profano": {
+      "texto": "🔥 Algo em você arde contra si mesmo.",
+      "cor": "#f85b5b",
+      "aura": "vermelho-escuro"
+    },
+    "anomalia": {
+      "texto": "⚡ Você não se encaixa. E isso muda tudo.",
+      "cor": "#a87ef8",
+      "aura": "violeta-glitch"
+    }
+  },
   "blocos": [
     {
+      "id": "historia1",
       "tipo": "rotina",
       "titulo": "Alvorada",
-      "descricao": "Você acorda com a luz do sol invadindo o quarto. Ela desenha padrões na parede. Uma sensação de propósito nasce com a luz. Mas o que fazer com ela?",
+      "descricao": "Você acorda com a luz invadindo o quarto. Ela desenha padrões estranhos na parede. Pela primeira vez em dias, algo te chama para o mundo lá fora.",
       "opcoes": [
         {
-          "texto": "Levantar e preparar-se com calma",
-          "proximo": "historia1",
-          "build": "virtuoso"
+          "texto": "Respirar fundo e levantar com propósito",
+          "proximo": "historia2",
+          "buildImpact": "virtuoso",
+          "dica": "A manhã aceita quem a honra.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "luz"
         },
         {
-          "texto": "Voltar a dormir mais 10 minutos",
-          "proximo": "historia1",
-          "build": "profano"
+          "texto": "Resmungar e puxar o cobertor",
+          "proximo": "historia2",
+          "buildImpact": "profano",
+          "dica": "Fingir que ainda é noite.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "fuga"
         },
         {
-          "texto": "Levantar apressado e ignorar tudo",
-          "proximo": "historia1",
-          "build": "anomalia"
+          "texto": "Levantar no susto e sair sem pensar",
+          "proximo": "historia2",
+          "buildImpact": "anomalia",
+          "dica": "Nem todo caos vem do escuro.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "deslocamento"
         }
       ]
     },
     {
+      "id": "historia2",
       "tipo": "historia",
-      "titulo": "Rumo à Escola",
-      "descricao": "No caminho para a escola, o sol já está alto. Um velho encostado na sombra te diz: 'A luz revela, mas também queima. Qual verdade você está pronto para encarar hoje?'",
+      "titulo": "Velho de Luz e Sombra",
+      "descricao": "No caminho, um homem velho na calçada te observa. Ele diz: 'A luz revela, mas também queima. Você está pronto pra ser visto?'",
       "opcoes": [
         {
-          "texto": "Responder com silêncio e seguir o caminho",
-          "proximo": "rotina2"
+          "texto": "Concordar com um aceno respeitoso",
+          "proximo": "rotina1",
+          "dica": "Há sabedoria no silêncio.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "respeito"
         },
         {
-          "texto": "Parar e perguntar o que ele quis dizer",
-          "proximo": "rotina2"
+          "texto": "Fingir que não ouviu nada",
+          "proximo": "rotina1",
+          "dica": "Quando o mundo fala, você responde?",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "negacao"
         },
         {
-          "texto": "Ignorar completamente e mudar de calçada",
-          "proximo": "rotina2"
+          "texto": "Olhar pro celular e atravessar a rua",
+          "proximo": "rotina1",
+          "dica": "Blindar-se também é uma forma de exposição.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "desconexao"
         }
       ]
     },
     {
+      "id": "rotina1",
       "tipo": "rotina",
-      "titulo": "Sala Iluminada",
-      "descricao": "A aula começa. A professora fala sobre astronomia. Alguém pergunta por que as estrelas brilham. Ela responde: 'Elas queimam para dar luz a quem está longe.' Você pensa: e eu? Queimo por dentro ou ilumino alguém?",
+      "titulo": "Estrela em Sala",
+      "descricao": "Na escola, a professora pergunta: 'Por que as estrelas brilham?'. Alguém responde: 'Porque estão morrendo lentamente.'",
       "opcoes": [
         {
-          "texto": "Anotar a frase e refletir mais tarde",
-          "proximo": "historia2"
+          "texto": "Anotar e pensar nisso depois",
+          "proximo": "historia3",
+          "dica": "Refletir é dar luz ao pensamento.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "cosmos"
         },
         {
-          "texto": "Fazer uma piada para quebrar o clima",
-          "proximo": "historia2"
+          "texto": "Sussurrar: 'Igual eu então...'",
+          "proximo": "historia3",
+          "dica": "Ironia é luz torta.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "cinismo"
         },
         {
-          "texto": "Ficar olhando fixo para o ventilador girando",
-          "proximo": "historia2"
+          "texto": "Puxar o capuz e dormir com o olho aberto",
+          "proximo": "historia3",
+          "dica": "Evitar perguntas é negar estrelas.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "evasao"
         }
       ]
     },
     {
+      "id": "historia3",
       "tipo": "historia",
-      "titulo": "A Sombra no Refeitório",
-      "descricao": "Na hora do intervalo, alguém da sua turma é alvo de bullying. O garoto está isolado no canto, em silêncio. Você lembra do que sentiu no pátio ontem. Mas agora, os olhares estão em você.",
+      "titulo": "Sombra no Refeitório",
+      "descricao": "Um colega está isolado no refeitório. Alvo fácil. As risadas sobem como faíscas. Você vê. E é visto.",
       "opcoes": [
         {
-          "texto": "Sentar ao lado dele em silêncio",
+          "texto": "Sentar-se ao lado dele em silêncio",
           "proximo": "evento1",
-          "build": "virtuoso"
+          "buildImpact": "virtuoso",
+          "dica": "Estar junto sem palavras já é luz.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "presenca"
         },
         {
-          "texto": "Entrar na zombaria como defesa social",
+          "texto": "Soltar uma piada pra desviar o foco",
           "proximo": "evento1",
-          "build": "profano"
+          "buildImpact": "profano",
+          "dica": "Brilhar apagando outro?",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "autoengano"
         },
         {
-          "texto": "Observar tudo de longe sem agir",
+          "texto": "Observar sem reagir",
           "proximo": "evento1",
-          "build": "anomalia"
+          "buildImpact": "anomalia",
+          "dica": "A sombra cresce onde a luz não age.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "neutro"
         }
       ]
     },
     {
+      "id": "evento1",
       "tipo": "evento",
       "titulo": "Os Três Luminares",
-      "descricao": "Ao voltar pra casa, a noite chega. No céu, o Sol se despede, a Lua assume, e as estrelas começam a piscar. A Pedra aparece flutuando à sua frente, irradiando brilho suave: 'O Sol guia os dias, a Lua guarda as emoções, as estrelas lembram que há ordem até no caos. Qual te guia agora?'",
+      "descricao": "No fim do dia, a Pedra surge no céu. Ela gira devagar entre Sol, Lua e Estrelas. Uma voz ressoa: 'Qual luz você segue — a que queima, a que acalma ou a que orienta?'",
       "opcoes": [
         {
-          "texto": "O Sol – coragem e exposição",
-          "proximo": "rotina3"
+          "texto": "☀️ O Sol — coragem de se mostrar",
+          "proximo": "rotina2",
+          "dica": "Ser luz é aceitar o calor.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "exposicao"
         },
         {
-          "texto": "A Lua – sensibilidade e refúgio",
-          "proximo": "rotina3"
+          "texto": "🌙 A Lua — sensibilidade sem gritos",
+          "proximo": "rotina2",
+          "dica": "Nem toda luz vem do dia.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "interior"
         },
         {
-          "texto": "As Estrelas – orientação no silêncio",
-          "proximo": "rotina3"
+          "texto": "✨ As Estrelas — direção no silêncio",
+          "proximo": "rotina2",
+          "dica": "Guiar sem ser visto é nobre.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "norte"
         }
       ]
     },
     {
+      "id": "rotina2",
       "tipo": "rotina",
       "titulo": "Crepúsculo Interior",
-      "descricao": "Você escreve algo no diário. As palavras saem com luz própria. Você percebe que o dia teve três tipos de brilho: externo, interno e simbólico. Entende agora que nem toda luz vem do Sol.",
+      "descricao": "Você escreve no diário à luz fraca do abajur. Percebe que há dias que clareiam por fora, e dias que acendem por dentro.",
       "opcoes": [
         {
-          "texto": "Dormir com a janela aberta, olhando as estrelas",
-          "proximo": "fim"
+          "texto": "Dormir com a janela aberta e alma exposta",
+          "proximo": "fim4",
+          "buildImpact": "virtuoso",
+          "dica": "Quem confia, descansa.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "entrega"
         },
         {
-          "texto": "Apagar tudo e deixar a pedra sob o travesseiro",
-          "proximo": "fim"
+          "texto": "Fechar tudo e guardar a pedra sob o travesseiro",
+          "proximo": "fim4",
+          "buildImpact": "profano",
+          "dica": "Proteger-se pode virar prisão.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "defesa"
         },
         {
-          "texto": "Ler algo sobre o céu noturno antes de dormir",
-          "proximo": "fim"
+          "texto": "Ficar olhando pro teto até apagar",
+          "proximo": "fim4",
+          "buildImpact": "anomalia",
+          "dica": "A luz interior às vezes não vem.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "vazio"
         }
       ]
+    },
+    {
+      "id": "fim4",
+      "tipo": "fim",
+      "titulo": "Fim do Dia 4",
+      "descricao": "🌕 O quarto dia termina. Agora você sabe: cada luz ilumina um tipo de dor — e escolher qual seguir também é um ato de criação."
     }
   ],
-  "fim": {
-    "mensagem": "🌕 O quarto dia termina. Agora você sabe: há luzes diferentes, e cada uma revela algo único. A verdadeira iluminação é saber qual seguir — e quando brilhar por si."
+  "frasesFinais": {
+    "virtuoso": "Mesmo ferido, você escolhe não ferir.",
+    "profano": "Negar o chamado também é um tipo de resposta.",
+    "anomalia": "Quem sente demais, às vezes quebra para não ser moldado."
   }
 }

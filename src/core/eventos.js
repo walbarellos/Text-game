@@ -59,18 +59,6 @@ export function executarEvento(id) {
   eventoAtual = id;
   salvarProgresso({ diaAtual, eventoAtual, build: buildAtual });
 
-  export function renderizarEvento(evento, aoEscolherOpcao, buildAtual) {
-    const destino = document.getElementById('evento');
-    if (!destino) return;
-
-    destino.innerHTML = `
-    <div class="evento-bloco fade-in" aria-live="polite">
-    <h2>${evento.titulo}</h2>
-    <p>${evento.descricao}</p>
-    <div class="opcoes"></div>
-    </div>
-    `;
-
     const containerOpcoes = destino.querySelector('.opcoes');
 
     // ⚠️ Só renderiza botões se houver opções

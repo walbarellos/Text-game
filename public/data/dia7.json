@@ -1,51 +1,103 @@
 {
-  "nome": "Dia 7",
-  "descricao": "No sétimo dia, até Deus parou. E você? Você só quer entender se viveu, sobreviveu ou só deu reload no caos com outra skin. Hora de parar. Ou pelo menos tentar.",
+  "nome": "Dia 7 — O Silêncio Final",
+  "fraseInspiradora": "Às vezes, a escolha mais difícil é admitir que nunca houve uma.",
   "blocos": [
     {
-      "tipo": "historia",
-      "titulo": "A Retrospectiva",
-      "descricao": "Você acorda... e não tem alarme. Não tem aula. Não tem cobranças imediatas. Mas sua mente corre como se fosse segunda. Você ouve uma voz interior (com voz de telemarketing): 'Parabéns! Você sobreviveu a 6 dias de caos simbólico. Deseja recomeçar?'",
+      "id": "inicio",
+      "titulo": "Despertar ou desistir?",
+      "descricao": "Você acorda, mas não tem certeza se ainda está jogando ou se já virou o jogo. As paredes são de veludo. Há um botão que diz 'Recomeçar'. Mas ele está atrás de uma redoma. De vidro. Sem rachaduras.",
       "opcoes": [
         {
-          "texto": "Pedir um troféu de barro com Wi-Fi",
-          "proximo": "evento1"
+          "texto": "Apertar o botão com a testa.",
+          "proximo": "labirinto",
+          "buildImpact": "anomalia",
+          "dica": "Nada como o bom e velho improviso craniano.",
+          "fraseChave": "O caos é uma estratégia como qualquer outra."
         },
         {
-          "texto": "Ignorar e continuar no modo zumbi reflexivo",
-          "proximo": "evento1"
+          "texto": "Esperar. Talvez algo aconteça.",
+          "proximo": "labirinto",
+          "buildImpact": "profano",
+          "dica": "Inércia: o mais confortável dos grilhões.",
+          "fraseChave": "A espera é o vício dos indecisos."
         },
         {
-          "texto": "Anotar tudo o que aprendeu... e fingir que entendeu",
-          "proximo": "evento1"
+          "texto": "Meditar e aceitar o momento.",
+          "proximo": "labirinto",
+          "buildImpact": "virtuoso",
+          "dica": "Você é melhor do que isso (será?).",
+          "fraseChave": "A paz começa quando a expectativa morre."
         }
       ]
     },
     {
-      "tipo": "evento",
-      "titulo": "O Silêncio Fala",
-      "descricao": "A Pedra está em silêncio. Pela primeira vez, não fala nada. Você se aproxima. Ela brilha, mas não diz. A ausência de som te faz ouvir seu próprio barulho interno. Talvez o mundo não precise sempre de respostas. Talvez o jogo era você o tempo todo.",
+      "id": "labirinto",
+      "titulo": "O labirinto das últimas perguntas",
+      "descricao": "Você está em um labirinto. As paredes sussurram suas escolhas passadas. Uma delas grita 'VOCÊ MATOU O CACHORRO DA VIZINHA'. Você nunca teve vizinha. Ou cachorro.",
       "opcoes": [
         {
-          "texto": "Sentar e ficar em silêncio também",
-          "proximo": "fim"
+          "texto": "Confessar mesmo assim.",
+          "proximo": "espelho",
+          "buildImpact": "virtuoso",
+          "dica": "Arrependimento pré-pago.",
+          "fraseChave": "Quem se culpa, assume o controle do julgamento."
         },
         {
-          "texto": "Dizer: 'Obrigado, Pedra. Mesmo sem manual, tentei ser gente.'",
-          "proximo": "fim"
+          "texto": "Correr e gritar: 'MENTIRA!'",
+          "proximo": "espelho",
+          "buildImpact": "anomalia",
+          "dica": "Gritar resolve tudo. Quase sempre. Nunca.",
+          "fraseChave": "Se ninguém acredita, é verdade por padrão."
         },
         {
-          "texto": "Pegar a Pedra e guardar pra próxima temporada",
-          "proximo": "fim"
+          "texto": "Dar uma risadinha e seguir reto.",
+          "proximo": "espelho",
+          "buildImpact": "profano",
+          "dica": "O cinismo é a elegância dos fracos.",
+          "fraseChave": "Quando tudo é piada, nada te prende."
+        }
+      ]
+    },
+    {
+      "id": "espelho",
+      "titulo": "O espelho e a porta",
+      "descricao": "Há um espelho. Seu reflexo não te imita. Ele sorri antes de você. E aponta para uma porta onde está escrito: 'Última chance (ou não)'.",
+      "opcoes": [
+        {
+          "texto": "Pedir desculpas ao reflexo.",
+          "proximo": "fim",
+          "buildImpact": "virtuoso",
+          "dica": "Nunca é tarde para pedir perdão... a si mesmo?",
+          "fraseChave": "A humildade é a única chave que abre portas fechadas por dentro."
+        },
+        {
+          "texto": "Ignorar e atravessar a porta.",
+          "proximo": "fim",
+          "buildImpact": "profano",
+          "dica": "Passar reto é um estilo de vida.",
+          "fraseChave": "Ignorar o espelho não te impede de ser visto."
+        },
+        {
+          "texto": "Quebrar o espelho com a testa (de novo).",
+          "proximo": "fim",
+          "buildImpact": "anomalia",
+          "dica": "Quem nunca recorreu à violência simbólica que atire a primeira pedra mental.",
+          "fraseChave": "Toda revolução começa com um corte na testa."
         }
       ]
     },
     {
       "id": "fim",
       "tipo": "fim",
-      "titulo": "Fim do Dia 7",
-      "descricao": "✨ O sétimo dia termina. E tudo ficou quieto. Você sobreviveu. Não venceu, talvez. Mas nem todo mundo que dorme em paz precisa de medalha. Às vezes, o silêncio é a última forma de sabedoria.",
-      "fraseChave": "silêncio"
+      "titulo": "FIM?",
+      "descricao": "Você saiu. Ou ficou. A verdade é que ninguém tem certeza se o jogo terminou ou só você parou de jogar. Uma voz surge: 'Você foi... interessante. Quase ninguém chega aqui com tanta convicção e tão pouca noção.'",
+      "opcoes": [
+        {
+          "texto": "Recomeçar como se nada tivesse acontecido.",
+          "proximo": "inicio",
+          "fraseChave": "Ciclos não terminam. Eles fingem recomeçar."
+        }
+      ]
     }
   ]
 }
