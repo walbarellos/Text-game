@@ -61,7 +61,6 @@ async function carregarDia(numeroDia) {
 
     estado.eventos = dadosDia.blocos;
     estado.nomeDia = dadosDia.nome || `Dia ${numeroDia}`;
-    // 🧠 Define tooltip com frase inspiradora (se existir no JSON)
     const hudDia = document.getElementById('hud-dia');
     if (hudDia && dadosDia.fraseInspiradora) {
       hudDia.setAttribute('data-frase', dadosDia.fraseInspiradora);
@@ -70,12 +69,12 @@ async function carregarDia(numeroDia) {
     estado.eventoAtual = dadosDia.blocos[0];
 
     atualizarHUD(estado.nomeDia, estado.build);
+    atualizarGlowTitulo(estado.build);
     renderizarEvento(estado.eventoAtual, eventoContainer);
   } catch (erro) {
     console.error('❌ Erro ao carregar o dia:', erro);
     eventoContainer.innerHTML = `<p class="erro">⚠️ Dia não encontrado ou JSON inválido.</p>`;
-    return; // ⬅️ ISSO AQUI É O QUE FALTAVA!
-
+    return;
   }
 }
 
@@ -92,7 +91,6 @@ function aoEscolherOpcao(opcao) {
 
   const proximoEvento = estado.eventos.find(ev => ev.id === proximo);
 
-  // 🔚 Se chegou ao fim do dia
   if (!proximoEvento) {
     const blocoFinal = estado.eventos.find(ev => ev.tipo === 'fim');
 
@@ -103,19 +101,18 @@ function aoEscolherOpcao(opcao) {
       return;
     }
 
-    // ⚠️ Fallback (não deveria ocorrer)
     avancarDia(estado);
     return;
   }
 
-  // 🔁 Segue fluxo normal
   estado.eventoAtual = proximoEvento;
   salvarProgresso(estado);
   atualizarHUD(estado.nomeDia, estado.build);
+  atualizarGlowTitulo(estado.build);
 
   if (npc) {
     dispararNPC(npc, estado.build, () => {
-      renderizarEvento(proximoEvento, eventoCcontainer);
+      renderizarEvento(proximoEvento, eventoContainer);
     });
   } else {
     renderizarEvento(proximoEvento, eventoContainer);
@@ -127,10 +124,28 @@ document.addEventListener('opcaoSelecionada', (e) => {
   aoEscolherOpcao(e.detail);
 });
 
-// ⏭️ Escuta clique no botão de avanço de dia
 document.addEventListener('avancarDia', () => {
   avancarDia(estado);
 });
 
-// 🔁 Inicializa
 document.addEventListener('DOMContentLoaded', iniciarJogo);
+
+// ✨ Aplica build ao body e glow
+function atualizarGlowTitulo(build) {
+  document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');
+  document.body.classList.add(`build-${build}`);
+
+  const titulo = document.querySelector('.titulo-animado');
+  if (titulo) {
+    titulo.classList.remove('glow');
+    setTimeout(() => titulo.classList.add('glow'), 50);
+  }
+}
+
+// 🔧 Corrigir sobreposição do título à HUD
+document.addEventListener('DOMContentLoaded', () => {
+  const tituloRitual = document.querySelector('.titulo-ritual');
+  if (tituloRitual) {
+    tituloRitual.style.pointerEvents = 'none';
+  }
+});

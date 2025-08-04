@@ -1,0 +1,32 @@
+
+.botao-aura {
+  position: relative;
+  display: inline-block;
+  padding: 0.6em 1.4em;
+  color: #fff;
+  border: none;
+  background: #111;
+  font-family: 'Share Tech Mono', monospace;
+  letter-spacing: 1px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+}
+
+.botao-aura::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1), transparent 70%);
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.6s;
+  z-index: 0;
+}
+
+.botao-aura:hover::before {
+  opacity: 1;
+}

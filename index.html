@@ -1,37 +1,94 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="Jogo ritualístico simbólico sobre escolhas e moralidade." />
-    <title>What Is Life ☉</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="Jogo ritualístico simbólico sobre escolhas e moralidade." />
+  <title>What Is Life ☉</title>
 
-    <!-- Ícone ritualístico -->
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <!-- Ícone ritualístico -->
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
+  <!-- Estilos do Título e Efeitos -->
+  <link rel="stylesheet" href="./src/styles/titulo-animado.css" />
+  <link rel="stylesheet" href="./src/styles/aura.css" />
 
-    <!-- Preconexão com fontes -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-  </head>
+  <!-- Fonte ritualística -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+</head>
 
-  <body class="jogo-corpo">
-    <div id="wrapper-jogo">
+<body class="jogo-corpo">
+  <!-- Fundo animado -->
+  <canvas id="background-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;"></canvas>
+
+  <!-- Título ritualístico animado -->
+  <div class="titulo-ritual" aria-label="Título do Jogo">
+    <h1 class="titulo-animado">What Is Life ☉</h1>
+  </div>
+
+  <!-- Container do Jogo -->
+  <div id="wrapper-jogo">
     <!-- HUD -->
     <canvas id="etereal-fog"></canvas>
 
     <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
-    <div id="hud-dia" class="hud-dia" aria-live="polite" title="Clique para uma dica ritualística">Dia 1</div>
+      <div id="hud-dia" class="hud-dia" aria-live="polite" title="Clique para uma dica ritualística">Dia 1</div>
       <div id="hud-build" class="hud-build profano" aria-label="Build atual">⚪ Profano</div>
     </header>
 
-    <!-- Container principal da narrativa -->
+    <!-- Narrativa -->
     <main id="evento" class="evento-container" role="main" aria-label="Narrativa interativa do jogo"></main>
+  </div>
 
-    <!-- Script principal -->
-    <script type="module" src="./src/main.js"></script>
+  <!-- Script de fundo geométrico -->
+  <script type="module" src="/src/ui/fundo-geom.js"></script>
 
-  </body>
+  <!-- Script principal do jogo -->
+  <script type="module" src="./src/main.js"></script>
+
+  <!-- Script de título e SVG decorativo -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const titulo = document.querySelector('.titulo-animado');
+      if (!titulo) return;
+
+      const texto = titulo.textContent || 'What Is Life ☉';
+      const steps = texto.length;
+
+      // Define a animação dinâmica
+      titulo.style.animation = `
+        typing 3.5s steps(${steps}, end) forwards,
+        blink-caret 0.75s step-end infinite
+      `;
+
+      // Glow ativado após digitação
+      setTimeout(() => {
+        titulo.classList.add('glow');
+      }, 3600);
+
+      // SVG decorativo
+      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+      svg.setAttribute('width', '100%');
+      svg.setAttribute('height', '100');
+      svg.setAttribute('viewBox', '0 0 800 100');
+      svg.style.position = 'absolute';
+      svg.style.top = '0';
+      svg.style.left = '0';
+      svg.style.zIndex = '0';
+      svg.innerHTML = `
+        <polyline points="0,80 150,20 300,60 450,10 600,80 800,40"
+        stroke="#ffffff33"
+        stroke-width="1.5"
+        fill="none"
+        stroke-dasharray="5,5"
+        />
+      `;
+
+      titulo.parentElement?.prepend(svg);
+    });
+  </script>
+</body>
 </html>
