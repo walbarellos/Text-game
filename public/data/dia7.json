@@ -1,0 +1,51 @@
+{
+  "nome": "Dia 7",
+  "descricao": "No sétimo dia, até Deus parou. E você? Você só quer entender se viveu, sobreviveu ou só deu reload no caos com outra skin. Hora de parar. Ou pelo menos tentar.",
+  "blocos": [
+    {
+      "tipo": "historia",
+      "titulo": "A Retrospectiva",
+      "descricao": "Você acorda... e não tem alarme. Não tem aula. Não tem cobranças imediatas. Mas sua mente corre como se fosse segunda. Você ouve uma voz interior (com voz de telemarketing): 'Parabéns! Você sobreviveu a 6 dias de caos simbólico. Deseja recomeçar?'",
+      "opcoes": [
+        {
+          "texto": "Pedir um troféu de barro com Wi-Fi",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Ignorar e continuar no modo zumbi reflexivo",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Anotar tudo o que aprendeu... e fingir que entendeu",
+          "proximo": "evento1"
+        }
+      ]
+    },
+    {
+      "tipo": "evento",
+      "titulo": "O Silêncio Fala",
+      "descricao": "A Pedra está em silêncio. Pela primeira vez, não fala nada. Você se aproxima. Ela brilha, mas não diz. A ausência de som te faz ouvir seu próprio barulho interno. Talvez o mundo não precise sempre de respostas. Talvez o jogo era você o tempo todo.",
+      "opcoes": [
+        {
+          "texto": "Sentar e ficar em silêncio também",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Dizer: 'Obrigado, Pedra. Mesmo sem manual, tentei ser gente.'",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Pegar a Pedra e guardar pra próxima temporada",
+          "proximo": "fim"
+        }
+      ]
+    },
+    {
+      "id": "fim",
+      "tipo": "fim",
+      "titulo": "Fim do Dia 7",
+      "descricao": "✨ O sétimo dia termina. E tudo ficou quieto. Você sobreviveu. Não venceu, talvez. Mas nem todo mundo que dorme em paz precisa de medalha. Às vezes, o silêncio é a última forma de sabedoria.",
+      "fraseChave": "silêncio"
+    }
+  ]
+}

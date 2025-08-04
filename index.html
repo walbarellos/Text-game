@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Jogo ritualístico simbólico sobre escolhas e moralidade." />
+    <title>What Is Life ☉</title>
+
+    <!-- Ícone ritualístico -->
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+
+    <!-- Preconexão com fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+  </head>
+
+  <body class="jogo-corpo">
+    <div id="wrapper-jogo">
+    <!-- HUD -->
+    <canvas id="etereal-fog"></canvas>
+
+    <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
+    <div id="hud-dia" class="hud-dia" aria-live="polite" title="Clique para uma dica ritualística">Dia 1</div>
+      <div id="hud-build" class="hud-build profano" aria-label="Build atual">⚪ Profano</div>
+    </header>
+
+    <!-- Container principal da narrativa -->
+    <main id="evento" class="evento-container" role="main" aria-label="Narrativa interativa do jogo"></main>
+
+    <!-- Script principal -->
+    <script type="module" src="./src/main.js"></script>
+
+  </body>
+</html>

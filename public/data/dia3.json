@@ -1,0 +1,111 @@
+{
+  "nome": "Dia 3",
+  "descricao": "No terceiro dia, surge a separação. O que antes era um só caos começa a dividir-se em margens, bordas, limites. A consciência aprende a dizer: isso sou eu, isso não sou eu.",
+  "blocos": [
+    {
+      "tipo": "historia",
+      "titulo": "O Limite da Água",
+      "descricao": "Você está em sala de aula. O professor fala sobre equações, mas sua mente divaga. Um colega zoa sua roupa. O riso espalha. Algo em você transborda. Mas você segura. A batalha se desenha: responder, calar ou fugir. Uma voz interior sussurra: 'A melhor guerra é vencida antes de começar.'",
+      "opcoes": [
+        {
+          "texto": "Responder na mesma moeda (duelo verbal)",
+          "proximo": "rotina1",
+          "build": "profano"
+        },
+        {
+          "texto": "Fingir que não ouviu",
+          "proximo": "rotina1",
+          "build": "anomalia"
+        },
+        {
+          "texto": "*após ponderar sobre o preço da guerra* Levantar e sair da sala com dignidade",
+          "proximo": "rotina1",
+          "build": "virtuoso"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Pátio Fragmentado",
+      "descricao": "O pátio parece um campo de guerra emocional. Grupos se formam. Você é um continente à parte. Uma menina te olha. Você desvia. Outra voz sutil em sua mente diz: 'Ataques frontais sem estudo do terreno são suicidas.'",
+      "opcoes": [
+        {
+          "texto": "Tentar conversar com ela com cautela",
+          "proximo": "historia2"
+        },
+        {
+          "texto": "Olhar para o céu e fugir mentalmente",
+          "proximo": "historia2"
+        },
+        {
+          "texto": "Se misturar aos grupos com esforço",
+          "proximo": "historia2"
+        }
+      ]
+    },
+    {
+      "tipo": "historia",
+      "titulo": "Divisão",
+      "descricao": "Você lembra do dia em que separaram seus pais. A mala na calçada. O grito abafado. O som do zíper ecoa ainda hoje. O medo virou um biombo entre você e o mundo. Não havia plano de fuga. Só a derrota muda de forma.",
+      "opcoes": [
+        {
+          "texto": "Prometer que nunca abandonará ninguém",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Culpar a si mesmo em silêncio",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Fechar os olhos e respirar fundo",
+          "proximo": "evento1"
+        }
+      ]
+    },
+    {
+      "tipo": "evento",
+      "titulo": "A Pedra se Parte",
+      "descricao": "Você reencontra a pedra que guardou. Ela está rachada agora. De dentro dela, escorre luz. A pedra diz: 'Separar não é romper. É criar margem para o encontro.' Uma rachadura pode ser uma linha de fuga, mas também de crescimento. Você sente o calor do fragmento pulsando como um coração.",
+      "opcoes": [
+        {
+          "texto": "Guardar o fragmento de luz no bolso",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Enterrar a pedra de vez",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Deixá-la onde está",
+          "proximo": "rotina2"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Dois Lados do Mesmo Bolso",
+      "descricao": "Você caminha pra casa com a luz do fragmento escondida no bolso. Sente seu calor suave. Pela primeira vez, entende que há um dentro e um fora. E que ambos podem ser cuidados. A Pedra não te pertence mais. Mas o que ela revelou, sim. Uma nova voz ecoa: 'A verdadeira vitória é vencer a si mesmo todos os dias.'",
+      "opcoes": [
+        {
+          "texto": "Meditar antes de dormir",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Escrever algo no caderno",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Olhar o céu pela janela",
+          "proximo": "fim"
+        }
+      ]
+    },
+    {
+      "id": "fim",
+      "tipo": "fim",
+      "titulo": "Fim do Dia 3",
+      "descricao": "🌒 O terceiro dia termina. Você aprendeu a se separar sem se perder. Uma margem foi criada. E nela, algo novo poderá nascer. Como disse o Mestre: 'Conhece a ti mesmo, e não haverá guerra que te derrote.'",
+      "fraseChave": "margem"
+    }
+  ]
+}

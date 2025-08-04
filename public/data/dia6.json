@@ -1,0 +1,107 @@
+{
+  "nome": "Dia 6",
+  "descricao": "No sexto dia, Deus fez o homem — e imediatamente se arrependeu. O ser humano surge do pó, mas já quer ser CEO da criação. Entre espinhas e pensamentos filosóficos mal embasados, você acorda com vontade de entender... ou de sumir.",
+  "blocos": [
+    {
+      "tipo": "historia",
+      "titulo": "Cara de Barro",
+      "descricao": "Você acorda se olhando no espelho. É sexta. Tem prova. Seu cabelo parece um acidente geológico. Uma espinha decidiu nascer com liderança e está discursando na sua testa. Você ouve ecoar na mente: 'E criou o homem à Sua imagem... mas o espelho estava rachado.'",
+      "opcoes": [
+        {
+          "texto": "Tentar disfarçar tudo com um boné e filosofia de banheiro",
+          "proximo": "rotina1",
+          "build": "profano"
+        },
+        {
+          "texto": "Falar com a espinha como se fosse um demônio interno",
+          "proximo": "rotina1",
+          "build": "anomalia"
+        },
+        {
+          "texto": "Respirar fundo e aceitar a imperfeição como arte divina",
+          "proximo": "rotina1",
+          "build": "virtuoso"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Meme Existencial",
+      "descricao": "No caminho pra escola, você lê uma pichação: 'Eu penso, logo me atraso.' A frase te acerta como uma voadora conceitual. Você começa a questionar se está mesmo indo pra aula ou apenas flutuando no simulador social.",
+      "opcoes": [
+        {
+          "texto": "Parar e filosofar até ser atropelado simbolicamente",
+          "proximo": "historia2"
+        },
+        {
+          "texto": "Anotar a frase pra usar numa redação",
+          "proximo": "historia2"
+        },
+        {
+          "texto": "Dar risada sozinho e fingir normalidade",
+          "proximo": "historia2"
+        }
+      ]
+    },
+    {
+      "tipo": "historia",
+      "titulo": "Sopro e Sufoco",
+      "descricao": "O professor solta a frase: 'O que diferencia o homem dos animais é a linguagem'. Você pensa: 'Mas e o WhatsApp?' Ao fundo, um colega emite um som que parece um boi possuído. Você se pergunta se a alma realmente foi soprada... ou se escapou pelo nariz de alguém.",
+      "opcoes": [
+        {
+          "texto": "Levantar a mão e questionar tudo com classe",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Gritar 'Muuuu' e fazer o caos começar",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Anotar no caderno: 'Deus me fez assim? Então tá.'",
+          "proximo": "evento1"
+        }
+      ]
+    },
+    {
+      "tipo": "evento",
+      "titulo": "A Pedra Humanóide",
+      "descricao": "A Pedra surge com pernas de massinha e óculos de leitura. Ela diz: 'Você é feito de pó... mas já quer Wi-Fi celestial?' Ela se vira de costas e diz: 'Olha pra mim. Agora olha pra você. E agora aceita: até Eu tive que lidar com versões beta.'",
+      "opcoes": [
+        {
+          "texto": "Responder: 'Quero ser versão 1.0, mas sem bugs sociais'",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Agradecer e pedir upgrade de firmware espiritual",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Sair correndo e aceitar ser Homo Erraticus",
+          "proximo": "rotina2"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Criação Inacabada",
+      "descricao": "Você chega em casa e sua mãe diz: 'Tira esse tênis agora!' Você pensa: 'E Deus viu que era bom... até o cheiro do pé subir.' A noite cai. Você olha pro teto e imagina um mundo onde humanos vêm com manual.",
+      "opcoes": [
+        {
+          "texto": "Dormir rezando para não ser reprovado na prova... ou na vida",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Tentar escrever um versículo sobre si mesmo",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Sonhar com o sétimo dia e fingir que vai descansar também",
+          "proximo": "fim"
+        }
+      ]
+    }
+  ],
+  "fim": {
+    "mensagem": "🧠 O sexto dia termina. O barro falou. A imagem questionou o espelho. Você não sabe se foi feito à semelhança divina ou por um estagiário do Gênesis... mas está vivo. E isso já é milagre demais."
+  }
+}

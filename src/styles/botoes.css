@@ -1,0 +1,16 @@
+/* BOTÕES */
+.btn-opcao {
+    background-color: #222;
+    color: #eee;
+    border: 1px solid #555;
+    padding: 0.6rem 1rem;
+    margin: 0.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-opcao:hover {
+    background-color: #444;
+    border-color: #888;
+}

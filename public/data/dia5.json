@@ -1,0 +1,129 @@
+{
+  "nome": "Dia 5",
+  "descricao": "No quinto dia, a vida se move. As águas se enchem de peixes, e os céus, de aves. É o nascimento do instinto, da liberdade, do impulso de viver. Agora, a consciência não apenas observa — ela reage.",
+  "blocos": [
+    {
+      "tipo": "rotina",
+      "titulo": "Banho Frio",
+      "descricao": "Você se atrasa. No chuveiro, a água está fria. O corpo acorda antes da mente. Você percebe que hoje não pensa: apenas age.",
+      "opcoes": [
+        {
+          "texto": "Ficar parado sentindo o frio como um teste",
+          "proximo": "historia1",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Gritar, reclamar e sair correndo",
+          "proximo": "historia1",
+          "build": "profano"
+        },
+        {
+          "texto": "Fingir que está tudo bem enquanto treme",
+          "proximo": "historia1",
+          "build": "anomalia"
+        }
+      ]
+    },
+    {
+      "tipo": "historia",
+      "titulo": "Impulso",
+      "descricao": "Na rua, um cachorro atravessa na frente de um carro. Você dá um grito — o motorista freia. O animal escapa. Um grupo de pessoas olha pra você como se você fosse o maluco da esquina. Mas o cachorro viveu.",
+      "opcoes": [
+        {
+          "texto": "Sentir vergonha e se esconder",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Ignorar os olhares e continuar andando",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Sorrir como um herói e fazer pose",
+          "proximo": "rotina2"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Pátio Selvagem",
+      "descricao": "Na escola, algo mudou. Os colegas parecem animais no cio. Correria, gritos, cheiros fortes. Há um impulso no ar. Você sente vontade de correr. Ou de se esconder.",
+      "opcoes": [
+        {
+          "texto": "Imitar os sons e se misturar à loucura",
+          "proximo": "historia2",
+          "build": "profano"
+        },
+        {
+          "texto": "Subir num canto e observar como um corvo",
+          "proximo": "historia2",
+          "build": "anomalia"
+        },
+        {
+          "texto": "Chamar alguém para conversar calmamente",
+          "proximo": "historia2",
+          "build": "virtuoso"
+        }
+      ]
+    },
+    {
+      "tipo": "historia",
+      "titulo": "Asas ou Nado",
+      "descricao": "No almoço, te perguntam: 'Você é mais do tipo que voa ou que mergulha?' Você hesita. Nadar exige fôlego. Voar exige leveza. Mas viver exige ambos.",
+      "opcoes": [
+        {
+          "texto": "Responder que prefere voar — ver o todo",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Responder que prefere mergulhar — sentir fundo",
+          "proximo": "evento1"
+        },
+        {
+          "texto": "Dizer que ainda não aprendeu a respirar",
+          "proximo": "evento1"
+        }
+      ]
+    },
+    {
+      "tipo": "evento",
+      "titulo": "A Pedra Grita",
+      "descricao": "De repente, uma rajada de vento. A Pedra aparece, girando no ar, envolta por penas e gotas. Ela diz: 'A vida pulsa quando você não pensa. Mas quem vive só pelo instinto... voa sem asas, nada sem brânquias. Escolha teu fôlego.'",
+      "opcoes": [
+        {
+          "texto": "Agachar e tocar o chão com a mão direita",
+          "proximo": "rotina3"
+        },
+        {
+          "texto": "Fechar os olhos e escutar os batimentos",
+          "proximo": "rotina3"
+        },
+        {
+          "texto": "Pular e girar como se voasse",
+          "proximo": "rotina3"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Antes do Sono",
+      "descricao": "Em casa, antes de dormir, você lembra do dia: instintos, reações, reflexos. Percebe que reagir não é errado — é natural. Mas a diferença entre homem e fera está na pausa entre impulso e ação.",
+      "opcoes": [
+        {
+          "texto": "Anotar os impulsos que teve hoje",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Se entregar ao sono sem pensar",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Ouvir música como anestesia",
+          "proximo": "fim"
+        }
+      ]
+    }
+  ],
+  "fim": {
+    "mensagem": "🐟 O quinto dia termina. Você se moveu, correu, reagiu. Mas também viu que viver sem pensar é viver pela metade. O corpo é uma flecha. Mas é a alma que escolhe o alvo."
+  }
+}

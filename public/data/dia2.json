@@ -1,0 +1,138 @@
+{
+  "nome": "Dia 2",
+  "descricao": "O dia em que algo começa a brilhar, mesmo entre as ruínas. Uma faísca de possibilidade — ou de incêndio.",
+  "blocos": [
+    {
+      "id": "dia2_bloco0_historia",
+      "tipo": "historia",
+      "titulo": "Luz Invasora",
+      "descricao": "Você acorda antes do despertador. Um feixe de sol atravessa o vidro rachado e acerta bem o seu olho. Violência luminosa. Pela primeira vez em dias, você sente uma vontade esquisita: levantar.",
+      "opcoes": [
+        {
+          "texto": "Seguir o feixe até a janela como se fosse um chamado cósmico",
+          "proximo": "dia2_bloco1_rotina",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Cobrir o rosto e murmurar 'respeita meu ciclo circadiano'",
+          "proximo": "dia2_bloco1_rotina",
+          "build": "profano"
+        },
+        {
+          "texto": "Sussurrar uma oração esquecida — mesmo sem lembrar quem escuta",
+          "proximo": "dia2_bloco1_rotina",
+          "build": "virtuoso"
+        }
+      ]
+    },
+    {
+      "id": "dia2_bloco1_rotina",
+      "tipo": "rotina",
+      "titulo": "Vestir o Coração",
+      "descricao": "Você coloca uma roupa limpa (ou menos suja). Tenta pentear o cabelo com os dedos. O espelho debocha. É pouco. Mas é algo.",
+      "opcoes": [
+        {
+          "texto": "Ir à aula com os fones no ouvido e fingir ser um protagonista melancólico",
+          "proximo": "dia2_bloco2_historia",
+          "build": "profano"
+        },
+        {
+          "texto": "Andar até o ponto de ônibus tentando não pensar muito",
+          "proximo": "dia2_bloco2_historia",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Voltar pra cama fingindo que saiu — Oscar de atuação no TikTok mental",
+          "proximo": "dia2_bloco2_historia",
+          "build": "anomalia"
+        }
+      ]
+    },
+    {
+      "id": "dia2_bloco2_historia",
+      "tipo": "historia",
+      "titulo": "Espelho, Espelho meu...",
+      "descricao": "No banheiro da escola, o espelho entrega um detalhe esquecido: uma cicatriz antiga. Você lembra como ela surgiu. E o silêncio que ela carrega. Parabéns, detetive de si mesmo.",
+      "opcoes": [
+        {
+          "texto": "Encostar a mão na cicatriz e sorrir, como quem homenageia um guerreiro",
+          "proximo": "dia2_bloco3_evento",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Esfregar com raiva, como se pudesse apagar a memória",
+          "proximo": "dia2_bloco3_evento",
+          "build": "anomalia"
+        },
+        {
+          "texto": "Puxar o capuz e seguir em frente como figurante de série adolescente",
+          "proximo": "dia2_bloco3_evento",
+          "build": "profano"
+        },
+        {
+          "texto": "Sair correndo e voltar pra casa sem olhar pra trás",
+          "proximo": "fim_colapso",
+          "build": "anomalia"
+        }
+      ]
+    },
+    {
+      "id": "dia2_bloco3_evento",
+      "tipo": "evento",
+      "titulo": "A Pedra Sussurra de Novo",
+      "descricao": "No caminho de volta, você ouve aquele sussurro conhecido: \"A luz também sangra, mas ela não recua.\" Pode ser metáfora. Pode ser só seu cérebro em combustão poética.",
+      "opcoes": [
+        {
+          "texto": "Responder em pensamento com voz grave e solene",
+          "proximo": "dia2_bloco4_rotina",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Guardar um caco de vidro como símbolo — ou possível arma mística",
+          "proximo": "dia2_bloco4_rotina",
+          "build": "anomalia"
+        },
+        {
+          "texto": "Pisar no som como se fosse baratinha da alma",
+          "proximo": "dia2_bloco4_rotina",
+          "build": "profano"
+        }
+      ]
+    },
+    {
+      "id": "dia2_bloco4_rotina",
+      "tipo": "rotina",
+      "titulo": "O Telhado e os Tons",
+      "descricao": "Você sobe no telhado. O céu é uma aquarela de fim do mundo com glitter. Alguém grita seu nome lá de baixo — ou você imaginou? O vento parece gostar de você hoje.",
+      "opcoes": [
+        {
+          "texto": "Descer devagar e encarar a vida com expressão de 'ok, vai'",
+          "proximo": "fim",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Ficar até anoitecer e tentar ver estrelas ou OVNIs",
+          "proximo": "fim",
+          "build": "profano"
+        },
+        {
+          "texto": "Gritar bem alto só pra ouvir o eco e fingir que é diálogo",
+          "proximo": "fim",
+          "build": "anomalia"
+        }
+      ]
+    }
+  ],
+  "fim": {
+    "id": "fim",
+    "tipo": "fim",
+    "titulo": "Encerramento do Dia 2",
+    "descricao": "🌅 Você concluiu o segundo dia. A luz ainda é fraca — mas foi você quem a fez brilhar. Inclusive com humor, drama e um pouco de insanidade funcional."
+  },
+  "fim_colapso": {
+    "id": "fim_colapso",
+    "tipo": "fim",
+    "titulo": "Colapso Antecipado",
+    "descricao": "🕳️ Você colapsou antes do fim. Às vezes o dia engole antes de começar. Mas mesmo isso é uma escolha."
+  }
+}

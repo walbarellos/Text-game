@@ -1,0 +1,173 @@
+{
+  "nome": "Dia 1",
+  "fraseInspiradora": "🕯️ Mesmo na escuridão, há quem encontre o rumo.",
+  "descricao": "Um dia sem forma, envolto em trevas. Nada ainda foi criado, mas tudo já foi ferido.",
+  "blocos": [
+    {
+      "id": "historia1",
+      "tipo": "historia",
+      "titulo": "A Casa Silenciosa",
+      "descricao": "Você acorda com o som de garrafas caindo. Lá fora ainda é noite. Sua mãe dorme no sofá com a TV ligada. O silêncio é pesado.",
+      "opcoes": [
+        {
+          "texto": "Olhar pela janela",
+          "proximo": "rotina1",
+          "buildImpact": "virtuoso",
+          "dica": "Atenção aos sinais do mundo exterior.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "transicao"
+        },
+        {
+          "texto": "Voltar a dormir",
+          "proximo": "rotina1",
+          "buildImpact": "profano",
+          "dica": "Ignorar também é uma decisão.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "sono"
+        },
+        {
+          "texto": "Chorar em silêncio",
+          "proximo": "rotina1",
+          "buildImpact": "anomalia",
+          "dica": "Dor contida vira voz interna.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "pedra"
+        }
+      ]
+    },
+    {
+      "id": "rotina1",
+      "tipo": "rotina",
+      "titulo": "Manhã Fragmentada",
+      "descricao": "O café está frio. Seu pai não está em casa. Você sente o vazio entre as coisas. Mas a vida te obriga a sair.",
+      "opcoes": [
+        {
+          "texto": "Ir pra escola",
+          "proximo": "historia2",
+          "buildImpact": "virtuoso",
+          "dica": "Enfrentar a realidade pode curar.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "transicao"
+        },
+        {
+          "texto": "Ficar em casa",
+          "proximo": "historia2",
+          "buildImpact": "profano",
+          "dica": "Evitar a rotina não apaga o vazio.",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "inercia"
+        },
+        {
+          "texto": "Andar sem rumo",
+          "proximo": "historia2",
+          "buildImpact": "anomalia",
+          "dica": "Caminhar sem rumo é negar o sistema.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "humor"
+        }
+      ]
+    },
+    {
+      "id": "historia2",
+      "tipo": "historia",
+      "titulo": "O Tapa Invisível",
+      "descricao": "Lembra de quando brincou alto demais e ele te bateu com o cinto? A marca ficou por dias. Ninguém notou. Hoje você ri baixo.",
+      "opcoes": [
+        {
+          "texto": "Seguir o dia como se nada",
+          "proximo": "evento1",
+          "buildImpact": "profano",
+          "dica": "Fingir é sobreviver... ou não?",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "inercia"
+        },
+        {
+          "texto": "Prometer que não será como ele",
+          "proximo": "evento1",
+          "buildImpact": "virtuoso",
+          "dica": "Você pode quebrar o ciclo.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "transicao"
+        },
+        {
+          "texto": "Odiar tudo em silêncio",
+          "proximo": "evento1",
+          "buildImpact": "anomalia",
+          "dica": "O ódio calado se acumula.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "pedra"
+        }
+      ]
+    },
+    {
+      "id": "evento1",
+      "tipo": "evento",
+      "titulo": "A Voz da Pedra",
+      "descricao": "Enquanto caminha pela rua, você vê uma pedra negra no chão. Ao tocá-la, ela sussurra: 'Mesmo no caos, há forma escondida.'",
+      "opcoes": [
+        {
+          "texto": "Guardar a pedra",
+          "proximo": "rotina2",
+          "buildImpact": "virtuoso",
+          "dica": "Guardar pode ser o início de algo novo.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "pedra"
+        },
+        {
+          "texto": "Ignorar e seguir",
+          "proximo": "rotina2",
+          "buildImpact": "profano",
+          "dica": "Você não viu nada, certo?",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "inercia"
+        },
+        {
+          "texto": "Chutar com raiva",
+          "proximo": "rotina2",
+          "buildImpact": "anomalia",
+          "dica": "Às vezes quebrar é comunicar.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "humor"
+        }
+      ]
+    },
+    {
+      "id": "rotina2",
+      "tipo": "rotina",
+      "titulo": "Volta pra Casa",
+      "descricao": "A noite chega. Você não tem forças pra estudar. Sua mãe pergunta se está tudo bem. Você responde: 'Tá sim.'",
+      "opcoes": [
+        {
+          "texto": "Tentar dormir",
+          "proximo": "fim1",
+          "buildImpact": "profano",
+          "dica": "Fuga ou descanso?",
+          "efeitoTexto": "esmaecer",
+          "fraseChave": "sono"
+        },
+        {
+          "texto": "Ficar acordado pensando",
+          "proximo": "fim1",
+          "buildImpact": "virtuoso",
+          "dica": "Refletir é se posicionar.",
+          "efeitoTexto": "brilhar",
+          "fraseChave": "transicao"
+        },
+        {
+          "texto": "Jogar algo até apagar",
+          "proximo": "fim1",
+          "buildImpact": "anomalia",
+          "dica": "Afogar-se no mundo virtual é uma escolha também.",
+          "efeitoTexto": "tremer",
+          "fraseChave": "humor"
+        }
+      ]
+    },
+    {
+      "id": "fim1",
+      "tipo": "fim",
+      "titulo": "Fim do Dia 1",
+      "descricao": "🕯️ Você sobreviveu ao Tohu VaVohu. Mas algo dentro de você quebrou e outra coisa se fortaleceu. O que será?"
+    }
+  ]
+}

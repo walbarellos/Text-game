@@ -1,0 +1,167 @@
+/* 📁 src/styles/hud.css */
+
+/* 🎩 Cabeçalho fixo */
+header.hud {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.4rem 0.8rem;
+  background: #0f0f0f;
+  border-bottom: 1px solid #222;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 0.75rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+/* 🏷️ Badges genéricas */
+
+.badge.build.changed {
+  transform: scale(1.08);
+  transition: transform 0.2s ease;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.8rem;
+  border-radius: 999px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 4px rgba(255,255,255,0.08);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* 📅 Badge de Dia */
+.badge.dia,
+#hud-dia {
+background-color: #222;
+color: #eee;
+font-weight: bold;
+border-radius: 8px;
+padding: 0.4rem 0.8rem;
+box-shadow: inset 0 0 3px rgba(255,255,255,0.05);
+cursor: pointer;
+position: relative;
+transition: background-color 0.3s ease;
+}
+
+/* 💬 Tooltip do dia */
+#hud-dia::after {
+content: attr(data-frase);
+position: absolute;
+bottom: 130%;
+left: 50%;
+transform: translateX(-50%);
+background: rgba(20, 20, 20, 0.95);
+padding: 0.75rem 1rem;
+border-radius: 8px;
+border: 1px solid #666;
+white-space: nowrap;
+color: #eee;
+font-size: 0.75rem;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.3s ease;
+box-shadow: 0 0 10px rgba(0,0,0,0.4);
+z-index: 999;
+}
+
+#hud-dia::before {
+content: "";
+position: absolute;
+bottom: 122%;
+left: 50%;
+transform: translateX(-50%);
+border: 6px solid transparent;
+border-top-color: rgba(20, 20, 20, 0.95);
+z-index: 999;
+opacity: 0;
+transition: opacity 0.3s ease;
+}
+
+#hud-dia:hover {
+background-color: #333;
+}
+
+#hud-dia:hover::after,
+#hud-dia:hover::before {
+opacity: 1;
+}
+
+/* 🧭 Badge de Build */
+#hud-build {
+font-weight: bold;
+border-radius: 8px;
+padding: 0.4rem 0.8rem;
+box-shadow: inset 0 0 3px rgba(255,255,255,0.05);
+transition: all 0.3s ease-in-out;
+position: relative;
+cursor: help;
+}
+
+/* 💬 Tooltip da Build (acusadora) */
+#hud-build::after {
+content: attr(data-tooltip);
+position: absolute;
+top: -140%;
+right: 50%;
+transform: translateX(50%);
+background: rgba(0, 0, 0, 0.95);
+color: #ddd;
+padding: 0.4rem 0.8rem;
+border-radius: 8px;
+font-size: 0.7rem;
+white-space: nowrap;
+border: 1px solid #444;
+opacity: 0;
+pointer-events: none;
+transition: opacity 0.3s ease;
+z-index: 1000;
+}
+
+#hud-build:hover::after {
+opacity: 1;
+}
+
+/* 🎨 Cores por build */
+.badge.build.virtuoso,
+#hud-build.virtuoso {
+background-color: #1c5533;
+color: #a6f4c5;
+border: 1px solid #10b981;
+}
+
+.badge.build.profano,
+#hud-build.profano {
+background-color: #7f1d1d;
+color: #fecaca;
+border: 1px solid #ef4444;
+}
+
+.badge.build.anomalia,
+#hud-build.anomalia {
+background-color: #3b0764;
+color: #e9d5ff;
+border: 1px solid #a855f7;
+box-shadow: 0 0 6px #a855f788;
+}
+
+
+
+/* EFEITO NÉVOA */
+
+#etereal-fog {
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: 0; /* atrás de tudo */
+pointer-events: none;
+opacity: 0.1; /* ajuste para mais/menos fumaça */
+filter: blur(4px);
+}

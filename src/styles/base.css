@@ -1,0 +1,155 @@
+/* BASE: Fonte, fundo e corpo do jogo */
+
+#wrapper-jogo {
+max-width: 700px;
+margin: 3rem auto;
+padding: 2rem;
+background: rgba(20, 20, 20, 0.85);
+border: 1px solid #333;
+border-radius: 12px;
+box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+backdrop-filter: blur(6px);
+}
+
+@media (max-width: 768px) {
+    #wrapper-jogo {
+    margin: 1rem;
+    padding: 1rem;
+    }
+}
+
+body.jogo-corpo {
+    background: radial-gradient(circle, #111 0%, #000 100%);
+    color: #eee;
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.clicavel {
+    color: #9ef;
+    cursor: pointer;
+    border-bottom: 1px dashed #9ef;
+    transition: color 0.2s ease;
+}
+
+.clicavel:hover {
+    color: #fff;
+}
+
+#btn-proximo-dia {
+margin-top: 1rem;
+padding: 0.75rem 1.5rem;
+background-color: #2b2b2b;
+color: #e2e2e2;
+font-weight: normal;
+font-size: 0.9rem;
+font-family: 'Share Tech Mono', monospace;
+letter-spacing: 0.05em;
+border-radius: 8px;
+border: 1px solid #444;
+cursor: pointer;
+transition: all 0.3s ease;
+}
+
+#btn-proximo-dia:hover {
+background-color: #1f1f1f;
+color: #f0f0f0;
+border-color: #888;
+transform: scale(1.02);
+}
+
+.evento-fim {
+    background: linear-gradient(135deg, #111, #1a1a1a);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2rem;
+    border-radius: 1rem;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.03);
+    transition: all 0.6s ease-in-out;
+}
+
+.evento-fim h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
+}
+
+.evento-fim p {
+    font-size: 1rem;
+    color: #ccc;
+    margin-bottom: 0.8rem;
+}
+
+.ritual-final-btn {
+    margin-top: 2rem;
+    background: #2b2b2b;
+    color: #e2e2e2;
+    border: 1px solid #444;
+    padding: 0.7rem 1.5rem;
+    border-radius: 0.5rem;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.ritual-final-btn:hover {
+    background: #1f1f1f;
+    color: #f0f0f0;
+    border-color: #888;
+    transform: scale(1.02);
+}
+
+.relatorio-final {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: linear-gradient(145deg, rgba(15,15,15,0.8), rgba(35,35,35,0.6));
+    border: 1px solid rgba(200, 200, 200, 0.15);
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.04);
+    color: #ddd;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    backdrop-filter: blur(4px);
+    animation: ritual-fade-in 1.5s ease-out forwards;
+}
+
+.relatorio-final p {
+    margin-bottom: 0.8rem;
+    text-align: left;
+    position: relative;
+    padding-left: 1.2rem;
+}
+
+.relatorio-final p::before {
+    content: '✦';
+    position: absolute;
+    left: 0;
+    color: #888;
+    font-size: 0.9rem;
+    top: 0.1rem;
+}
+
+.relatorio-final strong {
+    color: #9ef;
+    font-weight: 600;
+}
+
+@keyframes ritual-fade-in {
+    from {
+        transform: translateY(20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}

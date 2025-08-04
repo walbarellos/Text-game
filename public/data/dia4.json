@@ -1,0 +1,129 @@
+{
+  "nome": "Dia 4",
+  "descricao": "No quarto dia, surgem os luminares. O Sol para o dia, a Lua para a noite, as estrelas para os ciclos. É o dia em que a luz ganha direção. A consciência agora busca se orientar.",
+  "blocos": [
+    {
+      "tipo": "rotina",
+      "titulo": "Alvorada",
+      "descricao": "Você acorda com a luz do sol invadindo o quarto. Ela desenha padrões na parede. Uma sensação de propósito nasce com a luz. Mas o que fazer com ela?",
+      "opcoes": [
+        {
+          "texto": "Levantar e preparar-se com calma",
+          "proximo": "historia1",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Voltar a dormir mais 10 minutos",
+          "proximo": "historia1",
+          "build": "profano"
+        },
+        {
+          "texto": "Levantar apressado e ignorar tudo",
+          "proximo": "historia1",
+          "build": "anomalia"
+        }
+      ]
+    },
+    {
+      "tipo": "historia",
+      "titulo": "Rumo à Escola",
+      "descricao": "No caminho para a escola, o sol já está alto. Um velho encostado na sombra te diz: 'A luz revela, mas também queima. Qual verdade você está pronto para encarar hoje?'",
+      "opcoes": [
+        {
+          "texto": "Responder com silêncio e seguir o caminho",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Parar e perguntar o que ele quis dizer",
+          "proximo": "rotina2"
+        },
+        {
+          "texto": "Ignorar completamente e mudar de calçada",
+          "proximo": "rotina2"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Sala Iluminada",
+      "descricao": "A aula começa. A professora fala sobre astronomia. Alguém pergunta por que as estrelas brilham. Ela responde: 'Elas queimam para dar luz a quem está longe.' Você pensa: e eu? Queimo por dentro ou ilumino alguém?",
+      "opcoes": [
+        {
+          "texto": "Anotar a frase e refletir mais tarde",
+          "proximo": "historia2"
+        },
+        {
+          "texto": "Fazer uma piada para quebrar o clima",
+          "proximo": "historia2"
+        },
+        {
+          "texto": "Ficar olhando fixo para o ventilador girando",
+          "proximo": "historia2"
+        }
+      ]
+    },
+    {
+      "tipo": "historia",
+      "titulo": "A Sombra no Refeitório",
+      "descricao": "Na hora do intervalo, alguém da sua turma é alvo de bullying. O garoto está isolado no canto, em silêncio. Você lembra do que sentiu no pátio ontem. Mas agora, os olhares estão em você.",
+      "opcoes": [
+        {
+          "texto": "Sentar ao lado dele em silêncio",
+          "proximo": "evento1",
+          "build": "virtuoso"
+        },
+        {
+          "texto": "Entrar na zombaria como defesa social",
+          "proximo": "evento1",
+          "build": "profano"
+        },
+        {
+          "texto": "Observar tudo de longe sem agir",
+          "proximo": "evento1",
+          "build": "anomalia"
+        }
+      ]
+    },
+    {
+      "tipo": "evento",
+      "titulo": "Os Três Luminares",
+      "descricao": "Ao voltar pra casa, a noite chega. No céu, o Sol se despede, a Lua assume, e as estrelas começam a piscar. A Pedra aparece flutuando à sua frente, irradiando brilho suave: 'O Sol guia os dias, a Lua guarda as emoções, as estrelas lembram que há ordem até no caos. Qual te guia agora?'",
+      "opcoes": [
+        {
+          "texto": "O Sol – coragem e exposição",
+          "proximo": "rotina3"
+        },
+        {
+          "texto": "A Lua – sensibilidade e refúgio",
+          "proximo": "rotina3"
+        },
+        {
+          "texto": "As Estrelas – orientação no silêncio",
+          "proximo": "rotina3"
+        }
+      ]
+    },
+    {
+      "tipo": "rotina",
+      "titulo": "Crepúsculo Interior",
+      "descricao": "Você escreve algo no diário. As palavras saem com luz própria. Você percebe que o dia teve três tipos de brilho: externo, interno e simbólico. Entende agora que nem toda luz vem do Sol.",
+      "opcoes": [
+        {
+          "texto": "Dormir com a janela aberta, olhando as estrelas",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Apagar tudo e deixar a pedra sob o travesseiro",
+          "proximo": "fim"
+        },
+        {
+          "texto": "Ler algo sobre o céu noturno antes de dormir",
+          "proximo": "fim"
+        }
+      ]
+    }
+  ],
+  "fim": {
+    "mensagem": "🌕 O quarto dia termina. Agora você sabe: há luzes diferentes, e cada uma revela algo único. A verdadeira iluminação é saber qual seguir — e quando brilhar por si."
+  }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "profano",
+    "nome": "Profano",
+    "descricao": "Aquele que caminha pela inércia do mundo. Não escolhe — apenas reage.",
+    "cor": "#888888",
+    "simbolo": "⚪",
+    "lema": "Não escolher já é uma escolha.",
+    "caracteristicas": [
+      "Apatia moral",
+      "Busca conforto",
+      "Evita conflito",
+      "Seguindo o fluxo"
+    ]
+  },
+  {
+    "id": "virtuoso",
+    "nome": "Virtuoso",
+    "descricao": "Aquele que age com consciência. Escolhe mesmo quando dói.",
+    "cor": "#33cc99",
+    "simbolo": "🟢",
+    "lema": "A virtude começa onde termina o medo.",
+    "caracteristicas": [
+      "Ações ponderadas",
+      "Busca sentido",
+      "Aceita o desconforto",
+      "Alinha intenções e atos"
+    ]
+  },
+  {
+    "id": "anomalia",
+    "nome": "Anomalia",
+    "descricao": "Aquele que rompe as margens. Caos criador ou destruidor.",
+    "cor": "#cc3366",
+    "simbolo": "🟣",
+    "lema": "Só quem quebra tudo pode ver o que há por trás.",
+    "caracteristicas": [
+      "Transgressor",
+      "Impulsivo",
+      "Sarcasmo como armadura",
+      "Desafia sistemas"
+    ]
+  }
+]

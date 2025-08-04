@@ -1,0 +1,96 @@
+.opcao-bloco {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.dica {
+    font-size: 0.8rem;
+    font-style: italic;
+    color: #ccc;
+    margin-top: 0.3rem;
+    display: block;
+    opacity: 0.85;
+}
+
+.efeito-brilhar {
+    animation: brilho 1.2s infinite alternate;
+}
+.efeito-esmaecer {
+    opacity: 0.6;
+    transition: opacity 0.4s ease;
+}
+.efeito-tremer {
+    animation: tremer 0.4s ease-in-out;
+}
+
+@keyframes brilho {
+    from { text-shadow: 0 0 4px #fff; }
+    to { text-shadow: 0 0 12px #ffd700; }
+}
+
+@keyframes tremer {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    50% { transform: translateX(2px); }
+    75% { transform: translateX(-1px); }
+}
+
+
+/* src/styles/dicas.css */
+
+.clicavel {
+    color: #7dcaff;
+    cursor: pointer;
+    border-bottom: 1px dashed #7dcaff;
+    transition: color 0.2s ease;
+}
+
+.clicavel:hover {
+    color: #fff;
+    text-shadow: 0 0 2px #7dcaff;
+}
+
+.modal-dica {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    animation: fadeIn 0.25s ease-out;
+}
+
+.dica-conteudo {
+    background: #111;
+    color: #ccc;
+    padding: 1rem 1.4rem;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.6);
+    max-width: 400px;
+    text-align: center;
+    position: relative;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.fechar-dica {
+    margin-top: 1rem;
+    background: #222;
+    color: #ccc;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    border-radius: 6px;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
