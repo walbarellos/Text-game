@@ -8,6 +8,7 @@
       "tipo": "historia",
       "titulo": "A Casa Silenciosa",
       "descricao": "Você acorda com o som de garrafas caindo. Lá fora ainda é noite. Sua mãe dorme no sofá com a TV ligada. O silêncio é pesado.",
+      "npc": "npc1",
       "opcoes": [
         {
           "texto": "Olhar pela janela",
