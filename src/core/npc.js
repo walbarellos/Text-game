@@ -26,9 +26,8 @@ async function carregarNPCs() {
  * Exibe a fala do NPC e permite ao jogador responder com 3 opções.
  * @param {string} idNPC - ID do NPC
  * @param {string} build - Build atual
- * @param {Function} onFim - Callback após resposta
  */
-export async function dispararNPC(idNPC, build, onFim) {
+export async function dispararNPC(idNPC, build) {
   if (!Object.keys(npcData).length) {
     await carregarNPCs();
   }
@@ -36,7 +35,6 @@ export async function dispararNPC(idNPC, build, onFim) {
   const npc = npcData?.[idNPC];
   if (!npc) {
     console.warn(`NPC com id '${idNPC}' não encontrado em npcData:`, npcData);
-    onFim?.();
     return;
   }
 
@@ -57,16 +55,14 @@ export async function dispararNPC(idNPC, build, onFim) {
   </div>
   `;
 
-  document.querySelectorAll('.btn-resposta').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const respostaBuild = btn.dataset.build;
-      const eventoResposta = new CustomEvent('respostaNPC', {
-        detail: {
-          build: respostaBuild
-        }
-      });
-      document.dispatchEvent(eventoResposta);
-      onFim?.();
+  requestAnimationFrame(() => {
+    document.querySelectorAll('.btn-resposta').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const respostaBuild = btn.dataset.build;
+        document.dispatchEvent(new CustomEvent('respostaNPC', {
+          detail: { build: respostaBuild, idNPC }
+        }));
+      }, { once: true });
     });
   });
 }

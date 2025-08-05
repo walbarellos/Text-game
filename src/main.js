@@ -185,12 +185,25 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// 💬 Registro de interação com NPC
-document.addEventListener('respostaNPC', (e) => {
-  const { build } = e.detail;
-  const npc = estado.eventoAtual?.npc;
-
+document.addEventListener('respostaNPC', (event) => {
+  const build = event.detail.build;
   registrarEscolha(build);
-  registrarInteracaoNPC(npc, build);
-  estado.build = buildDominante();
+  registrarInteracaoNPC();
+
+  // Após escolher no diálogo do NPC, avançar para o próximo evento
+  const eventoAtual = estado.eventoAtual;
+  const proximoId = eventoAtual?.opcoes?.[0]?.proximo;
+
+  if (proximoId) {
+    const proximoEvento = estado.eventos.find(e => e.id === proximoId);
+    if (proximoEvento) {
+      estado.eventoAtual = proximoEvento;
+      atualizarHUD(estado.nomeDia, buildDominante());
+      renderizarEvento(proximoEvento);
+    } else {
+      console.warn(`🔍 Evento '${proximoId}' não encontrado.`);
+    }
+  } else {
+    console.warn(`⚠️ Evento atual '${eventoAtual?.id}' não tem 'proximo' definido nas opções.`);
+  }
 });

@@ -39,7 +39,10 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     <div class="relatorio-npc">
     <p><strong>📜 Diálogos com NPCs:</strong></p>
     <ul>
-    ${interacoes.map((i) => `<li>${i.idNPC.toUpperCase()}: resposta ${i.build}</li>`).join('')}
+    ${interacoes.map((i) => {
+      const nome = i?.idNPC?.toUpperCase?.() || 'NPC DESCONHECIDO';
+      return `<li>${nome}: resposta ${i.build}</li>`;
+    }).join('')}
     </ul>
     </div>`
     : `<p><em>💬 Nenhuma interação com NPC registrada.</em></p>`;
