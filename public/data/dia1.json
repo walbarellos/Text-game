@@ -27,12 +27,13 @@
           "fraseChave": "sono"
         },
         {
-          "texto": "Chorar em silêncio",
-          "proximo": "rotina1",
+          "texto": "Andar sem rumo",
+          "proximo": "historia2",
+          "npc": "npc3",
           "buildImpact": "anomalia",
-          "dica": "Dor contida vira voz interna.",
+          "dica": "Caminhar sem rumo é negar o sistema.",
           "efeitoTexto": "tremer",
-          "fraseChave": "pedra"
+          "fraseChave": "humor"
         }
       ]
     },

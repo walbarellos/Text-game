@@ -2,8 +2,6 @@
   {
     "id": "npc1",
     "nome": "Seu Toin da Kombi",
-    "descricao": "Um velho vendedor de coxinhas que sempre aparece nos momentos mais inadequados.",
-    "builds": ["profano", "anomalia", "virtuoso"],
     "falas": {
       "profano": "Você aí... quer resolver seus problemas com uma coxinha? Não resolve, mas engorda.",
       "anomalia": "Tô te observando desde o início, viu? Tô vendo você comer o mundo e cuspir cinzas.",
@@ -13,8 +11,6 @@
   {
     "id": "npc2",
     "nome": "Mãe Zuzu",
-    "descricao": "Vidente aposentada, agora vendedora de capas de celular. Fala como se tudo fosse destino.",
-    "builds": ["profano", "anomalia", "virtuoso"],
     "falas": {
       "profano": "Tava escrito nas linhas da sua tela rachada: vai dar ruim, meu filho.",
       "anomalia": "Você brincou com o tempo, e o tempo agora brinca com você. Tome chá de boldo.",
@@ -24,12 +20,28 @@
   {
     "id": "npc3",
     "nome": "Jubileu do Céu Cinza",
-    "descricao": "Poeta de semáforo. Anda com um cartaz: 'Aceito moedas ou metáforas.'",
-    "builds": ["profano", "anomalia", "virtuoso"],
     "falas": {
       "profano": "Tuas escolhas são como miojo sem tempero. Rápidas, mas tristes.",
       "anomalia": "Rimaste com o abismo e agora ele te aplaude em rimas tortas.",
       "virtuoso": "Poeta não é quem escreve, é quem sobrevive com beleza onde há concreto."
+    }
+  },
+  {
+    "id": "npc4",
+    "nome": "O NPC Misterioso",
+    "falas": {
+      "profano": "Shhh... até o vazio tem ouvidos. Cuidado com o que não diz.",
+      "anomalia": "Você achou que era diferente. E era. Mas agora está marcado.",
+      "virtuoso": "Se chegou até aqui é porque ouviu o silêncio que muitos ignoram."
+    }
+  },
+  {
+    "id": "npc5",
+    "nome": "Supremo Mestre & Bardo Graciliano",
+    "falas": {
+      "profano": "O discípulo que mente ao espelho cava sua própria ruína com versos quebrados.",
+      "anomalia": "No limite do nonsense, dançamos nus com as palavras. Eu só toquei o alaúde.",
+      "virtuoso": "Torne cada escolha um poema. Torne cada poema um templo. Torne-se verbo."
     }
   }
 ]

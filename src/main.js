@@ -79,10 +79,10 @@ async function carregarDia(numeroDia) {
 }
 
 // 🎮 Ao escolher uma opção narrativa
-function aoEscolherOpcao(opcao) {
-  const { proximo, build, npc } = opcao;
+function aoEscolherOpcao(opcao, callback) {
+  const { proximo, build } = opcao;
 
-  console.log('🧭 Opção escolhida:', { proximo, build, npc });
+  console.log('🧭 Opção escolhida:', opcao);
 
   if (build) {
     registrarEscolha(build);
@@ -93,7 +93,6 @@ function aoEscolherOpcao(opcao) {
 
   if (!proximoEvento) {
     const blocoFinal = estado.eventos.find(ev => ev.tipo === 'fim');
-
     if (blocoFinal) {
       estado.eventoAtual = blocoFinal;
       salvarProgresso(estado);
@@ -110,19 +109,23 @@ function aoEscolherOpcao(opcao) {
   atualizarHUD(estado.nomeDia, estado.build);
   atualizarGlowTitulo(estado.build);
 
-  if (npc) {
-    dispararNPC(npc, estado.build, () => {
-      renderizarEvento(proximoEvento, eventoContainer);
-    });
-  } else {
-    renderizarEvento(proximoEvento, eventoContainer);
-  }
+  callback?.(proximoEvento);
 }
 
-// 🎯 Escuta escolhas do jogador
+// 🎯 Escuta escolhas do jogador (corrigido!)
 document.addEventListener('opcaoSelecionada', (e) => {
-  aoEscolherOpcao(e.detail);
+  const { npc } = e.detail;
+
+  if (npc) {
+    // Primeiro fala com o NPC, depois continua
+    dispararNPC(npc, estado.build, () => {
+      aoEscolherOpcao(e.detail);
+    });
+  } else {
+    aoEscolherOpcao(e.detail);
+  }
 });
+//mudanças
 
 document.addEventListener('avancarDia', () => {
   avancarDia(estado);
@@ -130,20 +133,6 @@ document.addEventListener('avancarDia', () => {
 
 document.addEventListener('DOMContentLoaded', iniciarJogo);
 
-
-
-// ✨ Aplica build ao body e glow
-const titulo = document.querySelector('.titulo-animado');
-if (titulo && !titulo.classList.contains('glow')) {
-  const texto = titulo.textContent || '';
-  titulo.style.animation = `
-  typing 3.5s steps(${texto.length}, end) forwards,
-  blink-caret 0.75s step-end infinite
-  `;
-  setTimeout(() => {
-    titulo.classList.add('glow');
-  }, 3600);
-}
 // ✨ Aplica build ao body e glow
 function atualizarGlowTitulo(build) {
   document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');
@@ -156,12 +145,28 @@ function atualizarGlowTitulo(build) {
   }
 }
 
-// 🔧 Corrigir sobreposição do título à HUD
 document.addEventListener('DOMContentLoaded', () => {
+  const titulo = document.querySelector('.titulo-animado');
+  if (titulo && !titulo.classList.contains('glow')) {
+    const texto = titulo.textContent || '';
+    titulo.style.animation = `
+    typing 3.5s steps(${texto.length}, end) forwards,
+                          blink-caret 0.75s step-end infinite
+                          `;
+                          setTimeout(() => {
+                            titulo.classList.add('glow');
+                          }, 3600);
+  }
+
   const tituloRitual = document.querySelector('.titulo-ritual');
   if (tituloRitual) {
     tituloRitual.style.pointerEvents = 'none';
   }
+
 });
 
-
+document.addEventListener('respostaNPC', (e) => {
+  const { build } = e.detail;
+  registrarEscolha(build);
+  estado.build = buildDominante();
+});
