@@ -4,8 +4,16 @@ import { buildDominante, historicoBuilds, obterInteracoesNPC } from './buildTrac
 const eventoContainer = document.getElementById('evento');
 
 /**
+ * Cria e substitui DOM com melhor performance
+ */
+function renderSafeHTML(destino, html) {
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html;
+  destino.replaceChildren(wrapper);
+}
+
+/**
  * Renderiza um evento na tela com efeitos e interações.
- * Suporta eventos do tipo padrão e tipo 'fim' com lógica própria.
  */
 export function renderizarEvento(evento, destino = eventoContainer) {
   if (!destino || !evento) {
@@ -15,7 +23,6 @@ export function renderizarEvento(evento, destino = eventoContainer) {
 
   const { titulo, descricao, opcoes = [], tipo = 'padrão', npc } = evento;
 
-  // 🌌 Tipo "fim" recebe ritual completo
   if (tipo === 'fim') {
     const build = buildDominante();
     const contagem = historicoBuilds();
@@ -39,15 +46,12 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     <div class="relatorio-npc">
     <p><strong>📜 Diálogos com NPCs:</strong></p>
     <ul>
-    ${interacoes.map((i) => {
-      const nome = i?.idNPC?.toUpperCase?.() || 'NPC DESCONHECIDO';
-      return `<li>${nome}: resposta ${i.build}</li>`;
-    }).join('')}
+    ${interacoes.map(i => `<li>${i.idNPC?.toUpperCase?.() || '[ERRO]'}: resposta ${i.build}</li>`).join('')}
     </ul>
     </div>`
     : `<p><em>💬 Nenhuma interação com NPC registrada.</em></p>`;
 
-    destino.innerHTML = `
+    renderSafeHTML(destino, `
     <div class="evento-fim fade-in" aria-live="polite">
     <h2>🕯️ ${titulo}</h2>
     <p>${descricao}</p>
@@ -59,72 +63,58 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     <p><strong>🔮 Presságio:</strong> ${sugestao}</p>
     ${resumoNPC}
     </div>
-    <button id="btn-proximo-dia" class="ritual-final-btn">
-    ▶️ Avançar para o próximo dia
-    </button>
-    </div>`;
+    <button id="btn-proximo-dia" class="ritual-final-btn">▶️ Avançar para o próximo dia</button>
+    </div>
+    `);
 
-    const botao = document.getElementById('btn-proximo-dia');
-    botao?.addEventListener('click', (e) => {
-      const ripple = document.createElement('div');
-      ripple.className = 'ripple-effect';
-      ripple.style.left = `${e.offsetX}px`;
-      ripple.style.top = `${e.offsetY}px`;
-      botao.appendChild(ripple);
-      setTimeout(() => ripple.remove(), 1000);
-
+    document.getElementById('btn-proximo-dia')?.addEventListener('click', () => {
       document.dispatchEvent(new CustomEvent('avancarDia'));
     });
 
     return;
   }
 
-  // 🧠 Renderiza o bloco de evento padrão
+  // Bloco comum
   const renderizarBloco = () => {
     const html = `
     <div class="evento-bloco fade-in" aria-live="polite">
     <h2>${titulo}</h2>
     <p>${descricao}</p>
-    ${
-      opcoes.length > 0
-      ? `<div class="opcoes">
-      ${opcoes
-        .map((opcao) => {
-          const dados = {
-            proximo: opcao.proximo,
-            build: opcao.buildImpact || null,
-            npc: opcao.npc || null,
-            fraseChave: opcao.fraseChave || ''
-          };
-          return `
-          <div class="opcao-bloco">
-          <button
-          class="btn-opcao efeito-${opcao.efeitoTexto || 'nenhum'}"
-          title="${opcao.dica || ''}"
-          data-id='${encodeURIComponent(JSON.stringify(dados))}'
-          >
-          ${opcao.texto}
-          </button>
-          <span class="dica">${opcao.dica || ''}</span>
-          </div>`;
-        })
-        .join('')}
-        </div>`
-        : `<div class="sem-opcoes"><em>☕ Nada a escolher. Apenas sinta.</em></div>`
-    }
-    </div>`;
+    ${opcoes.length > 0 ? `
+      <div class="opcoes">
+      ${opcoes.map(opcao => {
+        const dados = {
+          proximo: opcao.proximo,
+          build: opcao.buildImpact || null,
+          npc: opcao.npc || null,
+          fraseChave: opcao.fraseChave || ''
+        };
+        return `
+        <div class="opcao-bloco">
+        <button
+        class="btn-opcao efeito-${opcao.efeitoTexto || 'nenhum'}"
+        title="${opcao.dica || ''}"
+        data-id='${encodeURIComponent(JSON.stringify(dados))}'>
+        ${opcao.texto}
+        </button>
+        <span class="dica">${opcao.dica || ''}</span>
+        </div>`;
+      }).join('')}
+      </div>` : `<div class="sem-opcoes"><em>☕ Nada a escolher. Apenas sinta.</em></div>`}
+      </div>
+      `;
 
-    destino.innerHTML = html;
+      renderSafeHTML(destino, html);
 
-    destino.querySelectorAll('.btn-opcao').forEach((botao) => {
-      botao.addEventListener('click', () => {
-        const dados = JSON.parse(decodeURIComponent(botao.dataset.id));
-        document.dispatchEvent(new CustomEvent('opcaoSelecionada', { detail: dados }));
+      destino.querySelectorAll('.btn-opcao').forEach(botao => {
+        botao.addEventListener('click', () => {
+          const dados = JSON.parse(decodeURIComponent(botao.dataset.id));
+          document.dispatchEvent(new CustomEvent('opcaoSelecionada', { detail: dados }));
+        }, { once: true }); // Evita múltiplos cliques
       });
-    });
   };
 
-  // 👥 Se tiver NPC, mostra fala antes de exibir evento
+  // Se houver NPC, renderiza diálogo antes
   if (npc) {
     const buildAtual = buildDominante();
     dispararNPC(npc, buildAtual, renderizarBloco);
