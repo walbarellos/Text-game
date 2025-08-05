@@ -11,7 +11,7 @@
       "opcoes": [
         {
           "texto": "Responder na mesma moeda (duelo verbal)",
-          "proximo": "rotina1",
+          "proximo": "npc1_bloco",
           "buildImpact": "profano",
           "dica": "Seja fogo, mesmo que queime você.",
           "efeitoTexto": "esmaecer",
@@ -19,7 +19,7 @@
         },
         {
           "texto": "Fingir que não ouviu e rezar pra não viralizar",
-          "proximo": "rotina1",
+          "proximo": "npc2_bloco",
           "buildImpact": "anomalia",
           "dica": "Ignorar é sobreviver com juros.",
           "efeitoTexto": "tremer",
@@ -27,12 +27,42 @@
         },
         {
           "texto": "*respira fundo* Levantar e sair da sala como se fosse CEO do próprio trauma",
-          "proximo": "rotina1",
+          "proximo": "npc3_bloco",
           "buildImpact": "virtuoso",
           "dica": "Sua dignidade é a resposta silenciosa.",
           "efeitoTexto": "brilhar",
           "fraseChave": "limite"
         }
+      ]
+    },
+    {
+      "id": "npc1_bloco",
+      "npc": "npc4",
+      "tipo": "historia",
+      "titulo": "Labareda no Pulso",
+      "descricao": "O professor te olha. A classe congela. A resposta veio como lava fina: ‘Você não conhece nem o seu estilo, imagina o meu.’ Silêncio. Alguns riem. Outros se calam. Você queima por dentro, mas não tremeu.",
+      "opcoes": [
+        { "texto": "Sair pro pátio", "proximo": "rotina1", "buildImpact": "profano" }
+      ]
+    },
+    {
+      "id": "npc2_bloco",
+      "npc": "npc_d3_2",
+      "tipo": "historia",
+      "titulo": "Teto Invisível",
+      "descricao": "A voz interior pergunta: 'Você ainda quer ser aceito por quem ri de você?' O silêncio vira couraça. Você sobreviveu a mais um dia sem viralizar.",
+      "opcoes": [
+        { "texto": "Sair pro pátio", "proximo": "rotina1", "buildImpact": "anomalia" }
+      ]
+    },
+    {
+      "id": "npc3_bloco",
+      "npc": "npc_d3_3",
+      "tipo": "historia",
+      "titulo": "Marcha Sem Tropa",
+      "descricao": "Você sai da sala. Cada passo ecoa como se fosse desfile de dignidade. Um aluno murmura: ‘Respeita quem sangra calado.’",
+      "opcoes": [
+        { "texto": "Seguir pro pátio", "proximo": "rotina1", "buildImpact": "virtuoso" }
       ]
     },
     {

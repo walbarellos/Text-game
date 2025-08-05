@@ -8,11 +8,10 @@
       "tipo": "historia",
       "titulo": "A Casa Silenciosa",
       "descricao": "Você acorda com o som de garrafas caindo. Lá fora ainda é noite. Sua mãe dorme no sofá com a TV ligada. O silêncio é pesado.",
-      "npc": "npc1",
       "opcoes": [
         {
           "texto": "Olhar pela janela",
-          "proximo": "rotina1",
+          "proximo": "npc1_bloco",
           "buildImpact": "virtuoso",
           "dica": "Atenção aos sinais do mundo exterior.",
           "efeitoTexto": "brilhar",
@@ -20,7 +19,7 @@
         },
         {
           "texto": "Voltar a dormir",
-          "proximo": "rotina1",
+          "proximo": "npc1_bloco",
           "buildImpact": "profano",
           "dica": "Ignorar também é uma decisão.",
           "efeitoTexto": "esmaecer",
@@ -28,12 +27,39 @@
         },
         {
           "texto": "Andar sem rumo",
-          "proximo": "historia2",
-          "npc": "npc3",
+          "proximo": "npc3_bloco",
           "buildImpact": "anomalia",
           "dica": "Caminhar sem rumo é negar o sistema.",
           "efeitoTexto": "tremer",
           "fraseChave": "humor"
+        }
+      ]
+    },
+    {
+      "id": "npc1_bloco",
+      "npc": "npc1",
+      "tipo": "historia",
+      "titulo": "A Janela",
+      "descricao": "Ao abrir a cortina, a noite parece sussurrar algo que só você entende.",
+      "opcoes": [
+        {
+          "texto": "Ir tomar café",
+          "proximo": "rotina1",
+          "buildImpact": "virtuoso"
+        }
+      ]
+    },
+    {
+      "id": "npc3_bloco",
+      "npc": "npc3",
+      "tipo": "historia",
+      "titulo": "Desvio Silencioso",
+      "descricao": "Você tropeça nos próprios pés e sente que talvez esteja indo pelo caminho errado de propósito.",
+      "opcoes": [
+        {
+          "texto": "Seguir pra onde der",
+          "proximo": "historia2",
+          "buildImpact": "anomalia"
         }
       ]
     },

@@ -138,8 +138,8 @@ document.addEventListener('opcaoSelecionada', (e) => {
   if (dados.build) registrarEscolha(dados.build);
   estado.build = buildDominante();
 
-  if (dados.npc) {
-    dispararNPC(dados.npc, estado.build, continuar);
+  if (proximoEvento.npc) {
+    dispararNPC(proximoEvento.npc, estado.build, continuar);
   } else {
     continuar();
   }
