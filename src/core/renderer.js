@@ -1,5 +1,5 @@
 import { dispararNPC } from './npc.js';
-import { buildDominante, historicoBuilds } from './buildTracker.js';
+import { buildDominante, historicoBuilds, obterInteracoesNPC } from './buildTracker.js';
 
 const eventoContainer = document.getElementById('evento');
 
@@ -19,7 +19,8 @@ export function renderizarEvento(evento, destino = eventoContainer) {
   if (tipo === 'fim') {
     const build = buildDominante();
     const contagem = historicoBuilds();
-    const frase = evento.fraseChave || evento.opcoes?.[0]?.fraseChave || 'desconhecida';
+    const interacoes = obterInteracoesNPC();
+    const frase = evento.fraseChave || 'desconhecida';
 
     const reflexao = {
       virtuoso: "Você tentou fazer o certo, mesmo sem garantias. Há luz em sua bússola.",
@@ -33,6 +34,16 @@ export function renderizarEvento(evento, destino = eventoContainer) {
       anomalia: "O inesperado aguarda no escuro."
     }[build] || "A próxima página está em branco.";
 
+    const resumoNPC = interacoes.length
+    ? `
+    <div class="relatorio-npc">
+    <p><strong>📜 Diálogos com NPCs:</strong></p>
+    <ul>
+    ${interacoes.map((i) => `<li>${i.idNPC.toUpperCase()}: resposta ${i.build}</li>`).join('')}
+    </ul>
+    </div>`
+    : `<p><em>💬 Nenhuma interação com NPC registrada.</em></p>`;
+
     destino.innerHTML = `
     <div class="evento-fim fade-in" aria-live="polite">
     <h2>🕯️ ${titulo}</h2>
@@ -43,12 +54,12 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     <p><strong>🧩 Frase-chave final:</strong> "${frase}"</p>
     <p><strong>💭 Reflexão:</strong> ${reflexao}</p>
     <p><strong>🔮 Presságio:</strong> ${sugestao}</p>
+    ${resumoNPC}
     </div>
     <button id="btn-proximo-dia" class="ritual-final-btn">
     ▶️ Avançar para o próximo dia
     </button>
-    </div>
-    `;
+    </div>`;
 
     const botao = document.getElementById('btn-proximo-dia');
     botao?.addEventListener('click', (e) => {
@@ -65,9 +76,7 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     return;
   }
 
-  /**
-   * Renderiza o bloco de evento com botões de opções.
-   */
+  // 🧠 Renderiza o bloco de evento padrão
   const renderizarBloco = () => {
     const html = `
     <div class="evento-bloco fade-in" aria-live="polite">
@@ -76,28 +85,29 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     ${
       opcoes.length > 0
       ? `<div class="opcoes">
-      ${opcoes.map((opcao) => {
-        const dados = {
-          proximo: opcao.proximo,
-          build: opcao.buildImpact || null,
-          npc: opcao.npc || null,
-          fraseChave: opcao.fraseChave || ''
-        };
-        return `
-        <div class="opcao-bloco">
-        <button
-        class="btn-opcao efeito-${opcao.efeitoTexto || 'nenhum'}"
-        title="${opcao.dica || ''}"
-        data-id='${encodeURIComponent(JSON.stringify(dados))}'
-        >
-        ${opcao.texto}
-        </button>
-        <span class="dica">${opcao.dica || ''}</span>
-        </div>
-        `;
-      }).join('')}
-      </div>`
-      : `<div class="sem-opcoes"><em>☕ Nada a escolher. Apenas sinta.</em></div>`
+      ${opcoes
+        .map((opcao) => {
+          const dados = {
+            proximo: opcao.proximo,
+            build: opcao.buildImpact || null,
+            npc: opcao.npc || null,
+            fraseChave: opcao.fraseChave || ''
+          };
+          return `
+          <div class="opcao-bloco">
+          <button
+          class="btn-opcao efeito-${opcao.efeitoTexto || 'nenhum'}"
+          title="${opcao.dica || ''}"
+          data-id='${encodeURIComponent(JSON.stringify(dados))}'
+          >
+          ${opcao.texto}
+          </button>
+          <span class="dica">${opcao.dica || ''}</span>
+          </div>`;
+        })
+        .join('')}
+        </div>`
+        : `<div class="sem-opcoes"><em>☕ Nada a escolher. Apenas sinta.</em></div>`
     }
     </div>`;
 
@@ -111,7 +121,7 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     });
   };
 
-  // 👥 Se tiver NPC, fala primeiro, depois evento
+  // 👥 Se tiver NPC, mostra fala antes de exibir evento
   if (npc) {
     const buildAtual = buildDominante();
     dispararNPC(npc, buildAtual, renderizarBloco);

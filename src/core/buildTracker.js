@@ -65,3 +65,30 @@ export function resetarBuild() {
     pontuacaoBuild[chave] = 0;
   }
 }
+
+// 📌 Registro simbólico de interações com NPCs
+let interacoesNPC = [];
+
+/**
+ * Registra uma resposta a um NPC, associada à build.
+ * @param {string} idNPC - Identificador do NPC
+ * @param {string} build - Caminho moral escolhido pelo jogador
+ */
+export function registrarInteracaoNPC(idNPC, build) {
+  interacoesNPC.push({ idNPC, build });
+}
+
+/**
+ * Retorna todas as interações com NPCs.
+ * @returns {Array} Lista de objetos { idNPC, build }
+ */
+export function obterInteracoesNPC() {
+  return interacoesNPC;
+}
+
+/**
+ * Reseta as interações (ao avançar de dia, por exemplo).
+ */
+export function resetarInteracoesNPC() {
+  interacoesNPC = [];
+}

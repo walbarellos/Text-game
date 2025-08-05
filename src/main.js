@@ -11,7 +11,7 @@ import { renderizarEvento } from './core/renderer.js';
 import { carregarDiaAtual, salvarProgresso, avancarDia } from './core/storage.js';
 import { atualizarHUD } from './ui/hud.js';
 import { dispararNPC } from './core/npc.js';
-import { registrarEscolha, buildDominante, resetarBuild } from './core/buildTracker.js';
+import { registrarEscolha, buildDominante, resetarBuild, registrarInteracaoNPC, resetarInteracoesNPC } from './core/buildTracker.js';
 import './ui/dicas.js';
 import './ui/fog.js';
 
@@ -94,8 +94,8 @@ function aoEscolherOpcao(opcao, callback) {
   if (!proximoEvento) {
     const blocoFinal = estado.eventos.find(ev => ev.tipo === 'fim');
     if (blocoFinal) {
-      estado.eventoAtual = blocoFinal;
       salvarProgresso(estado);
+      estado.eventoAtual = blocoFinal;
       renderizarEvento(blocoFinal, eventoContainer);
       return;
     }
@@ -104,33 +104,54 @@ function aoEscolherOpcao(opcao, callback) {
     return;
   }
 
-  estado.eventoAtual = proximoEvento;
   salvarProgresso(estado);
   atualizarHUD(estado.nomeDia, estado.build);
   atualizarGlowTitulo(estado.build);
 
+  estado.eventoAtual = proximoEvento;
   callback?.(proximoEvento);
 }
 
-// 🎯 Escuta escolhas do jogador (corrigido!)
+// 🎯 Escuta escolhas do jogador (versão corrigida!)
 document.addEventListener('opcaoSelecionada', (e) => {
-  const { npc } = e.detail;
+  const dados = { ...e.detail };
+  let proximoEvento = estado.eventos.find(ev => ev.id === dados.proximo);
 
-  if (npc) {
-    // Primeiro fala com o NPC, depois continua
-    dispararNPC(npc, estado.build, () => {
-      aoEscolherOpcao(e.detail);
-    });
+  if (!proximoEvento) {
+    proximoEvento = estado.eventos.find(ev => ev.tipo === 'fim');
+    if (!proximoEvento) {
+      console.warn('⚠️ Evento de destino e de fim não encontrados.');
+      avancarDia(estado);
+      return;
+    }
+  }
+
+  // Atualiza o estado ANTES do NPC
+  estado.eventoAtual = proximoEvento;
+  salvarProgresso(estado);
+  atualizarHUD(estado.nomeDia, buildDominante());
+
+  const continuar = () => {
+    renderizarEvento(proximoEvento, eventoContainer);
+  };
+
+  if (dados.build) registrarEscolha(dados.build);
+  estado.build = buildDominante();
+
+  if (dados.npc) {
+    dispararNPC(dados.npc, estado.build, continuar);
   } else {
-    aoEscolherOpcao(e.detail);
+    continuar();
   }
 });
-//mudanças
 
+// 🔄 Avança para o próximo dia e reseta interações
 document.addEventListener('avancarDia', () => {
+  resetarInteracoesNPC();
   avancarDia(estado);
 });
 
+// 🚀 Inicia o jogo quando DOM estiver pronto
 document.addEventListener('DOMContentLoaded', iniciarJogo);
 
 // ✨ Aplica build ao body e glow
@@ -162,11 +183,14 @@ document.addEventListener('DOMContentLoaded', () => {
   if (tituloRitual) {
     tituloRitual.style.pointerEvents = 'none';
   }
-
 });
 
+// 💬 Registro de interação com NPC
 document.addEventListener('respostaNPC', (e) => {
   const { build } = e.detail;
+  const npc = estado.eventoAtual?.npc;
+
   registrarEscolha(build);
+  registrarInteracaoNPC(npc, build);
   estado.build = buildDominante();
 });
