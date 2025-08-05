@@ -50,6 +50,7 @@ MVC Modularizado + Separação de Responsabilidades (SoC)
     index.html – carrega tudo e define a estrutura base.
 
 📦 Local: ui/, components/, index.html
+
 🛠️ TECNOLOGIAS ESCOLHIDAS
 Componente	Tecnologia	Justificativa
 Build	[Vite.js] (vanilla template)	Carregamento rápido, desenvolvimento modular
@@ -60,6 +61,7 @@ Armazenamento	localStorage	Persistência offline do progresso
 Layout	HTML5 sem frameworks	Total controle e leveza (estrutura de texto)
 Narrativas	Arquivos .json externos	Modularidade, edição simples, expansão rápida
 Organização	Estrutura modular por função	Facilidade de manutenção e escalabilidade
+
 🧬 PADRÕES EXTRAS ADOTADOS
 Padrão	Aplicação
 SoC (Separação de Responsabilidades)	Cada script tem uma função: render, HUD, NPCs, etc
@@ -67,6 +69,7 @@ Fail Safe JSON Loader	Falhas nos arquivos externos não quebram o jogo, exibem f
 Lazy Loading de Dias	Cada dia só é carregado quando necessário
 Reatividade Moral	A build do jogador afeta falas e futuro
 Arquitetura PWA-ready	Pode futuramente ser convertida para app com cache e ícone
+
 🔄 FLUXO GERAL DO JOGO
 
 🕹️ index.html

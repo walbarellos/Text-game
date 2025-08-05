@@ -40,7 +40,7 @@ Relacionamento: N Opções → 1 Bloco (referência)
 
     nome: string
 
-    build: enum [ "virtuoso", "profano", "anomalia", "neutro" ]
+    build: enum [ "virtuoso", "profano", "anomalia"]
 
     fala: string
 

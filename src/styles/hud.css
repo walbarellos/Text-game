@@ -161,3 +161,125 @@ pointer-events: none;
 opacity: 0.1;
 filter: blur(4px);
 }
+
+/* 🌌 Auras Morais - Efeitos por Build Refinadas */
+
+/* 🌌 Auras Morais - Efeitos por Build Refinadas */
+
+body.build-virtuoso .container::before,
+body.build-profano .container::before,
+body.build-anomalia .container::before {
+  content: "";
+  position: absolute;
+  top: -8%;
+  left: -8%;
+  width: 116%;
+  height: 116%;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  backdrop-filter: blur(6px);
+  transition: all 0.5s ease-in-out;
+}
+
+/* Virtuoso */
+body.build-virtuoso .container::before {
+  background: radial-gradient(ellipse at center, rgba(110, 242, 177, 0.15), transparent 70%);
+  box-shadow: 0 0 20px 6px rgba(110, 242, 177, 0.3);
+  filter: drop-shadow(0 0 6px #6ef2b1aa) brightness(1.05);
+  mix-blend-mode: screen;
+  animation: pulsar 3s infinite ease-in-out;
+}
+
+/* Profano */
+body.build-profano .container::before {
+  background: radial-gradient(ellipse at center, rgba(248, 91, 91, 0.15), transparent 70%);
+  box-shadow: 0 0 20px 6px rgba(248, 91, 91, 0.3);
+  filter: drop-shadow(0 0 6px #f85b5baa) brightness(0.9);
+  mix-blend-mode: overlay;
+  animation: red-waves 3s infinite ease-in-out;
+}
+
+/* Anomalia */
+body.build-anomalia .container::before {
+  background: radial-gradient(ellipse at center, rgba(168, 126, 248, 0.15), transparent 70%);
+  box-shadow: 0 0 20px 6px rgba(168, 126, 248, 0.3);
+  filter: drop-shadow(0 0 6px #a87ef8aa) contrast(1.2);
+  mix-blend-mode: lighten;
+  animation: glitchy-fog 3s infinite ease-in-out;
+}
+
+@keyframes pulsar {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+@keyframes red-waves {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.75;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
+}
+
+@keyframes glitchy-fog {
+  0%, 100% {
+    transform: translate(0, 0);
+    opacity: 0.6;
+  }
+  20% {
+    transform: translate(1px, -1px);
+  }
+  40% {
+    transform: translate(-1px, 1px);
+  }
+  60% {
+    transform: translate(2px, 0);
+  }
+  80% {
+    transform: translate(0, 2px);
+  }
+}
+
+/* 💧 Efeito Ripple ritualístico */
+.ripple-effect {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(248, 91, 91, 0.2);
+  pointer-events: none;
+  transform: scale(0);
+  animation: rippleExpand 0.8s ease-out forwards;
+  z-index: 10;
+}
+
+body.build-virtuoso .ripple-effect {
+  background: rgba(110, 242, 177, 0.2);
+}
+body.build-anomalia .ripple-effect {
+  background: rgba(168, 126, 248, 0.2);
+}
+
+
+@keyframes rippleExpand {
+  to {
+    transform: scale(15);
+    opacity: 0;
+  }
+}
+
+/* 🌠 Sugestões para mais imersão futura:
+ 1 .* Adicionar partículas lentas com cor da build flutuando ao fundo.
+ 2. Música ambiente que muda sutilmente por build.
+ 3. Aplicar variações climáticas por build (névoa + vento leve + estática).
+ */

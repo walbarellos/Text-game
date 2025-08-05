@@ -1,5 +1,5 @@
-
 🧩 ENTIDADES PRINCIPAIS
+
 1. 📘 Dia
 Atributo	Tipo	Descrição
 id	string	Identificador único do dia ("dia1" etc.)

@@ -54,11 +54,20 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     destino.innerHTML = htmlFinal;
 
     const botao = document.getElementById('btn-proximo-dia');
-    botao?.addEventListener('click', () => {
+    botao?.addEventListener('click', (e) => {
+      // 💧 Ripple visual
+      const ripple = document.createElement('div');
+      ripple.className = 'ripple-effect';
+      ripple.style.left = `${e.offsetX}px`;
+      ripple.style.top = `${e.offsetY}px`;
+      botao.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 1000);
+
+      // 🎯 Evento de avançar o dia
       const evento = new CustomEvent('avancarDia');
       document.dispatchEvent(evento);
     });
-
     return;
   }
 
