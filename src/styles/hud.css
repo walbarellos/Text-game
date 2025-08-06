@@ -334,3 +334,29 @@ body.build-anomalia .particle {
  - *Música ambiente que muda sutilmente por build.
  - Aplicar variações climáticas por build (névoa + vento leve + estática).
  */
+/* 🌠 Sugestões diminuir lag no mobile e web:
+ * - *aplicado a todos os arquivos css ou maioria.
+ */
+
+@media (max-width: 768px) {
+  .particles-container,
+  .ripple-effect,
+  body.build-virtuoso .container::before,
+  body.build-profano .container::before,
+  body.build-anomalia .container::before {
+    display: none !important;
+    animation: none !important;
+    filter: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+.particle,
+.ripple-effect,
+body.build-virtuoso .container::before,
+body.build-profano .container::before,
+body.build-anomalia .container::before {
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+}

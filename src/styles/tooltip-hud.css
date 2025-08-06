@@ -1,24 +1,43 @@
-/* src/styles/tooltip-hud.css */
-
+/* 📜 Tooltip Ritualístico Inferior */
 .tooltip-ritual {
   position: fixed;
   bottom: 2vh;
   left: 50%;
-  transform: translateX(-50%);
-  background: rgba(255, 255, 255, 0.06);
-  color: #eee;
+  transform: translateX(-50%) translateY(0);
+  padding: 0.55rem 1.2rem;
+
   font-family: 'Share Tech Mono', monospace;
-  font-size: 0.9rem;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  box-shadow: 0 0 6px #ffffff11;
-  backdrop-filter: blur(6px);
+  font-size: 0.95rem;
+  color: #e5e5e5;
+  text-align: center;
+  line-height: 1.4;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
   z-index: 999;
+  max-width: 80vw;
+  word-wrap: break-word;
 }
 
+/* ✨ Ativo (com fade-in sutil e levante) */
 .tooltip-ritual.visible {
   opacity: 1;
+  transform: translateX(-50%) translateY(-6px);
+}
+
+/* 📱 Mobile & Acessibilidade */
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+  .tooltip-ritual {
+    font-size: 0.85rem;
+    padding: 0.45rem 0.8rem;
+    backdrop-filter: blur(4px);
+    transition: none !important;
+  }
 }

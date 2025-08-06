@@ -94,3 +94,20 @@
         transform: scale(1);
     }
 }
+
+@media (max-width: 768px) {
+    .efeito-brilhar,
+    .efeito-tremer {
+        animation: none !important;
+        text-shadow: none !important;
+        transform: none !important;
+    }
+
+    .modal-dica {
+        animation: none !important;
+    }
+
+    .clicavel:hover {
+        text-shadow: none !important;
+    }
+}

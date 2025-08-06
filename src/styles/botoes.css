@@ -1,16 +1,74 @@
-/* BOTÕES */
+/* 🎮 BOTÕES INTERATIVOS RITUALÍSTICOS */
+
+/* Base universal */
 .btn-opcao {
+    display: inline-block;
     background-color: #222;
     color: #eee;
     border: 1px solid #555;
-    padding: 0.6rem 1rem;
+    padding: 0.6rem 1.1rem;
     margin: 0.5rem;
     border-radius: 8px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.92rem;
+    letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all 0.2s;
+    user-select: none;
+    transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.2s ease;
 }
 
+/* Estado de interação */
 .btn-opcao:hover {
     background-color: #444;
     border-color: #888;
+}
+
+.btn-opcao:active {
+    transform: scale(0.97);
+}
+
+/* 🧠 Responsividade adicional (Mobile) */
+@media (max-width: 480px) {
+    .btn-opcao {
+        padding: 0.5rem 0.9rem;
+        font-size: 0.85rem;
+        margin: 0.4rem 0.2rem;
+    }
+}
+
+/* 🌈 Variações por BUILD Moral (Hover refinado) */
+body.build-virtuoso .btn-opcao:hover {
+    background-color: #1c5533;
+    border-color: #10b981;
+    color: #a6f4c5;
+    box-shadow: 0 0 6px #10b98144;
+}
+
+body.build-profano .btn-opcao:hover {
+    background-color: #7f1d1d;
+    border-color: #ef4444;
+    color: #fecaca;
+    box-shadow: 0 0 6px #ef444444;
+}
+
+body.build-anomalia .btn-opcao:hover {
+    background-color: #3b0764;
+    border-color: #a855f7;
+    color: #e9d5ff;
+    box-shadow: 0 0 6px #a855f744;
+}
+
+/* ✨ Brilho ativo ritual (Ex: botão em destaque) */
+.btn-ritual-ativo {
+    animation: glow-botao 1.8s ease-in-out infinite;
+}
+
+@keyframes glow-botao {
+    0%   { box-shadow: 0 0 4px #fff2, 0 0 8px #6ef2b155; }
+    50%  { box-shadow: 0 0 10px #6ef2b199, 0 0 20px #6ef2b144; }
+    100% { box-shadow: 0 0 4px #fff2, 0 0 8px #6ef2b155; }
 }

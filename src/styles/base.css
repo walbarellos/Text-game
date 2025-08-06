@@ -1,5 +1,18 @@
 /* BASE: Fonte, fundo e corpo do jogo */
 
+body.jogo-corpo {
+    background: radial-gradient(circle, #111 0%, #000 100%);
+    color: #eee;
+    font-family: 'Share Tech Mono', monospace;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Container principal */
 #wrapper-jogo {
 max-width: 700px;
 margin: 3rem auto;
@@ -18,18 +31,7 @@ backdrop-filter: blur(6px);
     }
 }
 
-body.jogo-corpo {
-    background: radial-gradient(circle, #111 0%, #000 100%);
-    color: #eee;
-    font-family: 'Share Tech Mono', monospace;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
+/* Clicáveis contextuais */
 .clicavel {
     color: #9ef;
     cursor: pointer;
@@ -41,6 +43,7 @@ body.jogo-corpo {
     color: #fff;
 }
 
+/* Botão principal de transição de dia */
 #btn-proximo-dia {
 margin-top: 1rem;
 padding: 0.75rem 1.5rem;
@@ -53,7 +56,7 @@ letter-spacing: 0.05em;
 border-radius: 8px;
 border: 1px solid #444;
 cursor: pointer;
-transition: all 0.3s ease;
+transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
 
 #btn-proximo-dia:hover {
@@ -63,6 +66,7 @@ border-color: #888;
 transform: scale(1.02);
 }
 
+/* Bloco final do dia ou do jogo */
 .evento-fim {
     background: linear-gradient(135deg, #111, #1a1a1a);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -70,7 +74,7 @@ transform: scale(1.02);
     border-radius: 1rem;
     text-align: center;
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.03);
-    transition: all 0.6s ease-in-out;
+    transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
 }
 
 .evento-fim h2 {
@@ -86,6 +90,7 @@ transform: scale(1.02);
     margin-bottom: 0.8rem;
 }
 
+/* Botão do ritual final */
 .ritual-final-btn {
     margin-top: 2rem;
     background: #2b2b2b;
@@ -97,7 +102,7 @@ transform: scale(1.02);
     font-size: 0.9rem;
     letter-spacing: 0.05em;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
 
 .ritual-final-btn:hover {
@@ -107,6 +112,7 @@ transform: scale(1.02);
     transform: scale(1.02);
 }
 
+/* Bloco de relatório final simbólico */
 .relatorio-final {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -143,6 +149,7 @@ transform: scale(1.02);
     font-weight: 600;
 }
 
+/* Animação de entrada suave */
 @keyframes ritual-fade-in {
     from {
         transform: translateY(20px);
@@ -153,6 +160,3 @@ transform: scale(1.02);
         opacity: 1;
     }
 }
-
-
-

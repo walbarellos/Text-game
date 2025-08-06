@@ -5,10 +5,10 @@
     left: 0;
     right: 0;
     text-align: center;
-    z-index: 1000; /* Para ficar sempre acima da HUD */
+    z-index: 1000;
     pointer-events: none;
     padding: 0.5rem;
-    height: 3.5rem; /* Garante espaço fixo no topo */
+    height: 3.5rem;
 }
 
 .titulo-animado {
@@ -26,7 +26,6 @@
     blink-caret 0.75s step-end infinite;
 }
 
-/* Animações */
 @keyframes typing {
     from { width: 0 }
     to   { width: 22ch }
@@ -57,4 +56,18 @@ body.build-profano .titulo-animado.glow {
 }
 body.build-anomalia .titulo-animado.glow {
     text-shadow: 0 0 10px #a87ef8, 0 0 20px #a87ef899, 0 0 30px #a87ef844;
+}
+
+/* 📱 Otimização Mobile e Acessibilidade */
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+    .titulo-animado {
+        animation: none !important;
+        width: auto !important;
+        border-right: none !important;
+    }
+
+    .titulo-animado.glow {
+        animation: none !important;
+        text-shadow: none !important;
+    }
 }
