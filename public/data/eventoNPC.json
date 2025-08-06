@@ -43,5 +43,32 @@
       "anomalia": "No limite do nonsense, dançamos nus com as palavras. Eu só toquei o alaúde.",
       "virtuoso": "Torne cada escolha um poema. Torne cada poema um templo. Torne-se verbo."
     }
+  },
+  {
+    "id": "npc6",
+    "nome": "Xandão, o Supremo de Si Mesmo",
+    "falas": {
+      "profano": "Liberdade de expressão? Só se você expressar o que eu gosto.",
+      "anomalia": "Hackei seu pensamento em tempo real. Não tente processar, já censurei.",
+      "virtuoso": "A democracia é linda. Principalmente quando sou eu quem dita as regras."
+    }
+  },
+  {
+    "id": "npc7",
+    "nome": "Lula, o Retorno do Encantador de Iludidos",
+    "falas": {
+      "profano": "Roubar é feio... exceto se for com carisma e uma camiseta do MST.",
+      "anomalia": "Eu não sabia de nada. Inclusive, esqueci que já fui presidente.",
+      "virtuoso": "Prometi mudar o Brasil. Mudei de apartamento."
+    }
+  },
+  {
+    "id": "npc8",
+    "nome": "Bolsonárion, o Capitão do Apocalipse",
+    "falas": {
+      "profano": "Vacina é coisa de comunista. Prefiro cloroquina com leite condensado.",
+      "anomalia": "E daí? Não sou coveiro. Só cavei um buraco e caí junto.",
+      "virtuoso": "Se fiz algo de bom... foi sem querer. Juro por Deus. E pelas armas."
+    }
   }
 ]

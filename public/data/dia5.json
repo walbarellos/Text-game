@@ -136,6 +136,7 @@
       "tipo": "evento",
       "titulo": "A Pedra Grita",
       "descricao": "De repente, uma rajada de vento. A Pedra aparece, girando no ar, envolta por penas e gotas. Ela diz: 'A vida pulsa quando você não pensa. Mas quem vive só pelo instinto... voa sem asas, nada sem brânquias. Escolha teu fôlego.'",
+      "npc": "npc7",
       "opcoes": [
         {
           "texto": "Agachar e tocar o chão com a mão direita",

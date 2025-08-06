@@ -57,6 +57,7 @@
       "tipo": "historia",
       "titulo": "Velho de Luz e Sombra",
       "descricao": "No caminho, um homem velho na calçada te observa. Ele diz: 'A luz revela, mas também queima. Você está pronto pra ser visto?'",
+      "npc": "npc5",
       "opcoes": [
         {
           "texto": "Concordar com um aceno respeitoso",

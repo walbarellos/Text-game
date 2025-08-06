@@ -7,15 +7,14 @@
   <meta name="description" content="Jogo ritualístico simbólico sobre escolhas e moralidade." />
   <title>What Is Life ☉</title>
 
-  <!-- Ícone ritualístico -->
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
-  <!-- Estilos do Título e Efeitos -->
+  <!-- Estilos -->
   <link rel="stylesheet" href="./src/styles/titulo-animado.css" />
   <link rel="stylesheet" href="./src/styles/aura.css" />
   <link rel="stylesheet" href="./src/styles/tooltip-hud.css" />
 
-  <!-- Fonte ritualística -->
+  <!-- Fonte -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
@@ -25,36 +24,56 @@
   <!-- Fundo animado -->
   <canvas id="background-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;"></canvas>
 
-  <!-- Título ritualístico animado -->
-  <div class="titulo-ritual" aria-label="Título do Jogo">
-    <h1 class="titulo-animado">What Is Life ☉</h1>
+  <!-- Envoltório geral -->
+  <div class="main-wrapper">
+
+    <!-- Título ritualístico -->
+    <div class="titulo-ritual" aria-label="Título do Jogo">
+      <h1 class="titulo-animado">What Is Life ☉</h1>
+    </div>
+
+    <!-- Wrapper do Jogo -->
+    <div id="wrapper-jogo" class="container">
+      <canvas id="etereal-fog"></canvas>
+
+      <!-- HUD -->
+      <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
+        <div id="hud-dia" class="hud-dia" aria-live="polite">Dia 1</div>
+        <div id="hud-build" class="hud-build profano" aria-label="Build atual">⚪ Profano</div>
+      </header>
+
+      <!-- Tooltip -->
+      <div id="tooltip-ritual" class="tooltip-ritual" aria-hidden="true"></div>
+
+      <!-- Narrativa -->
+      <main id="evento" class="evento-container" role="main" aria-label="Narrativa interativa do jogo"></main>
+    </div>
+
+    <!-- Footer com créditos -->
+    <footer class="footer-jogo" aria-hidden="false">
+      <div class="footer-inner">
+        <div class="creditos">Desenvolvido por <strong>Willian Albarello</strong> – ☉ What Is Life</div>
+        <div class="redes-sociais">
+          <a href="https://mastodon.social/@willian" target="_blank" rel="noopener noreferrer" aria-label="Mastodon">
+            <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21.43 9.19c-.26-2.65-2.61-4.73-5.47-5.08-1.24-.16-3.65-.24-5.9-.22-2.25-.02-4.66.06-5.9.22-2.86.35-5.21 2.43-5.47 5.08C-.08 13.05-.19 18.7 1.7 20.68 3.37 22.42 6.52 23.18 8.66 23.46c1.27.18 2.46.24 3.63.22 1.17.02 2.36-.04 3.63-.22 2.14-.28 5.3-1.04 6.96-2.78 1.89-1.98 1.78-7.63 1.55-11.49zM17.65 13.8c0 2.47-2.28 2.47-2.28 2.47h-.46v-2.2c0-.94-.43-1.42-1.29-1.42-.98 0-1.46.66-1.46 1.85v1.78h-.46c-.48 0-2.29-.01-2.29-2.47V10.4h1.25v3.08c0 1.09.7 1.09.7 1.09h.24v-2.21c0-.94.64-1.89 2.03-1.89 1.38 0 1.75.95 1.75 1.89v2.21h.24s.7 0 .7-1.09V10.4h1.25v3.4z"/>
+            </svg>
+          </a>
+          <a href="https://instagram.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 3a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5zm5.25-.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </footer>
   </div>
 
-  <!-- Wrapper do Jogo -->
-  <div id="wrapper-jogo" class="container">
-    <!-- Névoa etérea -->
-    <canvas id="etereal-fog"></canvas>
-
-    <!-- HUD -->
-    <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
-      <div id="hud-dia" class="hud-dia" aria-live="polite">Dia 1</div>
-      <div id="hud-build" class="hud-build profano" aria-label="Build atual">⚪ Profano</div>
-    </header>
-
-    <!-- Tooltip personalizada -->
-    <div id="tooltip-ritual" class="tooltip-ritual" aria-hidden="true"></div>
-
-    <!-- Narrativa -->
-    <main id="evento" class="evento-container" role="main" aria-label="Narrativa interativa do jogo"></main>
-  </div>
-
-  <!-- Script de fundo geométrico -->
+  <!-- Scripts -->
   <script type="module" src="/src/ui/fundo-geom.js"></script>
-
-  <!-- Script principal do jogo -->
   <script type="module" src="./src/main.js"></script>
 
-  <!-- Script de título e SVG decorativo -->
+  <!-- Título e SVG -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const titulo = document.querySelector('.titulo-animado');
@@ -63,38 +82,37 @@
       const texto = titulo.textContent || 'What Is Life ☉';
       const steps = texto.length;
 
-      // Define a animação dinâmica
       titulo.style.animation = `
         typing 3.5s steps(${steps}, end) forwards,
         blink-caret 0.75s step-end infinite
       `;
 
-      // Glow ativado após digitação
       setTimeout(() => {
         titulo.classList.add('glow');
       }, 3600);
 
-      // SVG decorativo
       const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
       svg.setAttribute('width', '100%');
       svg.setAttribute('height', '100');
       svg.setAttribute('viewBox', '0 0 800 100');
-      svg.style.position = 'absolute';
-      svg.style.top = '0';
-      svg.style.left = '0';
+      svg.style.width = '100%';
+      svg.style.height = '100px';
+      svg.style.position = 'relative';
+      svg.style.display = 'block';
+      svg.style.margin = '0 auto';
       svg.style.zIndex = '0';
+
       svg.innerHTML = `
         <polyline points="0,80 150,20 300,60 450,10 600,80 800,40"
-        stroke="#ffffff33"
-        stroke-width="1.5"
-        fill="none"
-        stroke-dasharray="5,5"
+          stroke="#ffffff33"
+          stroke-width="1.5"
+          fill="none"
+          stroke-dasharray="5,5"
         />
       `;
 
       titulo.parentElement?.prepend(svg);
 
-      // Tooltip ritualística
       const hudDia = document.getElementById('hud-dia');
       const tooltip = document.getElementById('tooltip-ritual');
 

@@ -89,3 +89,39 @@
     75%  { transform: translate(1px, 1px) scale(1.01); opacity: 0.14; }
     100% { transform: translate(0, 0) scale(1); opacity: 0.1; }
 }
+
+
+/* 📡 Footer Config */
+/* 📡 FB e Mastodon icones */
+.footer-jogo {
+    margin-top: 2rem;
+    padding: 1rem 2vw;
+    color: #ccc;
+    font-size: 0.9rem;
+    text-align: center;
+    background: linear-gradient(to top, #111 0%, transparent 100%);
+    border-top: 1px solid #333;
+}
+
+.footer-inner {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+
+.footer-jogo .creditos {
+    margin-bottom: 0.5rem;
+    font-family: 'Share Tech Mono', monospace;
+}
+
+.footer-jogo .redes-sociais a {
+    display: inline-block;
+    margin: 0 0.5rem;
+    transition: transform 0.3s ease;
+}
+
+.footer-jogo .redes-sociais a:hover svg {
+    transform: scale(1.2);
+    fill: #6ef2b1; /* cor ritualística para hover */
+}
+
