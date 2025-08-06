@@ -1,4 +1,4 @@
-//📦Importações de estilo
+//📦 Importações de estilo
 import './styles/base.css';
 import './styles/hud.css';
 import './styles/evento.css';
@@ -6,11 +6,11 @@ import './styles/botoes.css';
 import './styles/tema.css';
 import './styles/dicas.css';
 
-//🔧Patch
+//🔧 Patch
 import './styles/patch-responsivo-ritual-v1.css';
+import './styles/intro.css';
 
-
-//🔧Módulos centrais
+//🔧 Módulos centrais
 import { renderizarEvento } from './core/renderer.js';
 import { carregarDiaAtual, salvarProgresso, avancarDia } from './core/storage.js';
 import { atualizarHUD } from './ui/hud.js';
@@ -19,7 +19,7 @@ import { registrarEscolha, buildDominante, resetarBuild, registrarInteracaoNPC, 
 import './ui/dicas.js';
 import './ui/fog.js';
 
-//📊Estado Global
+//📊 Estado Global
 let estado = {
   diaAtual: 1,
   eventoAtual: null,
@@ -30,7 +30,7 @@ let estado = {
 
 const eventoContainer = document.getElementById('evento');
 
-//🚀Início do jogo
+//🚀 Início do jogo
 async function iniciarJogo() {
   console.log('🎮 Iniciando jogo...');
   const progressoSalvo = carregarDiaAtual();
@@ -52,7 +52,7 @@ async function iniciarJogo() {
   resetarBuild();
 }
 
-// 📂 Carrega JSON do dia e renderiza primeiro evento
+//📂 Carrega JSON do dia e renderiza primeiro evento
 async function carregarDia(numeroDia) {
   try {
     const resposta = await fetch(`/data/dia${numeroDia}.json`);
@@ -65,6 +65,7 @@ async function carregarDia(numeroDia) {
 
     estado.eventos = dadosDia.blocos;
     estado.nomeDia = dadosDia.nome || `Dia ${numeroDia}`;
+
     const hudDia = document.getElementById('hud-dia');
     if (hudDia && dadosDia.fraseInspiradora) {
       hudDia.setAttribute('data-frase', dadosDia.fraseInspiradora);
@@ -78,11 +79,22 @@ async function carregarDia(numeroDia) {
   } catch (erro) {
     console.error('❌ Erro ao carregar o dia:', erro);
     eventoContainer.innerHTML = `<p class="erro">⚠️ Dia não encontrado ou JSON inválido.</p>`;
-    return;
   }
 }
 
-// 🎮 Ao escolher uma opção narrativa
+//✨ Atualiza cor do título e body conforme build
+function atualizarGlowTitulo(build) {
+  document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');
+  document.body.classList.add(`build-${build}`);
+
+  const titulo = document.querySelector('.titulo-animado');
+  if (titulo) {
+    titulo.classList.remove('glow');
+    setTimeout(() => titulo.classList.add('glow'), 50);
+  }
+}
+
+//🎯 Opção narrativa escolhida
 function aoEscolherOpcao(opcao, callback) {
   const { proximo, build } = opcao;
 
@@ -101,22 +113,26 @@ function aoEscolherOpcao(opcao, callback) {
       salvarProgresso(estado);
       estado.eventoAtual = blocoFinal;
       renderizarEvento(blocoFinal, eventoContainer);
-      return;
+    } else {
+      avancarDia(estado);
     }
-
-    avancarDia(estado);
     return;
   }
 
   salvarProgresso(estado);
   atualizarHUD(estado.nomeDia, estado.build);
   atualizarGlowTitulo(estado.build);
-
   estado.eventoAtual = proximoEvento;
   callback?.(proximoEvento);
 }
 
-// 🎯 Escuta escolhas do jogador (versão corrigida!)
+//📌 Avança para o próximo dia e reseta interações
+document.addEventListener('avancarDia', () => {
+  resetarInteracoesNPC();
+  avancarDia(estado);
+});
+
+//🎮 Captura escolhas do jogador
 document.addEventListener('opcaoSelecionada', (e) => {
   const dados = { ...e.detail };
   let proximoEvento = estado.eventos.find(ev => ev.id === dados.proximo);
@@ -130,7 +146,6 @@ document.addEventListener('opcaoSelecionada', (e) => {
     }
   }
 
-  // Atualiza o estado ANTES do NPC
   estado.eventoAtual = proximoEvento;
   salvarProgresso(estado);
   atualizarHUD(estado.nomeDia, buildDominante());
@@ -149,65 +164,93 @@ document.addEventListener('opcaoSelecionada', (e) => {
   }
 });
 
-// 🔄 Avança para o próximo dia e reseta interações
-document.addEventListener('avancarDia', () => {
-  resetarInteracoesNPC();
-  avancarDia(estado);
-});
-
-// 🚀 Inicia o jogo quando DOM estiver pronto
-document.addEventListener('DOMContentLoaded', iniciarJogo);
-
-// ✨ Aplica build ao body e glow
-function atualizarGlowTitulo(build) {
-  document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');
-  document.body.classList.add(`build-${build}`);
-
-  const titulo = document.querySelector('.titulo-animado');
-  if (titulo) {
-    titulo.classList.remove('glow');
-    setTimeout(() => titulo.classList.add('glow'), 50);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-  const titulo = document.querySelector('.titulo-animado');
-  if (titulo && !titulo.classList.contains('glow')) {
-    const texto = titulo.textContent || '';
-    titulo.style.animation = `
-    typing 3.5s steps(${texto.length}, end) forwards,
-                          blink-caret 0.75s step-end infinite
-                          `;
-                          setTimeout(() => {
-                            titulo.classList.add('glow');
-                          }, 3600);
-  }
-
-  const tituloRitual = document.querySelector('.titulo-ritual');
-  if (tituloRitual) {
-    tituloRitual.style.pointerEvents = 'none';
-  }
-});
-
+//🤝 Interação com NPC
 document.addEventListener('respostaNPC', (event) => {
   const build = event.detail.build;
   registrarEscolha(build);
   registrarInteracaoNPC();
 
-  // Após escolher no diálogo do NPC, avançar para o próximo evento
   const eventoAtual = estado.eventoAtual;
   const proximoId = eventoAtual?.opcoes?.[0]?.proximo;
+  if (!proximoId) return;
 
-  if (proximoId) {
-    const proximoEvento = estado.eventos.find(e => e.id === proximoId);
-    if (proximoEvento) {
-      estado.eventoAtual = proximoEvento;
-      atualizarHUD(estado.nomeDia, buildDominante());
-      renderizarEvento(proximoEvento);
-    } else {
-      console.warn(`🔍 Evento '${proximoId}' não encontrado.`);
-    }
-  } else {
-    console.warn(`⚠️ Evento atual '${eventoAtual?.id}' não tem 'proximo' definido nas opções.`);
+  const proximoEvento = estado.eventos.find(e => e.id === proximoId);
+  if (!proximoEvento) return;
+
+  estado.eventoAtual = proximoEvento;
+  atualizarHUD(estado.nomeDia, buildDominante());
+  renderizarEvento(proximoEvento);
+});
+
+//🎬 Intro + Init
+document.addEventListener('DOMContentLoaded', () => {
+  const intro = document.getElementById('intro-cinematica');
+  const texto = document.getElementById('intro-texto');
+  const botaoPular = document.getElementById('pular-intro');
+  const titulo = document.querySelector('.titulo-animado');
+  const tituloRitual = document.querySelector('.titulo-ritual');
+
+  // ⚙️ Efeito digitando no título
+  if (titulo && !titulo.classList.contains('glow')) {
+    const textoTitulo = titulo.textContent || '';
+    titulo.style.animation = `
+    typing 3.5s steps(${textoTitulo.length}, end) forwards,
+                          blink-caret 0.75s step-end infinite
+                          `;
+                          setTimeout(() => titulo.classList.add('glow'), 3600);
   }
+
+  if (tituloRitual) {
+    tituloRitual.style.pointerEvents = 'none';
+  }
+
+  // 🎥 Controle da intro
+  const introExibida = localStorage.getItem('introExibida');
+  const progressoSalvo = JSON.parse(localStorage.getItem('progresso'));
+  const diaAtual = progressoSalvo?.diaAtual || 1;
+  const deveExibirIntro = !introExibida && diaAtual === 1;
+
+  if (deveExibirIntro && intro && texto && botaoPular) {
+    intro.classList.add('mostrar'); // 👈 garante exibição
+    const frases = [
+      '☉ What Is Life',
+      'Um jogo sobre moralidade, escolhas e degeneração.',
+      'Você será julgado.',
+      'E você sabe disso.',
+      '...',
+      'Comece.'
+    ];
+
+    let i = 0;
+
+    const exibirFrase = () => {
+      if (i >= frases.length) {
+        esconderIntro();
+        iniciarJogo();
+        return;
+      }
+
+      texto.innerHTML = frases[i];
+      i++;
+      setTimeout(exibirFrase, 2500);
+    };
+
+    const esconderIntro = () => {
+      intro.classList.add('ocultar');
+      localStorage.setItem('introExibida', 'true');
+    };
+
+    botaoPular.addEventListener('click', () => {
+      esconderIntro();
+      iniciarJogo();
+    });
+
+    exibirFrase();
+  } else {
+    setTimeout(() => {
+      if (intro) intro.classList.add('ocultar');
+      iniciarJogo();
+    }, 50); // delay mínimo p/ evitar corridas visuais
+  }
+
 });
