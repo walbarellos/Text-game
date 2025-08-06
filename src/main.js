@@ -1,4 +1,4 @@
-// 📦 Importações de estilo
+//📦Importações de estilo
 import './styles/base.css';
 import './styles/hud.css';
 import './styles/evento.css';
@@ -6,7 +6,11 @@ import './styles/botoes.css';
 import './styles/tema.css';
 import './styles/dicas.css';
 
-// 🔧 Módulos centrais
+//🔧Patch
+import './styles/patch-responsivo-ritual-v1.css';
+
+
+//🔧Módulos centrais
 import { renderizarEvento } from './core/renderer.js';
 import { carregarDiaAtual, salvarProgresso, avancarDia } from './core/storage.js';
 import { atualizarHUD } from './ui/hud.js';
@@ -15,7 +19,7 @@ import { registrarEscolha, buildDominante, resetarBuild, registrarInteracaoNPC, 
 import './ui/dicas.js';
 import './ui/fog.js';
 
-// 📊 Estado Global
+//📊Estado Global
 let estado = {
   diaAtual: 1,
   eventoAtual: null,
@@ -26,7 +30,7 @@ let estado = {
 
 const eventoContainer = document.getElementById('evento');
 
-// 🚀 Início do jogo
+//🚀Início do jogo
 async function iniciarJogo() {
   console.log('🎮 Iniciando jogo...');
   const progressoSalvo = carregarDiaAtual();
