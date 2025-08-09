@@ -22,3 +22,10 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Android/SDK e builds
+android/commandlinetools-*.zip
+android/.gradle/
+android/build/
+**/build/
+**/.cxx/
