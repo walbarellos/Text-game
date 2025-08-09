@@ -1,0 +1,79 @@
+/* Overlay amplo da ação */
+.action-reward {
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    background: radial-gradient(1200px 600px at 50% 50%, rgba(255,255,255,0.04), transparent 65%);
+    pointer-events: none;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity .22s ease, transform .22s ease;
+    z-index: 48; /* abaixo da HUD (50), acima do conteúdo */
+}
+.action-reward.show { opacity: 1; transform: scale(1); }
+
+/* camadas */
+.ar-ring {
+    width: clamp(180px, 26vw, 360px); aspect-ratio: 1;
+    border-radius: 50%;
+    border: 1.5px solid currentColor;
+    opacity: .22;
+    animation: arPulse 900ms ease-out forwards;
+}
+@keyframes arPulse {
+    0% { transform: scale(.65); opacity: .35; }
+    80% { opacity: .1; }
+    100% { transform: scale(1.25); opacity: 0; }
+}
+
+.ar-scan {
+    position: absolute; inset: 0;
+    background: linear-gradient(to bottom, transparent, rgba(255,255,255,.06), transparent);
+    mix-blend-mode: screen;
+    opacity: .0;
+    animation: arScan 950ms ease-out forwards;
+}
+@keyframes arScan {
+    0% { opacity:.0; transform: translateY(-20%); }
+    25% { opacity:.25; }
+    100% { opacity:0; transform: translateY(30%); }
+}
+
+.ar-stars {
+    position: absolute; width: 42vmin; height: 42vmin;
+    opacity: .35;
+}
+.ar-stars polyline {
+    stroke: currentColor; stroke-width: .6; fill: none;
+    stroke-dasharray: 2.4 2.4; stroke-linecap: round;
+    animation: dashDraw 900ms ease forwards;
+}
+@keyframes dashDraw { from { stroke-dashoffset: 60; } to { stroke-dashoffset: 0; } }
+
+/* Ripple local no botão */
+.btn-opcao {
+    position: relative; overflow: hidden;
+}
+.btn-opcao .ripple {
+    position: absolute; border-radius: 50%;
+    width: 10px; height: 10px; background: currentColor;
+    opacity: .18; transform: translate(-50%, -50%) scale(1);
+    animation: rippleOut 500ms ease-out forwards;
+}
+@keyframes rippleOut {
+    to { opacity: 0; transform: translate(-50%, -50%) scale(16); }
+}
+
+/* Pulso no HUD build */
+#hud-build.pulse {
+box-shadow: 0 0 0 0 currentColor;
+animation: hudPulse 600ms ease-out 1;
+}
+@keyframes hudPulse {
+    0% { box-shadow: 0 0 0 0 currentColor; }
+    100% { box-shadow: 0 0 0 16px transparent; }
+}
+
+/* Cores herdadas por build */
+body.build-virtuoso .action-reward { color: #6ef2b1; }
+body.build-profano  .action-reward { color: #f85b5b; }
+body.build-anomalia .action-reward { color: #a87ef8; }

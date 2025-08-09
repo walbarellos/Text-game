@@ -1,4 +1,4 @@
-//📦 Importações de estilo
+// 📦 Estilos base
 import './styles/base.css';
 import './styles/hud.css';
 import './styles/evento.css';
@@ -6,20 +6,31 @@ import './styles/botoes.css';
 import './styles/tema.css';
 import './styles/dicas.css';
 
-//🔧 Patch
+// 🔧 Patches/efeitos extras (se existirem no projeto)
 import './styles/patch-responsivo-ritual-v1.css';
 import './styles/intro.css';
+import './styles/reward-choice.css';
 
-//🔧 Módulos centrais
+// 🔧 Núcleo
 import { renderizarEvento } from './core/renderer.js';
 import { carregarDiaAtual, salvarProgresso, avancarDia } from './core/storage.js';
 import { atualizarHUD } from './ui/hud.js';
 import { dispararNPC } from './core/npc.js';
-import { registrarEscolha, buildDominante, resetarBuild, registrarInteracaoNPC, resetarInteracoesNPC } from './core/buildTracker.js';
+import {
+  registrarEscolha,
+  buildDominante,
+  resetarBuild,
+  registrarInteracaoNPC,
+  resetarInteracoesNPC,
+} from './core/buildTracker.js';
+
 import './ui/dicas.js';
 import './ui/fog.js';
 
-//📊 Estado Global
+// ✨ UI Rewards
+import { playChoiceReward, pulseBuildBadge } from './ui/rewardChoice.js';
+
+// 📊 Estado global
 let estado = {
   diaAtual: 1,
   eventoAtual: null,
@@ -30,115 +41,123 @@ let estado = {
 
 const eventoContainer = document.getElementById('evento');
 
-//🚀 Início do jogo
+/* ---------------------------------------
+ *   Boot
+ * ----------------------------------------*/
 async function iniciarJogo() {
-  console.log('🎮 Iniciando jogo...');
-  const progressoSalvo = carregarDiaAtual();
+  try {
+    console.log('🎮 Iniciando jogo...');
+    const progressoSalvo = carregarDiaAtual();
+    if (progressoSalvo) {
+      estado = progressoSalvo;
+      console.log('📁 Progresso carregado:', progressoSalvo);
+    }
 
-  if (progressoSalvo) {
-    estado = progressoSalvo;
-    console.log('📁 Progresso carregado:', progressoSalvo);
+    const maxDias = 7;
+    if (estado.diaAtual > maxDias) {
+      console.warn(`🧼 Dia ${estado.diaAtual} excede o máximo. Resetando...`);
+      localStorage.clear();
+      location.reload();
+      return;
+    }
+
+    await carregarDia(estado.diaAtual);
+    resetarBuild(); // limpa o acumulador moral ao iniciar o dia
+  } catch (err) {
+    console.error('💥 Falha ao iniciar o jogo:', err);
   }
-
-  const maxDias = 7;
-  if (estado.diaAtual > maxDias) {
-    console.warn(`🧼 Dia ${estado.diaAtual} excede o máximo. Resetando...`);
-    localStorage.clear();
-    location.reload();
-    return;
-  }
-
-  await carregarDia(estado.diaAtual);
-  resetarBuild();
 }
 
-//📂 Carrega JSON do dia e renderiza primeiro evento
+/* ---------------------------------------
+ *   Carregar e preparar o dia
+ * ----------------------------------------*/
 async function carregarDia(numeroDia) {
   try {
     const resposta = await fetch(`/data/dia${numeroDia}.json`);
     if (!resposta.ok) throw new Error(`Status ${resposta.status} - ${resposta.statusText}`);
 
     const textoBruto = await resposta.text();
-    console.log('📄 Conteúdo JSON recebido:', textoBruto);
-
+    // console.log('📄 Conteúdo JSON recebido:', textoBruto);
     const dadosDia = JSON.parse(textoBruto);
 
-    estado.eventos = dadosDia.blocos;
+    estado.eventos = dadosDia.blocos || [];
     estado.nomeDia = dadosDia.nome || `Dia ${numeroDia}`;
+    estado.eventoAtual = estado.eventos[0] || null;
 
+    // tooltip do botão "DIA"
     const hudDia = document.getElementById('hud-dia');
-    if (hudDia && dadosDia.fraseInspiradora) {
-      hudDia.setAttribute('data-frase', dadosDia.fraseInspiradora);
+    if (hudDia) {
+      if (dadosDia.fraseInspiradora) {
+        hudDia.setAttribute('data-frase', dadosDia.fraseInspiradora);
+      } else {
+        hudDia.removeAttribute('data-frase');
+      }
     }
-
-    estado.eventoAtual = dadosDia.blocos[0];
 
     atualizarHUD(estado.nomeDia, estado.build);
     atualizarGlowTitulo(estado.build);
-    renderizarEvento(estado.eventoAtual, eventoContainer);
+
+    if (estado.eventoAtual) {
+      renderizarEvento(estado.eventoAtual, eventoContainer);
+    } else {
+      eventoContainer.innerHTML = `<p class="erro">⚠️ Este dia não possui blocos.</p>`;
+    }
   } catch (erro) {
     console.error('❌ Erro ao carregar o dia:', erro);
     eventoContainer.innerHTML = `<p class="erro">⚠️ Dia não encontrado ou JSON inválido.</p>`;
   }
 }
 
-//✨ Atualiza cor do título e body conforme build
+/* ---------------------------------------
+ *   Visual — título ritualístico
+ * ----------------------------------------*/
 function atualizarGlowTitulo(build) {
   document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');
   document.body.classList.add(`build-${build}`);
 
   const titulo = document.querySelector('.titulo-animado');
   if (titulo) {
+    // reativa o glow para animar transição de cor conforme a build
     titulo.classList.remove('glow');
     setTimeout(() => titulo.classList.add('glow'), 50);
   }
 }
 
-//🎯 Opção narrativa escolhida
-function aoEscolherOpcao(opcao, callback) {
-  const { proximo, build } = opcao;
-
-  console.log('🧭 Opção escolhida:', opcao);
-
-  if (build) {
-    registrarEscolha(build);
-    estado.build = buildDominante();
-  }
-
-  const proximoEvento = estado.eventos.find(ev => ev.id === proximo);
-
-  if (!proximoEvento) {
-    const blocoFinal = estado.eventos.find(ev => ev.tipo === 'fim');
-    if (blocoFinal) {
-      salvarProgresso(estado);
-      estado.eventoAtual = blocoFinal;
-      renderizarEvento(blocoFinal, eventoContainer);
-    } else {
-      avancarDia(estado);
-    }
-    return;
-  }
-
-  salvarProgresso(estado);
-  atualizarHUD(estado.nomeDia, estado.build);
-  atualizarGlowTitulo(estado.build);
-  estado.eventoAtual = proximoEvento;
-  callback?.(proximoEvento);
-}
-
-//📌 Avança para o próximo dia e reseta interações
+/* ---------------------------------------
+ *   Avanço de dia
+ * ----------------------------------------*/
 document.addEventListener('avancarDia', () => {
-  resetarInteracoesNPC();
+  try {
+    resetarInteracoesNPC?.();
+  } catch {}
   avancarDia(estado);
 });
 
-//🎮 Captura escolhas do jogador
+/* ---------------------------------------
+ *   Escolha do jogador (evento vindo do renderer)
+ * ----------------------------------------*/
 document.addEventListener('opcaoSelecionada', (e) => {
+  // e.detail = { proximo, build, npc, fraseChave }
   const dados = { ...e.detail };
-  let proximoEvento = estado.eventos.find(ev => ev.id === dados.proximo);
 
+  // 1) registra build e recalcula dominante
+  if (dados.build) registrarEscolha(dados.build);
+  estado.build = buildDominante();
+
+  // 2) feedback visual (reward + pulso no badge)
+  try {
+    playChoiceReward(estado.build);
+    pulseBuildBadge();
+  } catch (err) {
+    // silencioso: caso CSS/JS do reward não exista
+  }
+
+  // 3) encontra próximo evento
+  let proximoEvento = estado.eventos.find((ev) => ev.id === dados.proximo);
+
+  // se não houver, tenta bloco de FIM
   if (!proximoEvento) {
-    proximoEvento = estado.eventos.find(ev => ev.tipo === 'fim');
+    proximoEvento = estado.eventos.find((ev) => ev.tipo === 'fim');
     if (!proximoEvento) {
       console.warn('⚠️ Evento de destino e de fim não encontrados.');
       avancarDia(estado);
@@ -146,93 +165,94 @@ document.addEventListener('opcaoSelecionada', (e) => {
     }
   }
 
+  // 4) atualiza estado, HUD e render
   estado.eventoAtual = proximoEvento;
   salvarProgresso(estado);
-  atualizarHUD(estado.nomeDia, buildDominante());
-
-  const continuar = () => {
-    renderizarEvento(proximoEvento, eventoContainer);
-  };
-
-  if (dados.build) registrarEscolha(dados.build);
-  estado.build = buildDominante();
+  atualizarHUD(estado.nomeDia, estado.build);
+  atualizarGlowTitulo(estado.build);
 
   if (proximoEvento.npc) {
-    dispararNPC(proximoEvento.npc, estado.build, continuar);
+    // diálogo antes de seguir
+    dispararNPC(proximoEvento.npc, estado.build, () => {
+      renderizarEvento(proximoEvento, eventoContainer);
+    });
   } else {
-    continuar();
+    renderizarEvento(proximoEvento, eventoContainer);
   }
 });
 
-//🤝 Interação com NPC
+/* ---------------------------------------
+ *   Resposta de NPC (seu sistema de NPC aciona este evento)
+ * ----------------------------------------*/
 document.addEventListener('respostaNPC', (event) => {
-  const build = event.detail.build;
-  registrarEscolha(build);
-  registrarInteracaoNPC();
+  const build = event?.detail?.build;
+  if (build) registrarEscolha(build);
+  registrarInteracaoNPC?.();
 
-  const eventoAtual = estado.eventoAtual;
-  const proximoId = eventoAtual?.opcoes?.[0]?.proximo;
+  // próximo = primeira opção do evento atual (convencional)
+  const proximoId = estado.eventoAtual?.opcoes?.[0]?.proximo;
   if (!proximoId) return;
 
-  const proximoEvento = estado.eventos.find(e => e.id === proximoId);
+  const proximoEvento = estado.eventos.find((e) => e.id === proximoId);
   if (!proximoEvento) return;
 
   estado.eventoAtual = proximoEvento;
+  salvarProgresso(estado);
   atualizarHUD(estado.nomeDia, buildDominante());
-  renderizarEvento(proximoEvento);
+  atualizarGlowTitulo(buildDominante());
+  renderizarEvento(proximoEvento, eventoContainer);
 });
 
-//🎬 Intro + Init
+/* ---------------------------------------
+ *   Intro + início
+ * ----------------------------------------*/
 document.addEventListener('DOMContentLoaded', () => {
-  const intro = document.getElementById('intro-cinematica');
-  const texto = document.getElementById('intro-texto');
-  const botaoPular = document.getElementById('pular-intro');
+  // Título: typing + glow dinâmico
   const titulo = document.querySelector('.titulo-animado');
-  const tituloRitual = document.querySelector('.titulo-ritual');
-
-  // ⚙️ Efeito digitando no título
   if (titulo && !titulo.classList.contains('glow')) {
     const textoTitulo = titulo.textContent || '';
     titulo.style.animation = `
-    typing 3.5s steps(${textoTitulo.length}, end) forwards,
+    typing 3.5s steps(${textoTitulo.length || 24}, end) forwards,
                           blink-caret 0.75s step-end infinite
                           `;
                           setTimeout(() => titulo.classList.add('glow'), 3600);
   }
 
-  if (tituloRitual) {
-    tituloRitual.style.pointerEvents = 'none';
-  }
+  // Impede o título de bloquear cliques
+  const tituloRitual = document.querySelector('.titulo-ritual');
+  if (tituloRitual) tituloRitual.style.pointerEvents = 'none';
 
-  // 🎥 Controle da intro
+  // Cinemática de abertura (opcional)
+  const intro = document.getElementById('intro-cinematica');
+  const texto = document.getElementById('intro-texto');
+  const botaoPular = document.getElementById('pular-intro');
+
   const introExibida = localStorage.getItem('introExibida');
-  const progressoSalvo = JSON.parse(localStorage.getItem('progresso'));
-  const diaAtual = progressoSalvo?.diaAtual || 1;
+  const progressoSalvo = JSON.parse(localStorage.getItem('progresso') || 'null');
+  const diaAtual = progressoSalvo?.diaAtual ?? 1;
   const deveExibirIntro = !introExibida && diaAtual === 1;
 
   if (deveExibirIntro && intro && texto && botaoPular) {
-    intro.classList.add('mostrar'); // 👈 garante exibição
+    intro.classList.add('mostrar');
+
     const frases = [
       '☉ What Is Life',
       'Um jogo sobre moralidade, escolhas e degeneração.',
       'Você será julgado.',
       'E você sabe disso.',
       '...',
-      'Comece.'
+      'Comece.',
     ];
 
     let i = 0;
-
     const exibirFrase = () => {
       if (i >= frases.length) {
         esconderIntro();
         iniciarJogo();
         return;
       }
-
-      texto.innerHTML = frases[i];
-      i++;
-      setTimeout(exibirFrase, 2500);
+      texto.innerHTML = frases[i++];
+      setTimeout(exibirFrase, 2200);
     };
 
     const esconderIntro = () => {
@@ -247,10 +267,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     exibirFrase();
   } else {
+    // sem intro — segue o jogo
     setTimeout(() => {
       if (intro) intro.classList.add('ocultar');
       iniciarJogo();
-    }, 50); // delay mínimo p/ evitar corridas visuais
+    }, 30);
   }
-
 });
