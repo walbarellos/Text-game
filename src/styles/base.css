@@ -1,49 +1,59 @@
-/* BASE: Fonte, fundo e corpo do jogo */
+/* ───────────────── BASE alinhada aos temas ───────────────── */
 
+/* 0) Garantia de altura e camada do canvas */
+html, body { height: 100%; }
+#background-canvas { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: -1; }
+
+/* 1) Corpo do jogo: fluxo em coluna (nada de centralizar tudo) */
 body.jogo-corpo {
-    background: radial-gradient(circle, #111 0%, #000 100%);
-    color: #eee;
-    font-family: 'Share Tech Mono', monospace;
+    /* layout */
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
+
+    /* visual: o TEMA define o fundo via --bg */
+    background: var(--bg, radial-gradient(circle, #111 0%, #000 100%));
+    color: #eee;
+
+    /* tipografia base */
+    font-family: 'Share Tech Mono', monospace;
+
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-/* Container principal */
+/* 2) Wrapper vira APENAS container fluido (sem cartão próprio) */
 #wrapper-jogo {
-max-width: 700px;
-margin: 3rem auto;
-padding: 2rem;
-background: rgba(20, 20, 20, 0.85);
-border: 1px solid #333;
-border-radius: 12px;
-box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
-backdrop-filter: blur(6px);
+max-width: 1100px;
+width: 100%;
+margin: 0 auto;
+padding: 0;
+
+/* remove visual antigo */
+background: transparent;
+border: none;
+border-radius: 0;
+box-shadow: none;
+backdrop-filter: none;
 }
 
-@media (max-width: 768px) {
-    #wrapper-jogo {
-    margin: 1rem;
-    padding: 1rem;
-    }
+/* 3) Main wrapper cresce e empurra o footer pro fim */
+.main-wrapper {
+    flex: 1 0 auto;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Clicáveis contextuais */
+/* 4) Clicáveis contextuais (mantidos) */
 .clicavel {
     color: #9ef;
     cursor: pointer;
     border-bottom: 1px dashed #9ef;
     transition: color 0.2s ease;
 }
+.clicavel:hover { color: #fff; }
 
-.clicavel:hover {
-    color: #fff;
-}
-
-/* Botão principal de transição de dia */
+/* 5) Botão principal de transição de dia (mantido) */
 #btn-proximo-dia {
 margin-top: 1rem;
 padding: 0.75rem 1.5rem;
@@ -51,14 +61,12 @@ background-color: #2b2b2b;
 color: #e2e2e2;
 font-weight: normal;
 font-size: 0.9rem;
-font-family: 'Share Tech Mono', monospace;
 letter-spacing: 0.05em;
 border-radius: 8px;
 border: 1px solid #444;
 cursor: pointer;
 transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
-
 #btn-proximo-dia:hover {
 background-color: #1f1f1f;
 color: #f0f0f0;
@@ -66,7 +74,7 @@ border-color: #888;
 transform: scale(1.02);
 }
 
-/* Bloco final do dia ou do jogo */
+/* 6) Bloco final / relatório (mantido) */
 .evento-fim {
     background: linear-gradient(135deg, #111, #1a1a1a);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -76,21 +84,17 @@ transform: scale(1.02);
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.03);
     transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
 }
-
 .evento-fim h2 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
     color: #fff;
     text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
-
 .evento-fim p {
     font-size: 1rem;
     color: #ccc;
     margin-bottom: 0.8rem;
 }
-
-/* Botão do ritual final */
 .ritual-final-btn {
     margin-top: 2rem;
     background: #2b2b2b;
@@ -98,21 +102,17 @@ transform: scale(1.02);
     border: 1px solid #444;
     padding: 0.7rem 1.5rem;
     border-radius: 0.5rem;
-    font-family: 'Share Tech Mono', monospace;
     font-size: 0.9rem;
     letter-spacing: 0.05em;
     cursor: pointer;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
 }
-
 .ritual-final-btn:hover {
     background: #1f1f1f;
     color: #f0f0f0;
     border-color: #888;
     transform: scale(1.02);
 }
-
-/* Bloco de relatório final simbólico */
 .relatorio-final {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -121,20 +121,16 @@ transform: scale(1.02);
     border-radius: 16px;
     box-shadow: 0 0 20px rgba(255,255,255,0.04);
     color: #ddd;
-    font-family: 'Share Tech Mono', monospace;
     font-size: 0.95rem;
     line-height: 1.5;
-    backdrop-filter: blur(4px);
     animation: ritual-fade-in 1.5s ease-out forwards;
 }
-
 .relatorio-final p {
     margin-bottom: 0.8rem;
     text-align: left;
     position: relative;
     padding-left: 1.2rem;
 }
-
 .relatorio-final p::before {
     content: '✦';
     position: absolute;
@@ -143,20 +139,14 @@ transform: scale(1.02);
     font-size: 0.9rem;
     top: 0.1rem;
 }
+.relatorio-final strong { color: #9ef; font-weight: 600; }
 
-.relatorio-final strong {
-    color: #9ef;
-    font-weight: 600;
+@keyframes ritual-fade-in {
+    from { transform: translateY(20px); opacity: 0; }
+    to   { transform: translateY(0);    opacity: 1; }
 }
 
-/* Animação de entrada suave */
-@keyframes ritual-fade-in {
-    from {
-        transform: translateY(20px);
-        opacity: 0;
-    }
-    to {
-        transform: translateY(0);
-        opacity: 1;
-    }
+/* 7) Responsivo do wrapper (sem visuais) */
+@media (max-width: 768px) {
+    #wrapper-jogo { max-width: 100%; margin: 0 auto; padding: 0; }
 }

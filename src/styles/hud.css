@@ -1,11 +1,14 @@
 /* 📁 src/styles/hud.css */
-/* 🎩 Cabeçalho fixo */
+
+/* ──────────────────────────────────────────────────────────
+ *   HUD (cabeçalho)
+ *   ────────────────────────────────────────────────────────── */
 header.hud {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0.4rem 0.8rem;
-  background: #0f0f0f;
+  background: #0f0f0f;                 /* base: não conflita com tema */
   border-bottom: 1px solid #222;
   font-family: 'Share Tech Mono', monospace;
   font-size: 0.75rem;
@@ -13,6 +16,17 @@ header.hud {
   position: sticky;
   top: 4.5rem; /* Deslocado para baixo do título animado */
   z-index: 950;
+  will-change: transform;
+}
+
+/* Acabamento temático suave (não quebra seu estilo base) */
+.theme-grimoire header.hud,
+.theme-cavern  header.hud {
+  background:
+  radial-gradient(800px 120px at 50% -40%, rgba(255,255,255,.06), transparent 70%),
+  linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border-bottom: 1px solid rgba(255,255,255,.06);
+  box-shadow: 0 10px 24px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05) inset;
 }
 
 /* 🏷️ Badges genéricas */
@@ -30,7 +44,7 @@ header.hud {
   font-weight: bold;
   letter-spacing: 0.05em;
   box-shadow: 0 0 4px rgba(255,255,255,0.08);
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
 }
 
 /* 📅 Badge de Dia */
@@ -44,8 +58,10 @@ padding: 0.4rem 0.8rem;
 box-shadow: inset 0 0 3px rgba(255,255,255,0.05);
 cursor: pointer;
 position: relative;
-transition: background-color 0.3s ease;
+transition: background-color 0.25s ease;
 }
+
+#hud-dia:hover { background-color: #333; }
 
 /* 💬 Tooltip do dia */
 #hud-dia::after {
@@ -56,18 +72,17 @@ left: 50%;
 transform: translateX(-50%);
 background: rgba(20, 20, 20, 0.95);
 padding: 0.75rem 1rem;
-border-radius: 8px;
+  border-radius: 8px;
 border: 1px solid #666;
 white-space: nowrap;
 color: #eee;
 font-size: 0.75rem;
 opacity: 0;
 pointer-events: none;
-transition: opacity 0.3s ease;
+transition: opacity 0.2s ease;
 box-shadow: 0 0 10px rgba(0,0,0,0.4);
 z-index: 1001;
 }
-
 #hud-dia::before {
 content: "";
 position: absolute;
@@ -78,17 +93,10 @@ border: 6px solid transparent;
 border-top-color: rgba(20, 20, 20, 0.95);
 z-index: 1001;
 opacity: 0;
-transition: opacity 0.3s ease;
+transition: opacity 0.2s ease;
 }
-
-#hud-dia:hover {
-background-color: #333;
-}
-
 #hud-dia:hover::after,
-#hud-dia:hover::before {
-opacity: 1;
-}
+#hud-dia:hover::before { opacity: 1; }
 
 /* 🧭 Badge de Build */
 #hud-build {
@@ -96,267 +104,352 @@ font-weight: bold;
 border-radius: 8px;
 padding: 0.4rem 0.8rem;
 box-shadow: inset 0 0 3px rgba(255,255,255,0.05);
-transition: all 0.3s ease-in-out;
+transition: transform 0.2s ease, background-color 0.25s ease, color 0.25s ease;
 position: relative;
 cursor: help;
 }
 
-/* 💬 Tooltip da Build (acusadora) */
+
+/* ===== Vars de tema do HUD ===== */
+:root {
+  --hud-radius: 12px;
+  --hud-blur: 8px;
+  --hud-elev: 24px;
+  --hud-border: rgba(255,255,255,0.08);
+  --hud-fill: rgba(8, 8, 10, 0.72);
+  --hud-text: #e8e8e8;
+
+  /* Cores por build */
+  --v-bg: #0f3f2a; --v-bd: #10b981; --v-tx: #c9ffe5; --v-glow: #10b98166;
+  --p-bg: #5f1212; --p-bd: #ef4444; --p-tx: #ffd9d9; --p-glow: #ef444466;
+  --a-bg: #2a0a45; --a-bd: #a855f7; --a-tx: #f1e6ff; --a-glow: #a855f788;
+}
+
+/* Garanta que o badge seja âncora do tooltip */
+#hud-build { position: relative; }
+
+/* ===== Tooltip acusador (bonito, vítreo e responsivo) ===== */
 #hud-build::after {
 content: attr(data-tooltip);
 position: absolute;
-top: -140%;
-right: 50%;
-transform: translateX(50%);
-background: rgba(0, 0, 0, 0.95);
-color: #ddd;
-padding: 0.4rem 0.8rem;
-border-radius: 8px;
-font-size: 0.7rem;
-white-space: nowrap;
-border: 1px solid #444;
+left: 50%;
+bottom: calc(100% + 12px);
+transform: translateX(-50%) translateY(6px);
+
+/* 🔑 Largura previsível (adeus coluna estreita) */
+display: block;
+min-width: 200px;                       /* nunca fica “fino” demais */
+max-width: clamp(220px, 42vw, 360px);   /* responsivo, com teto */
+width: max-content;                     /* cresce até o conteúdo… */
+box-sizing: border-box;                 /* …respeitando o padding */
+
+padding: 0.6rem 1rem;
+border-radius: var(--hud-radius);
+background: linear-gradient(180deg, rgba(18,18,22,0.92), rgba(12,12,16,0.88));
+border: 1px solid var(--hud-border);
+color: var(--hud-text);
+font-family: 'Share Tech Mono', monospace;
+font-size: clamp(0.78rem, 1.05vw, 0.9rem);
+line-height: 1.35;
+text-align: center;
+
+/* Quebra elegante (sem “empilhar” palavra por linha) */
+white-space: normal;
+overflow-wrap: break-word;
+word-break: normal;
+-webkit-hyphens: auto;
+hyphens: auto;
+
+box-shadow:
+0 10px 30px rgba(0,0,0,0.45),
+0 0 0 1px rgba(255,255,255,0.03) inset;
+backdrop-filter: blur(var(--hud-blur));
+-webkit-backdrop-filter: blur(var(--hud-blur));
 opacity: 0;
 pointer-events: none;
-transition: opacity 0.3s ease;
+z-index: 1001;
+will-change: transform, opacity;
+transition: transform .25s ease, opacity .25s ease;
+}
+
+/* Estado visível (sem mudanças) */
+#hud-build:hover::after,
+#hud-build:focus-visible::after {
+opacity: 1;
+transform: translateX(-50%) translateY(0);
+}
+
+/* Seta do tooltip */
+#hud-build::before {
+content: "";
+position: absolute;
+left: 50%;
+bottom: calc(100% + 4px);
+transform: translateX(-50%) rotate(45deg);
+width: 10px; height: 10px;
+background: linear-gradient(180deg, rgba(18,18,22,0.92), rgba(12,12,16,0.88));
+border-left: 1px solid var(--hud-border);
+border-top: 1px solid var(--hud-border);
+box-shadow: 0 2px 6px rgba(0,0,0,0.35);
+opacity: 0;
+transition: opacity .25s ease;
 z-index: 1001;
 }
 
-#hud-build:hover::after {
+/* Mostrar tooltip (mouse e teclado) */
+#hud-build:hover::after,
+#hud-build:focus-visible::after,
+#hud-build:hover::before,
+#hud-build:focus-visible::before {
 opacity: 1;
+transform: translateX(-50%) translateY(0);
 }
 
-/* 🎨 Cores por build */
-.badge.build.virtuoso,
-#hud-build.virtuoso {
-background-color: #1c5533;
-color: #a6f4c5;
-border: 1px solid #10b981;
+/* Motion reduce: estático e limpo */
+@media (prefers-reduced-motion: reduce) {
+  #hud-build::after,
+  #hud-build::before {
+  transition: none !important;
+  transform: translateX(-50%) !important;
+  }
 }
 
-.badge.build.profano,
-#hud-build.profano {
-background-color: #7f1d1d;
-color: #fecaca;
-border: 1px solid #ef4444;
+/* ===== Badges por build – vidro coeso, glow sutil e estados ===== */
+.badge.build,
+#hud-build {
+display: inline-flex;
+align-items: center;
+gap: .45rem;
+padding: .35rem .85rem;
+border-radius: 999px;
+font-weight: 600;
+letter-spacing: .02em;
+box-shadow:
+0 8px 22px rgba(0,0,0,0.35),
+inset 0 0 0 1px rgba(255,255,255,0.04);
+backdrop-filter: blur(6px);
+-webkit-backdrop-filter: blur(6px);
 }
 
-.badge.build.anomalia,
-#hud-build.anomalia {
-background-color: #3b0764;
-color: #e9d5ff;
-border: 1px solid #a855f7;
-box-shadow: 0 0 6px #a855f788;
+/* Indicador (pontinho) */
+.badge.build::before,
+#hud-build::before { /* OBS: já usamos ::before no tooltip; evite conflito com #hud-build */
+/* Nada aqui para não conflitar com a seta do tooltip */
+}
+.badge.build > .dot {
+  width: .55rem; height: .55rem; border-radius: 50%;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.08) inset, 0 0 8px currentColor;
 }
 
-/* 🌫️ Efeito Névoa */
+/* Virtuoso */
+.badge.build.virtuoso, #hud-build.virtuoso {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--v-bg) 92%, #000), var(--v-bg));
+  color: var(--v-tx);
+  border: 1px solid var(--v-bd);
+  box-shadow:
+  0 0 0 1px rgba(255,255,255,0.03) inset,
+  0 10px 26px var(--v-glow);
+}
+.badge.build.virtuoso .dot { background: var(--v-bd); }
+
+/* Profano */
+.badge.build.profano, #hud-build.profano {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--p-bg) 92%, #000), var(--p-bg));
+  color: var(--p-tx);
+  border: 1px solid var(--p-bd);
+  box-shadow:
+  0 0 0 1px rgba(255,255,255,0.03) inset,
+  0 10px 26px var(--p-glow);
+}
+.badge.build.profano .dot { background: var(--p-bd); }
+
+/* Anomalia */
+.badge.build.anomalia, #hud-build.anomalia {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--a-bg) 92%, #000), var(--a-bg));
+  color: var(--a-tx);
+  border: 1px solid var(--a-bd);
+  box-shadow:
+  0 0 0 1px rgba(255,255,255,0.03) inset,
+  0 10px 26px var(--a-glow);
+}
+.badge.build.anomalia .dot { background: var(--a-bd); }
+
+/* Hover/Focus: leve elevação e brilho */
+.badge.build:hover,
+.badge.build:focus-visible,
+#hud-build:hover,
+#hud-build:focus-visible {
+filter: saturate(1.05);
+transform: translateY(-1px);
+box-shadow:
+0 12px 30px rgba(0,0,0,0.45),
+0 0 0 1px rgba(255,255,255,0.05) inset;
+transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
+}
+
+/* Tamanhos menores em mobile */
+@media (max-width: 768px) {
+  .badge.build, #hud-build {
+    padding: .3rem .75rem;
+    font-size: .95rem;
+  }
+}
+
+
+/* 🌫️ Efeito Névoa (canvas de fundo) */
 #etereal-fog {
 position: fixed;
-top: 0;
-left: 0;
-width: 100vw;
-height: 100vh;
+top: 0; left: 0;
+width: 100vw; height: 100vh;
 z-index: 0;
 pointer-events: none;
 opacity: 0.1;
 filter: blur(4px);
 }
 
+/* ──────────────────────────────────────────────────────────
+ *   AURAS MORAIS — ESCOPADAS AO CARTÃO DE NARRATIVA
+ *   (antes eram em .container; agora só em #evento.evento-ritual)
+ *   ────────────────────────────────────────────────────────── */
 
-/* 🌌 Auras Morais - Efeitos por Build Refinadas */
-
+/* Reset/remoção das antigas regras pesadas para .container::before
+ *   (garante que nada vaze para outros containers) */
 body.build-virtuoso .container::before,
 body.build-profano .container::before,
-body.build-anomalia .container::before {
+body.build-anomalia .container::before { content: none !important; }
+
+/* Aura leve e GPU-friendly (apenas transform/opacity) */
+body.build-virtuoso #evento.evento-ritual::before,
+body.build-profano  #evento.evento-ritual::before,
+body.build-anomalia #evento.evento-ritual::before {
   content: "";
   position: absolute;
   top: -8%;
   left: -8%;
   width: 116%;
   height: 116%;
-  border-radius: 50%;
+  border-radius: 20px;
   pointer-events: none;
   z-index: 0;
-  backdrop-filter: blur(6px);
-  transition: all 0.5s ease-in-out;
+  /* Sem backdrop-filter/filters pesados */
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  opacity: 0.9;                     /* visível, mas ainda leve */
+  will-change: transform, opacity;  /* hints para compositor */
 }
 
 /* Virtuoso */
-body.build-virtuoso .container::before {
-  background: radial-gradient(ellipse at center, rgba(110, 242, 177, 0.15), transparent 70%);
-  box-shadow: 0 0 20px 6px rgba(110, 242, 177, 0.3);
-  filter: drop-shadow(0 0 6px #6ef2b1aa) brightness(1.05);
-  mix-blend-mode: screen;
-  animation: pulsar 3s infinite ease-in-out;
+body.build-virtuoso #evento.evento-ritual::before {
+  background: radial-gradient(ellipse at center, rgba(110, 242, 177, 0.12), transparent 70%);
+  box-shadow: 0 0 18px 4px rgba(110, 242, 177, 0.20);
+  animation: pulsar 6s ease-in-out infinite;
 }
 
 /* Profano */
-body.build-profano .container::before {
-  background: radial-gradient(ellipse at center, rgba(248, 91, 91, 0.15), transparent 70%);
-  box-shadow: 0 0 20px 6px rgba(248, 91, 91, 0.3);
-  filter: drop-shadow(0 0 6px #f85b5baa) brightness(0.9);
-  mix-blend-mode: overlay;
-  animation: red-waves 3s infinite ease-in-out;
+body.build-profano #evento.evento-ritual::before {
+  background: radial-gradient(ellipse at center, rgba(248, 91, 91, 0.12), transparent 70%);
+  box-shadow: 0 0 18px 4px rgba(248, 91, 91, 0.20);
+  animation: red-waves 5.5s ease-in-out infinite;
 }
 
 /* Anomalia */
-body.build-anomalia .container::before {
-  background: radial-gradient(ellipse at center, rgba(168, 126, 248, 0.15), transparent 70%);
-  box-shadow: 0 0 20px 6px rgba(168, 126, 248, 0.3);
-  filter: drop-shadow(0 0 6px #a87ef8aa) contrast(1.2);
-  mix-blend-mode: lighten;
-  animation: glitchy-fog 3s infinite ease-in-out;
+body.build-anomalia #evento.evento-ritual::before {
+  background: radial-gradient(ellipse at center, rgba(168, 126, 248, 0.12), transparent 70%);
+  box-shadow: 0 0 18px 4px rgba(168, 126, 248, 0.20);
+  animation: glitchy-fog 7s ease-in-out infinite;
 }
 
+/* Keyframes leves (apenas transform/opacity) */
 @keyframes pulsar {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.75;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
+  0%, 100% { transform: scale(1);   opacity: .85; }
+  50%      { transform: scale(1.04); opacity: 1;  }
 }
-
 @keyframes red-waves {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.75;
-  }
-  50% {
-    transform: scale(1.08);
-    opacity: 1;
-  }
+  0%, 100% { transform: scale(1);    opacity: .85; }
+  50%      { transform: scale(0.985); opacity: 1;   }
 }
-
 @keyframes glitchy-fog {
-  0%, 100% {
-    transform: translate(0, 0);
-    opacity: 0.6;
-  }
-  20% {
-    transform: translate(1px, -1px);
-  }
-  40% {
-    transform: translate(-1px, 1px);
-  }
-  60% {
-    transform: translate(2px, 0);
-  }
-  80% {
-    transform: translate(0, 2px);
+  0%   { transform: translate(0, 0) scale(1);    opacity: .88; }
+  25%  { transform: translate(1px,-1px) scale(1.01); opacity: .95; }
+  50%  { transform: translate(-1px,1px) scale(1);    opacity: 1;   }
+  75%  { transform: translate(1px, 1px) scale(1.005); opacity: .92; }
+  100% { transform: translate(0, 0) scale(1);    opacity: .88; }
+}
+
+/* ♿ Respeito total a usuários com redução de movimento */
+@media (prefers-reduced-motion: reduce) {
+  body.build-virtuoso #evento.evento-ritual::before,
+  body.build-profano  #evento.evento-ritual::before,
+  body.build-anomalia #evento.evento-ritual::before {
+    animation: none !important;
+    transition: none !important;
   }
 }
 
-/* 💧 Efeito Ripple ritualístico */
+/* 📱 Desativar efeitos pesados no mobile */
+@media (max-width: 768px) {
+  body.build-virtuoso #evento.evento-ritual::before,
+  body.build-profano  #evento.evento-ritual::before,
+  body.build-anomalia #evento.evento-ritual::before {
+    display: none !important;
+  }
+}
+
+/* ──────────────────────────────────────────────────────────
+ *   Ripple/Partículas — ajustes de performance
+ *   ────────────────────────────────────────────────────────── */
 .ripple-effect {
   position: absolute;
-  width: 20px;
-  height: 20px;
+  width: 20px; height: 20px;
   border-radius: 50%;
   pointer-events: none;
   transform: scale(0);
   animation: rippleExpand 0.8s ease-out forwards;
   z-index: 10;
   background: rgba(255, 255, 255, 0.2);
+  will-change: transform, opacity;
 }
-
-body.build-virtuoso .ripple-effect {
-  background: rgba(110, 242, 177, 0.2);
-}
-
-body.build-profano .ripple-effect {
-  background: rgba(248, 91, 91, 0.2);
-}
-
-body.build-anomalia .ripple-effect {
-  background: rgba(168, 126, 248, 0.2);
-}
+body.build-virtuoso .ripple-effect { background: rgba(110, 242, 177, 0.2); }
+body.build-profano  .ripple-effect { background: rgba(248,  91,  91, 0.2); }
+body.build-anomalia .ripple-effect { background: rgba(168, 126, 248, 0.2); }
 
 @keyframes rippleExpand {
-  to {
-    transform: scale(15);
-    opacity: 0;
-  }
+  to { transform: scale(14); opacity: 0; }
 }
 
-/* ✨ Partículas etéreas simbólicas por build */
 .particles-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
 }
-
 .particle {
   position: absolute;
-  width: 6px;
-  height: 6px;
+  width: 6px; height: 6px;
   border-radius: 50%;
   opacity: 0.6;
   animation: floaty 10s infinite ease-in-out;
+  will-change: transform, opacity;
 }
-
 @keyframes floaty {
-  0% {
-    transform: translateY(100vh) scale(0.6);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(-10vh) scale(1);
-    opacity: 0;
-  }
+  0%   { transform: translateY(100vh) scale(0.6); opacity: 0; }
+  50%  { opacity: 1; }
+  100% { transform: translateY(-10vh) scale(1);  opacity: 0; }
 }
+body.build-virtuoso .particle { background-color: #6ef2b1; box-shadow: 0 0 8px #6ef2b177; }
+body.build-profano  .particle { background-color: #f85b5b; box-shadow: 0 0 8px #f85b5b77; }
+body.build-anomalia .particle { background-color: #a87ef8; box-shadow: 0 0 8px #a87ef877; }
 
-body.build-virtuoso .particle {
-  background-color: #6ef2b1;
-  box-shadow: 0 0 8px #6ef2b177;
-}
-
-body.build-profano .particle {
-  background-color: #f85b5b;
-  box-shadow: 0 0 8px #f85b5b77;
-}
-
-body.build-anomalia .particle {
-  background-color: #a87ef8;
-  box-shadow: 0 0 8px #a87ef877;
-}
-
-/* 🌠 Sugestões para mais imersão futura:
- - *Música ambiente que muda sutilmente por build.
- - Aplicar variações climáticas por build (névoa + vento leve + estática).
- */
-/* 🌠 Sugestões diminuir lag no mobile e web:
- * - *aplicado a todos os arquivos css ou maioria.
- */
-
+/* Mobile: desligar partículas e ripple */
 @media (max-width: 768px) {
-  .particles-container,
-  .ripple-effect,
-  body.build-virtuoso .container::before,
-  body.build-profano .container::before,
-  body.build-anomalia .container::before {
+  .particles-container, .ripple-effect {
     display: none !important;
     animation: none !important;
-    filter: none !important;
-    box-shadow: none !important;
-    backdrop-filter: none !important;
   }
 }
 
-.particle,
-.ripple-effect,
-body.build-virtuoso .container::before,
-body.build-profano .container::before,
-body.build-anomalia .container::before {
-  will-change: transform, opacity;
-  transform: translate3d(0, 0, 0);
+/* Hints de composição (somente onde faz sentido) */
+.particle, .ripple-effect {
+  transform: translate3d(0,0,0);
 }

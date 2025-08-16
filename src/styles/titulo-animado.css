@@ -1,73 +1,45 @@
-/* src/styles/titulo-animado.css */
+/* ===== Espaço real + overlay elegante ===== */
+:root {
+    --titulo-h: 3.5rem;   /* altura lógica do espaço reservado */
+    --titulo-pad: 0.5rem; /* respiro vertical */
+}
+
+@media (max-width: 768px) {
+    :root {
+        --titulo-h: 3rem;
+    }
+}
+
+/* O container agora PARTICIPA do fluxo (reserva altura)… */
 .titulo-ritual {
-    position: absolute;
-    top: 1.5vh;
-    left: 0;
-    right: 0;
-    text-align: center;
-    z-index: 1000;
+    position: relative !important;   /* sai do absolute que quebrava o fluxo */
+    height: var(--titulo-h);
+    padding: var(--titulo-pad) 0;
     pointer-events: none;
-    padding: 0.5rem;
-    height: 3.5rem;
+    display: block;
+    z-index: 1000;
+    text-align: center;
 }
 
-.titulo-animado {
-    display: inline-block;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: clamp(1.6rem, 2.5vw, 2.8rem);
-    color: #ffffffcc;
-    letter-spacing: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    border-right: 2px solid rgba(255, 255, 255, 0.8);
-    width: 0;
-    animation:
-    typing 3.5s steps(28, end) forwards,
-    blink-caret 0.75s step-end infinite;
+/* …mas o texto fica VISUALMENTE flutuando ao centro (overlay bonito) */
+.titulo-ritual .titulo-animado {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
-@keyframes typing {
-    from { width: 0 }
-    to   { width: 22ch }
-}
-
-@keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: rgba(255, 255, 255, 0.8) }
-}
-
-.titulo-animado.glow {
-    animation: glow 4s ease-in-out infinite;
-    border-right: none;
-}
-
-@keyframes glow {
-    0%   { text-shadow: 0 0 5px #fff3, 0 0 10px #6ef2b144 }
-    50%  { text-shadow: 0 0 15px #ffffff99, 0 0 25px #6ef2b1aa }
-    100% { text-shadow: 0 0 5px #fff3, 0 0 10px #6ef2b144 }
-}
-
-/* 🌈 Glow dinâmico por build */
-body.build-virtuoso .titulo-animado.glow {
-    text-shadow: 0 0 10px #6ef2b1, 0 0 20px #6ef2b199, 0 0 30px #6ef2b144;
-}
-body.build-profano .titulo-animado.glow {
-    text-shadow: 0 0 10px #f85b5b, 0 0 20px #f85b5b99, 0 0 30px #f85b5b44;
-}
-body.build-anomalia .titulo-animado.glow {
-    text-shadow: 0 0 10px #a87ef8, 0 0 20px #a87ef899, 0 0 30px #a87ef844;
-}
-
-/* 📱 Otimização Mobile e Acessibilidade */
+/* Acessibilidade / mobile: sem digitação, sem caret, largura auto */
 @media (max-width: 768px), (prefers-reduced-motion: reduce) {
-    .titulo-animado {
-        animation: none !important;
-        width: auto !important;
-        border-right: none !important;
+    .titulo-ritual .titulo-animado {
+        position: static;
+        transform: none;
     }
+}
 
-    .titulo-animado.glow {
-        animation: none !important;
-        text-shadow: none !important;
-    }
+/* Opcional: variante 100% estática se quiser zerar o overlay visual
+ *   (adicione a classe .sem-overlay no container quando quiser) */
+.titulo-ritual.sem-overlay .titulo-animado {
+    position: static !important;
+    transform: none !important;
 }

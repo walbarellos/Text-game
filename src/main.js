@@ -1,15 +1,26 @@
-// 📦 Estilos base
+// 🎨 ORDEM IMPORTANTE (do mais genérico → para o mais específico)
+
+// Base / layout comuns
 import './styles/base.css';
+
+// HUD, evento e botões
 import './styles/hud.css';
 import './styles/evento.css';
 import './styles/botoes.css';
-import './styles/tema.css';
-import './styles/dicas.css';
 
-// 🔧 Patches/efeitos extras (se existirem no projeto)
-import './styles/patch-responsivo-ritual-v1.css';
+// Utilitários e UI
+import './styles/dicas.css';
+import './styles/titulo-animado.css';
+import './styles/tooltip-hud.css';
 import './styles/intro.css';
 import './styles/reward-choice.css';
+
+// Tema (grimório/caverna) e patch responsivo
+import './styles/tema.css';
+import './styles/patch-responsivo-ritual-v1.css';
+
+// 🔧 Hotfix deve ser sempre o ÚLTIMO para prevalecer
+import './styles/hotfix.css';
 
 // 🔧 Núcleo
 import { renderizarEvento } from './core/renderer.js';

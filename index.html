@@ -1,148 +1,168 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="description" content="Jogo ritualístico simbólico sobre escolhas e moralidade." />
-  <title>What Is Life ☉</title>
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="Jogo ritualístico simbólico sobre escolhas e moralidade." />
+    <title>What Is Life ☉</title>
 
-  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
 
-  <!-- Estilos -->
-  <link rel="stylesheet" href="./src/styles/titulo-animado.css" />
-  <link rel="stylesheet" href="./src/styles/aura.css" />
-  <link rel="stylesheet" href="./src/styles/tooltip-hud.css" />
+    <!-- Fontes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
+  </head>
 
-  <!-- 🔧 Patch de Responsividade Ritualística -->
-  <link rel="stylesheet" href="./src/styles/patch-responsivo-ritual-v1.css" />
+  <!-- Definição do tema (grimório/caverna) e da build (virtuoso/profano/anomalia) -->
+  <body class="jogo-corpo theme-grimoire build-profano">
+    <!-- Fundo animado -->
+    <canvas id="background-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;"></canvas>
 
-  <!-- Fonte -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
-</head>
-
-<body class="jogo-corpo">
-  <!-- Fundo animado -->
-  <canvas id="background-canvas" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;"></canvas>
-  <!-- index.html (adicione antes do conteúdo principal) -->
-<div id="intro-cinematica" class="intro-cinematica">
-  <div id="intro-texto" class="intro-texto"></div>
-  <button id="pular-intro" class="pular-intro">Pular</button>
-</div>
-
-
-
-
-  <!-- Envoltório geral -->
-  <div class="main-wrapper">
-
-    <!-- Título ritualístico -->
-    <div class="titulo-ritual" aria-label="Título do Jogo">
-      <h1 class="titulo-animado">What Is Life ☉</h1>
+    <!-- Intro cinematográfica -->
+    <div id="intro-cinematica" class="intro-cinematica">
+      <div id="intro-texto" class="intro-texto"></div>
+      <button id="pular-intro" class="pular-intro">Pular</button>
     </div>
 
-    <!-- Wrapper do Jogo -->
-    <div id="wrapper-jogo" class="container">
-      <canvas id="etereal-fog"></canvas>
-
-      <!-- HUD -->
-      <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
-        <div id="hud-dia" class="hud-dia" aria-live="polite">Dia 1</div>
-        <div id="hud-build" class="hud-build profano" aria-label="Build atual">⚪ Profano</div>
-      </header>
-
-      <!-- Tooltip -->
-      <div id="tooltip-ritual" class="tooltip-ritual" aria-hidden="true"></div>
-
-      <!-- Narrativa -->
-      <main id="evento" class="evento-container" role="main" aria-label="Narrativa interativa do jogo"></main>
-    </div>
-
-    <!-- Footer com créditos -->
-    <footer class="footer-jogo" aria-hidden="false">
-      <div class="footer-inner">
-        <div class="creditos">Desenvolvido por <strong>Willian Albarello</strong> – ☉ What Is Life</div>
-        <div class="redes-sociais">
-          <a href="https://qoto.org/@wepiphany" target="_blank" rel="noopener noreferrer" aria-label="Mastodon">
-            <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M21.43 9.19c-.26-2.65-2.61-4.73-5.47-5.08-1.24-.16-3.65-.24-5.9-.22-2.25-.02-4.66.06-5.9.22-2.86.35-5.21 2.43-5.47 5.08C-.08 13.05-.19 18.7 1.7 20.68 3.37 22.42 6.52 23.18 8.66 23.46c1.27.18 2.46.24 3.63.22 1.17.02 2.36-.04 3.63-.22 2.14-.28 5.3-1.04 6.96-2.78 1.89-1.98 1.78-7.63 1.55-11.49zM17.65 13.8c0 2.47-2.28 2.47-2.28 2.47h-.46v-2.2c0-.94-.43-1.42-1.29-1.42-.98 0-1.46.66-1.46 1.85v1.78h-.46c-.48 0-2.29-.01-2.29-2.47V10.4h1.25v3.08c0 1.09.7 1.09.7 1.09h.24v-2.21c0-.94.64-1.89 2.03-1.89 1.38 0 1.75.95 1.75 1.89v2.21h.24s.7 0 .7-1.09V10.4h1.25v3.4z"/>
-            </svg>
-          </a>
-          <a href="https://github.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 0.297C5.373 0.297 0 5.67 0 12.297c0 5.285 3.438 9.773 8.207 11.387.6.113.793-.26.793-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.612-4.042-1.612-.546-1.386-1.333-1.755-1.333-1.755-1.09-.745.083-.73.083-.73 1.204.084 1.837 1.237 1.837 1.237 1.07 1.833 2.807 1.303 3.492.997.108-.775.42-1.303.763-1.602-2.665-.304-5.466-1.333-5.466-5.932 0-1.31.468-2.38 1.235-3.22-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.495 11.495 0 0 1 3.003-.404 11.49 11.49 0 0 1 3.003.404c2.29-1.552 3.296-1.23 3.296-1.23.653 1.653.242 2.873.119 3.176.77.84 1.234 1.91 1.234 3.22 0 4.61-2.805 5.625-5.476 5.922.43.37.814 1.102.814 2.222 0 1.605-.015 2.897-.015 3.292 0 .32.192.694.8.576C20.565 22.067 24 17.578 24 12.297 24 5.67 18.627.297 12 .297z"/>
-            </svg>
-          </a>
-
-          <a href="https://instagram.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 3a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5zm5.25-.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
-            </svg>
-          </a>
-        </div>
+    <!-- Envoltório geral -->
+    <div class="main-wrapper">
+      <!-- Título ritualístico -->
+      <div class="titulo-ritual" aria-label="Título do Jogo">
+        <h1 class="titulo-animado">What Is Life ☉</h1>
       </div>
-    </footer>
-  </div>
 
-  <!-- Scripts -->
-  <script type="module" src="/src/ui/fundo-geom.js"></script>
-  <script type="module" src="./src/main.js"></script>
+      <!-- Wrapper do Jogo -->
+      <div id="wrapper-jogo" class="container">
+        <canvas id="etereal-fog"></canvas>
 
-  <!-- Título e SVG -->
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const titulo = document.querySelector('.titulo-animado');
-      if (!titulo) return;
+        <!-- HUD -->
+        <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
+          <div id="hud-dia" class="hud-dia" aria-live="polite">Dia 1</div>
 
-      const texto = titulo.textContent || 'What Is Life ☉';
-      const steps = texto.length;
+          <!-- Badge da build: agora com dot, label, tooltip e foco teclado -->
+          <span
+            id="hud-build"
+            class="badge build profano"
+            tabindex="0"
+            role="status"
+            aria-label="Build atual: Profano"
+            data-tooltip="Seu espírito vacila. Reoriente o curso.">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="label">Profano</span>
+          </span>
+        </header>
 
-      titulo.style.animation = `
-        typing 3.5s steps(${steps}, end) forwards,
-        blink-caret 0.75s step-end infinite
-      `;
+        <!-- Tooltip -->
+        <div id="tooltip-ritual" class="tooltip-ritual" aria-hidden="true"></div>
 
-      setTimeout(() => {
-        titulo.classList.add('glow');
-      }, 3600);
+        <!-- Narrativa (aura ritual escopada neste container) -->
+        <main
+          id="evento"
+          class="evento-container evento-ritual"
+          role="main"
+          aria-label="Narrativa interativa do jogo">
+        </main>
+      </div>
 
-      const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-      svg.setAttribute('width', '100%');
-      svg.setAttribute('height', '100');
-      svg.setAttribute('viewBox', '0 0 800 100');
-      svg.style.width = '100%';
-      svg.style.height = '100px';
-      svg.style.position = 'relative';
-      svg.style.display = 'block';
-      svg.style.margin = '0 auto';
-      svg.style.zIndex = '0';
+      <!-- Footer com créditos -->
+      <footer class="footer-jogo" aria-hidden="false">
+        <div class="footer-inner">
+          <div class="creditos">Desenvolvido por <strong>Willian Albarello</strong> – ☉ What Is Life</div>
+          <div class="redes-sociais">
+            <a href="https://qoto.org/@wepiphany" target="_blank" rel="noopener noreferrer" aria-label="Mastodon">
+              <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21.43 9.19c-.26-2.65-2.61-4.73-5.47-5.08-1.24-.16-3.65-.24-5.9-.22-2.25-.02-4.66.06-5.9.22-2.86.35-5.21 2.43-5.47 5.08C-.08 13.05-.19 18.7 1.7 20.68 3.37 22.42 6.52 23.18 8.66 23.46c1.27.18 2.46.24 3.63.22 1.17.02 2.36-.04 3.63-.22 2.14-.28 5.3-1.04 6.96-2.78 1.89-1.98 1.78-7.63 1.55-11.49zM17.65 13.8c0 2.47-2.28 2.47-2.28 2.47h-.46v-2.2c0-.94-.43-1.42-1.29-1.42-.98 0-1.46.66-1.46 1.85v1.78h-.46c-.48 0-2.29-.01-2.29-2.47V10.4h1.25v3.08c0 1.09.7 1.09.7 1.09h.24v-2.21c0-.94.64-1.89 2.03-1.89 1.38 0 1.75.95 1.75 1.89v2.21h.24s.7 0 .7-1.09V10.4h1.25v3.4z"/>
+              </svg>
+            </a>
+            <a href="https://github.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 0.297C5.373 0.297 0 5.67 0 12.297c0 5.285 3.438 9.773 8.207 11.387.6.113.793-.26.793-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.612-4.042-1.612-.546-1.386-1.333-1.755-1.333-1.755-1.09-.745.083-.73.083-.73 1.204.084 1.837 1.237 1.837 1.237 1.07 1.833 2.807 1.303 3.492.997.108-.775.42-1.303.763-1.602-2.665-.304-5.466-1.333-5.466-5.932 0-1.31.468-2.38 1.235-3.22-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.495 11.495 0 0 1 3.003-.404 11.49 11.49 0 0 1 3.003.404c2.29-1.552 3.296-1.23 3.296-1.23.653 1.653.242 2.873.119 3.176.77.84 1.234 1.91 1.234 3.22 0 4.61-2.805 5.625-5.476 5.922.43.37.814 1.102.814 2.222 0 1.605-.015 2.897-.015 3.292 0 .32.192.694.8.576C20.565 22.067 24 17.578 24 12.297 24 5.67 18.627.297 12 .297z"/>
+              </svg>
+            </a>
+            <a href="https://instagram.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="24" height="24" fill="#fff" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 3a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5zm5.25-.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
 
-      svg.innerHTML = `
-        <polyline points="0,80 150,20 300,60 450,10 600,80 800,40"
-          stroke="#ffffff33"
-          stroke-width="1.5"
-          fill="none"
-          stroke-dasharray="5,5"
-        />
-      `;
+    <!-- Scripts -->
+    <script type="module" src="/src/ui/fundo-geom.js"></script>
+    <script type="module" src="./src/main.js"></script>
 
-      titulo.parentElement?.prepend(svg);
+    <!-- Título (efeito de digitação + linha SVG) e Tooltip HUD -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const titulo = document.querySelector('.titulo-animado');
+        if (titulo) {
+          const texto = titulo.textContent || 'What Is Life ☉';
+          const steps = texto.length;
 
-      const hudDia = document.getElementById('hud-dia');
-      const tooltip = document.getElementById('tooltip-ritual');
+          titulo.style.animation = `
+            typing 3.5s steps(${steps}, end) forwards,
+            blink-caret 0.75s step-end infinite
+          `;
 
-      hudDia?.addEventListener('mouseenter', () => {
-        const frase = hudDia.dataset.frase || '⚡ Frase ritualística não disponível.';
-        tooltip.textContent = frase;
-        tooltip.classList.add('visible');
+          setTimeout(() => { titulo.classList.add('glow'); }, 3600);
+
+          const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+          svg.setAttribute('width', '100%');
+          svg.setAttribute('height', '100');
+          svg.setAttribute('viewBox', '0 0 800 100');
+          svg.style.width = '100%';
+          svg.style.height = '100px';
+          svg.style.position = 'relative';
+          svg.style.display = 'block';
+          svg.style.margin = '0 auto';
+          svg.style.zIndex = '0';
+          svg.innerHTML = `
+            <polyline points="0,80 150,20 300,60 450,10 600,80 800,40"
+              stroke="#ffffff33"
+              stroke-width="1.5"
+              fill="none"
+              stroke-dasharray="5,5"
+            />
+          `;
+          titulo.parentElement?.prepend(svg);
+        }
+
+        // Tooltip HUD
+        const hudDia = document.getElementById('hud-dia');
+        const tooltip = document.getElementById('tooltip-ritual');
+
+        hudDia?.addEventListener('mouseenter', () => {
+          const frase = hudDia.dataset.frase || '⚡ Frase ritualística não disponível.';
+          tooltip.textContent = frase;
+          tooltip.classList.add('visible');
+        });
+
+        hudDia?.addEventListener('mouseleave', () => {
+          tooltip.classList.remove('visible');
+        });
       });
 
-      hudDia?.addEventListener('mouseleave', () => {
-        tooltip.classList.remove('visible');
-      });
-    });
-  </script>
-</body>
-</html>
+      // ===== Helpers opcionais: alternar tema e build em runtime =====
+      // Use no console: setTheme('grimorio'|'caverna'); setBuild('virtuoso'|'profano'|'anomalia');
+      function setTheme(name){
+        document.body.classList.toggle('theme-grimoire', name === 'grimorio');
+        document.body.classList.toggle('theme-cavern',  name === 'caverna');
+      }
+      function setBuild(kind){
+        document.body.classList.remove('build-virtuoso','build-profano','build-anomalia');
+        if (kind) document.body.classList.add(`build-${kind}`);
+
+        const pill = document.getElementById('hud-build');
+        if (pill){
+          pill.classList.remove('virtuoso','profano','anomalia');
+          pill.classList.add(kind);
+          pill.textContent = (kind?.charAt(0).toUpperCase() + kind?.slice(1)) || '—';
+        }
+      }
+    </script>
+  </body>
+  </html>
