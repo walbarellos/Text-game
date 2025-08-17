@@ -1,86 +1,115 @@
-/* 🎯 INTRO — RESPONSIVO + A11y
- *   - Sem animar `display` (não é animável)
- *   - Usa apenas opacity/visibility/pointer-events
- *   - Layout clamp e tipografia consistente
- */
+/* ===== INTRO CINEMATOGRÁFICA (compatível com seu HTML atual) ===== */
 
-/* SVG decorativo sob o título (intro também usa quando presente) */
-.titulo-ritual svg {
-    width: 100% !important;
-    height: 100px !important;
-    display: block;
-    margin: 0 auto;
-    position: relative;
-    z-index: 0;
-}
-
-/* Título: não estoura em telas pequenas */
-.titulo-animado {
-    font-size: clamp(1.6rem, 6vw, 3.2rem);
-    text-align: center;
-    word-break: break-word;
-    max-width: 90vw;
-    margin: 0 auto;
-}
-
-/* ===== INTRO CINEMATOGRÁFICA ===== */
+/* Overlay ocupa a viewport e centraliza o "card" (.intro-texto + botão) */
 #intro-cinematica {
 position: fixed;
-top: 10vh;
-left: 50%;
-transform: translateX(-50%);
-width: clamp(280px, 90vw, 600px);
-max-height: 60vh;
-padding: 2rem 1.5rem;
-background: #000;
-color: #fff;
-font-family: 'Share Tech Mono', monospace;
-font-size: clamp(1rem, 2.5vw, 1.4rem);
-text-align: center;
+inset: 0;
+display: grid;
+place-items: center;
+padding: max(2rem, 1.5rem + env(safe-area-inset-top))
+max(1.5rem, 1rem + env(safe-area-inset-right))
+max(2rem, 1.5rem + env(safe-area-inset-bottom))
+max(1.5rem, 1rem + env(safe-area-inset-left));
 z-index: 9999;
-border-radius: 1rem;
-box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
 
 /* estado base = oculto */
 opacity: 0;
 visibility: hidden;
 pointer-events: none;
-transition: opacity 0.6s ease, visibility 0.6s ease;
-overflow: hidden;
+transition: opacity .6s ease, visibility .6s ease;
+
+background: transparent; /* não escurece a página por padrão */
 }
 
-/* Mostra intro */
+/* “Card” interno é o próprio #intro-texto (sua marcação atual) */
+#intro-texto {
+width: clamp(280px, 90vw, 600px);
+max-height: min(60vh, 80svh);
+overflow: hidden auto;
+
+background: #000;
+color: #fff;
+font-family: 'Share Tech Mono', monospace;
+font-size: clamp(1rem, 2.5vw, 1.4rem);
+text-align: center;
+
+border-radius: 1rem;
+box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+padding: 2rem 1.5rem;
+}
+
+/* Estados */
 #intro-cinematica.mostrar {
 opacity: 1;
 visibility: visible;
 pointer-events: auto;
 }
-
-/* Oculta intro suavemente */
 #intro-cinematica.ocultar {
 opacity: 0;
 visibility: hidden;
 pointer-events: none;
 }
 
-/* Botão "Pular" */
-#pular-intro {
-margin-top: 1.5rem;
-background: #6ef2b1;
-color: #000;
-font-weight: 700;
-padding: 0.5rem 1.2rem;
-font-size: clamp(0.8rem, 1.5vw, 1rem);
-border: none;
-border-radius: 6px;
-cursor: pointer;
-transition: background 0.25s ease, transform 0.12s ease;
+/* Botão “Pular” (sua classe atual) */
+.pular-intro {
+    margin-top: 1.25rem;
+    background: #6ef2b1;
+    color: #000;
+    font-weight: 700;
+    padding: 0.5rem 1.2rem;
+    font-size: clamp(0.8rem, 1.5vw, 1rem);
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background .25s ease, transform .12s ease;
 }
-#pular-intro:hover { background: #4cd69d; transform: translateY(-1px); }
-#pular-intro:focus-visible { outline: 3px solid #c0c8ff; }
+.pular-intro:hover { background: #4cd69d; transform: translateY(-1px); }
+.pular-intro:active { transform: translateY(0); }
+.pular-intro:focus-visible { outline: 3px solid #c0c8ff; outline-offset: 2px; }
+
+/* Tipografia do título sem “text-wrap: pretty”; com fallback e balance onde houver */
+.titulo-animado {
+    font-size: clamp(1.6rem, 6vw, 3.2rem);
+    text-align: center;
+    overflow-wrap: anywhere;
+    word-break: normal;
+    hyphens: auto;
+    max-width: 90vw;
+    margin: 0 auto;
+}
+@supports (text-wrap: balance) {
+    .titulo-animado { text-wrap: balance; }
+}
 
 /* Reduz animação para quem prefere menos movimento */
 @media (prefers-reduced-motion: reduce) {
     #intro-cinematica { transition: none !important; }
-    #pular-intro { transition: none !important; }
+    .pular-intro { transition: none !important; }
 }
+
+/* Alto contraste / cores forçadas: legibilidade garantida */
+@media (prefers-contrast: more) {
+    #intro-cinematica { background: rgba(0,0,0,0.85); }
+    #intro-texto {
+    background: #000;
+    box-shadow: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    }
+}
+@media (forced-colors: active) {
+    #intro-cinematica { background: Canvas; }
+    #intro-texto {
+    background: Canvas;
+    color: CanvasText;
+    box-shadow: none;
+    border: 1px solid ButtonBorder;
+    }
+    .pular-intro {
+        background: ButtonFace;
+        color: ButtonText;
+        border: 1px solid ButtonBorder;
+    }
+}
+
+/* (Opcional) Travar scroll da página sob a intro */
+html.intro-lock, body.intro-lock { overflow: hidden; }

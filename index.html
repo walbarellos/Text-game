@@ -24,7 +24,7 @@
   </style>
 </head>
 
-<body class="jogo-corpo theme-grimoire build-virtuoso preload">
+<body class="jogo-corpo theme-grimoire preload">
   <a href="#evento" class="skip-link">Ir para o conteúdo principal</a>
 
   <canvas id="background-canvas" aria-hidden="true"
@@ -197,5 +197,121 @@
       el.classList.add('show'); setTimeout(()=>el.classList.remove('show'), 900);
     }
   </script>
-</body>
+  <script>
+  (() => {
+    const overlay = document.getElementById('intro-cinematica');
+    const panel   = document.getElementById('intro-texto');
+    const closeBtn = document.getElementById('pular-intro');
+    const mainWrapper = document.querySelector('.main-wrapper');
+
+    if (!overlay || !panel || !closeBtn) return;
+
+    // Elementos focáveis dentro do diálogo
+    const FOCUS_SELECTOR = [
+      'a[href]', 'area[href]', 'button:not([disabled])', 'input:not([disabled]):not([type="hidden"])',
+      'select:not([disabled])', 'textarea:not([disabled])', '[tabindex]:not([tabindex^="-"])'
+    ].join(',');
+
+    let lastActive = null;
+    let sessionToken = 0;
+
+    function setBackdropInert(enabled) {
+      if (!mainWrapper) return;
+      try {
+        if (enabled) {
+          mainWrapper.setAttribute('inert', '');
+          mainWrapper.setAttribute('aria-hidden', 'true');
+        } else {
+          mainWrapper.removeAttribute('inert');
+          mainWrapper.removeAttribute('aria-hidden');
+        }
+      } catch { /* inert não suportado? aria-hidden já ajuda */ }
+    }
+
+    function trapFocus(e) {
+      if (e.key !== 'Tab') return;
+      const items = Array.from(overlay.querySelectorAll(FOCUS_SELECTOR)).filter(el => el.offsetParent !== null);
+      if (items.length === 0) { e.preventDefault(); return; }
+      const first = items[0], last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    }
+
+    function onKeydown(e) {
+      if (e.key === 'Escape') closeIntro();
+      else trapFocus(e);
+    }
+
+    function openIntro(lines = []) {
+      sessionToken++;
+      const token = sessionToken;
+
+      lastActive = document.activeElement;
+      document.documentElement.classList.add('intro-lock');
+      setBackdropInert(true);
+
+      overlay.classList.remove('ocultar');
+      overlay.classList.add('mostrar');
+
+      // A11y ARIA
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-label', 'Introdução');
+      panel.setAttribute('aria-live', 'polite');
+
+      // Sequenciar texto (se houver)
+      panel.innerHTML = '';
+      (async () => {
+        for (const line of lines) {
+          if (token !== sessionToken) return; // abort se outra intro começar
+          const p = document.createElement('p');
+          p.textContent = line;
+          panel.appendChild(p);
+          // Tempo entre falas (ajuste conforme desejado)
+          await new Promise(r => setTimeout(r, 1200));
+        }
+        // Foco no botão ao final da sequência
+        closeBtn.focus();
+      })();
+
+      // Listeners
+      document.addEventListener('keydown', onKeydown);
+      closeBtn.addEventListener('click', closeIntro, { once: true });
+
+      // Foco inicial
+      setTimeout(() => {
+        const firstFocusable = overlay.querySelector(FOCUS_SELECTOR) || closeBtn;
+        firstFocusable?.focus();
+      }, 0);
+    }
+
+    function closeIntro() {
+      sessionToken++; // invalida sequências em progresso
+      overlay.classList.remove('mostrar');
+      overlay.classList.add('ocultar');
+
+      document.removeEventListener('keydown', onKeydown);
+      setBackdropInert(false);
+      document.documentElement.classList.remove('intro-lock');
+
+      // devolver foco
+      setTimeout(() => lastActive?.focus?.(), 0);
+    }
+
+    // Exponha controles globais, se desejar
+    window.openIntro = openIntro;
+    window.closeIntro = closeIntro;
+
+    // EXEMPLO de inicialização (opcional):
+    // window.addEventListener('load', () => {
+    //   openIntro([
+    //     'Uma vida… uma escolha por vez.',
+    //     'Respire. Observe. Decida.',
+    //     'Que a sua luz seja reta.'
+    //   ]);
+    // });
+  })();
+  </script>
+
+  </body>
 </html>

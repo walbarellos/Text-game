@@ -72,10 +72,19 @@ async function iniciarJogo() {
       return;
     }
 
-    resetarBuild(); // limpa o acumulador moral ANTES de carregar/mostrar
+    // 🔑 Preserve a build do save para exibir coerente no novo dia
+    const buildInicial = estado.build || 'profano';
+
+    // Carrega o dia atual
     await carregarDia(estado.diaAtual);
-    // garantir HUD coerente após o reset
-    atualizarHUD(estado.nomeDia, buildDominante());
+
+    // Aplica HUD/título com a build salva (sem recalcular dominante agora)
+    estado.build = buildInicial;
+    atualizarHUD(estado.nomeDia, estado.build);
+    atualizarGlowTitulo(estado.build);
+
+    // Agora sim, zera apenas o acumulador diário (não mexe no rótulo da build)
+    try { resetarBuild(); } catch {}
 
   } catch (err) {
     console.error('💥 Falha ao iniciar o jogo:', err);
