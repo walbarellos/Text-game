@@ -1,79 +1,106 @@
-/* Overlay amplo da ação */
-.action-reward {
-    position: fixed; inset: 0;
-    display: grid; place-items: center;
-    background: radial-gradient(1200px 600px at 50% 50%, rgba(255,255,255,0.04), transparent 65%);
-    pointer-events: none;
+/* ──────────────────────────────────────────────────────────
+ *  REWARD RITUAL — SÍMBOLO CENTRAL + MANDALA (só CSS)
+ *  Cole AO FINAL do seu arquivo atual. Não remove nada; só adiciona.
+ * ────────────────────────────────────────────────────────── */
+
+/* Símbolo central (substitui o “M”) */
+.action-reward::after{
+    content: "✦";                                /* será trocado por build abaixo */
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: max(64px, 6.5vmin);
+    height: max(64px, 6.5vmin);
+    display: grid;
+    place-items: center;
+    font-family: 'Share Tech Mono', monospace;  /* mantém identidade */
+    font-size: clamp(36px, 6.2vmin, 88px);
+    line-height: 1;
+    color: currentColor;
+    text-shadow:
+    0 0 10px currentColor,
+    0 0 20px currentColor,
+    0 0 36px color-mix(in srgb, currentColor 65%, transparent);
+    filter: drop-shadow(0 0 10px color-mix(in srgb, currentColor 55%, transparent));
     opacity: 0;
-    transform: scale(1.02);
-    transition: opacity .22s ease, transform .22s ease;
-    z-index: 48; /* abaixo da HUD (50), acima do conteúdo */
-}
-.action-reward.show { opacity: 1; transform: scale(1); }
-
-/* camadas */
-.ar-ring {
-    width: clamp(180px, 26vw, 360px); aspect-ratio: 1;
-    border-radius: 50%;
-    border: 1.5px solid currentColor;
-    opacity: .22;
-    animation: arPulse 900ms ease-out forwards;
-}
-@keyframes arPulse {
-    0% { transform: scale(.65); opacity: .35; }
-    80% { opacity: .1; }
-    100% { transform: scale(1.25); opacity: 0; }
+    transform: scale(.7) rotate(-6deg);
+    animation: arSymbolIn 900ms cubic-bezier(.2,.8,.2,1) forwards;
+    z-index: 3;                                  /* acima dos anéis/scan */
 }
 
-.ar-scan {
-    position: absolute; inset: 0;
-    background: linear-gradient(to bottom, transparent, rgba(255,255,255,.06), transparent);
+/* Conteúdo simbólico por build (escolhas legíveis cross-font) */
+body.build-virtuoso  .action-reward::after { content: "✦"; } /* estrela/luz */
+body.build-profano   .action-reward::after { content: "⨂"; } /* ruptura/sinete */
+body.build-anomalia  .action-reward::after { content: "⧉"; } /* anomalia/glitch */
+
+/* Entrada do símbolo */
+@keyframes arSymbolIn{
+    0%   { opacity:0; transform: scale(.7) rotate(-6deg); }
+    55%  { opacity:1; transform: scale(1.18) rotate(2deg); }
+    100% { opacity:.92; transform: scale(1) rotate(0deg); }
+}
+
+/* Mandala/selo aurático opcional (se você inserir um <svg class="ar-mandala">) */
+.ar-mandala{
+    position: absolute;
+    width: clamp(120px, 18vmin, 260px);
+    aspect-ratio: 1;
+    inset: 0;
+    margin: auto;
+    opacity: .42;
     mix-blend-mode: screen;
-    opacity: .0;
-    animation: arScan 950ms ease-out forwards;
+    z-index: 2; /* fica entre o símbolo (::after) e o ring/scan */
+    animation: mandalaSpin 6.5s linear infinite;
 }
-@keyframes arScan {
-    0% { opacity:.0; transform: translateY(-20%); }
-    25% { opacity:.25; }
-    100% { opacity:0; transform: translateY(30%); }
+.ar-mandala [stroke]{
+    stroke: currentColor;
+    stroke-width: .9;
+    fill: none;
+    vector-effect: non-scaling-stroke;
+    stroke-linecap: round;
+    stroke-dasharray: 2.4 3.2;
+    animation: dashPhase 3.2s ease-in-out infinite;
 }
-
-.ar-stars {
-    position: absolute; width: 42vmin; height: 42vmin;
-    opacity: .35;
+@keyframes mandalaSpin{
+    from { transform: rotate(0deg) scale(.98); }
+    to   { transform: rotate(360deg) scale(1.02); }
 }
-.ar-stars polyline {
-    stroke: currentColor; stroke-width: .6; fill: none;
-    stroke-dasharray: 2.4 2.4; stroke-linecap: round;
-    animation: dashDraw 900ms ease forwards;
-}
-@keyframes dashDraw { from { stroke-dashoffset: 60; } to { stroke-dashoffset: 0; } }
-
-/* Ripple local no botão */
-.btn-opcao {
-    position: relative; overflow: hidden;
-}
-.btn-opcao .ripple {
-    position: absolute; border-radius: 50%;
-    width: 10px; height: 10px; background: currentColor;
-    opacity: .18; transform: translate(-50%, -50%) scale(1);
-    animation: rippleOut 500ms ease-out forwards;
-}
-@keyframes rippleOut {
-    to { opacity: 0; transform: translate(-50%, -50%) scale(16); }
+@keyframes dashPhase{
+    0%,100% { stroke-dashoffset: 0;   opacity:.55; }
+    50%     { stroke-dashoffset: 18;  opacity:.85; }
 }
 
-/* Pulso no HUD build */
-#hud-build.pulse {
-box-shadow: 0 0 0 0 currentColor;
-animation: hudPulse 600ms ease-out 1;
+/* Realce breve quando o reward aparece */
+.action-reward.show::after{
+    animation: arSymbolIn 900ms cubic-bezier(.2,.8,.2,1) forwards,
+    arSymbolGlow 1.4s ease-out 120ms forwards;
 }
-@keyframes hudPulse {
-    0% { box-shadow: 0 0 0 0 currentColor; }
-    100% { box-shadow: 0 0 0 16px transparent; }
+@keyframes arSymbolGlow{
+    0%   { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 36px color-mix(in srgb, currentColor 65%, transparent); }
+    100% { text-shadow: 0 0 6px currentColor,  0 0 16px currentColor, 0 0 22px color-mix(in srgb, currentColor 45%, transparent); }
 }
 
-/* Cores herdadas por build */
-body.build-virtuoso .action-reward { color: #6ef2b1; }
-body.build-profano  .action-reward { color: #f85b5b; }
-body.build-anomalia .action-reward { color: #a87ef8; }
+/* Sutil “respirar” do anel já existente durante o reward */
+.action-reward.show .ar-ring{
+    animation: arPulse 900ms ease-out forwards, arRingBreathe 2.2s ease-in-out 300ms 1;
+}
+@keyframes arRingBreathe{
+    0%   { transform: scale(1);    opacity:.22; }
+    50%  { transform: scale(1.06); opacity:.28; }
+    100% { transform: scale(1.02); opacity:.20; }
+}
+
+/* Pequenos estilhaços (se quiser, basta criar spans .ar-spark via JS) */
+.ar-spark{
+    position:absolute;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor;
+    filter: blur(.2px);
+    opacity: .9;
+    z-index: 3;
+    animation: sparkFly 700ms ease-out forwards;
+}
+@keyframes sparkFly{
+    from { transform: translate(0,0) scale(.7); opacity: .9; }
+    to   { transform: translate(var(--dx,30px), var(--dy,-24px)) scale(.1); opacity: 0; }
+}

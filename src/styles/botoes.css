@@ -1,74 +1,108 @@
-/* 🎮 BOTÕES INTERATIVOS RITUALÍSTICOS */
+/* 🎮 BOTÕES INTERATIVOS RITUALÍSTICOS — revisão
+ *   - mantém compat com seu markup atual (.btn-opcao)
+ *   - melhora foco/teclado, estados, contraste e responsividade
+ *   - não interfere fora do cartão (#evento)                     */
 
-/* Base universal */
-.btn-opcao {
-    display: inline-block;
-    background-color: #222;
-    color: #eee;
-    border: 1px solid #555;
-    padding: 0.6rem 1.1rem;
-    margin: 0.5rem;
-    border-radius: 8px;
-    font-family: 'Share Tech Mono', monospace;
-    font-size: 0.92rem;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    user-select: none;
-    transition:
-    background-color 0.25s ease,
-    border-color 0.25s ease,
-    color 0.25s ease,
-    transform 0.2s ease;
+/* ┌──────── Base */
+#evento .btn-opcao{
+display:block;
+width:100%;
+max-width: 720px;                    /* mesma largura das opções */
+margin: .55rem auto;                 /* centralizado */
+padding: .9rem 1.2rem;
+border-radius: 14px;
+
+font-family:'Share Tech Mono', monospace;
+font-size: .95rem;
+letter-spacing: .05em;
+line-height: 1.2;
+
+color:#e7e7ea;
+background: linear-gradient(180deg, #1b1f24, #14181c);
+border: 1px solid rgba(255,255,255,.08);
+
+box-shadow:
+0 1px 0 rgba(255,255,255,.06) inset,
+0 10px 26px rgba(0,0,0,.45),
+0 0 0 1px rgba(255,255,255,.02) inset;
+
+cursor:pointer;
+user-select:none;
+transition:
+transform .15s ease,
+box-shadow .2s ease,
+filter .2s ease,
+background-color .25s ease,
+border-color .25s ease,
+color .25s ease;
 }
 
-/* Estado de interação */
-.btn-opcao:hover {
-    background-color: #444;
-    border-color: #888;
+/* ├──────── Hover/Active (neutro) */
+#evento .btn-opcao:hover{
+transform: translateY(-1px);
+filter: saturate(1.03);
+box-shadow:
+0 14px 34px rgba(0,0,0,.55),
+0 0 0 1px rgba(255,255,255,.04) inset;
+}
+#evento .btn-opcao:active{ transform: translateY(0); }
+
+/* ├──────── Foco visível (teclado/a11y) */
+#evento .btn-opcao:focus-visible{
+outline: none;
+box-shadow:
+0 0 0 2px rgba(255,255,255,.06) inset,
+0 0 0 3px #6ef2b166,              /* anel externo */
+0 12px 30px rgba(0,0,0,.5);
 }
 
-.btn-opcao:active {
-    transform: scale(0.97);
+/* ├──────── Estado desabilitado */
+#evento .btn-opcao[disabled],
+#evento .btn-opcao.is-disabled{
+opacity:.55; cursor:not-allowed;
+filter: grayscale(.2);
+box-shadow:
+0 1px 0 rgba(255,255,255,.04) inset,
+0 0 0 1px rgba(255,255,255,.02) inset;
 }
 
-/* 🧠 Responsividade adicional (Mobile) */
-@media (max-width: 480px) {
-    .btn-opcao {
-        padding: 0.5rem 0.9rem;
-        font-size: 0.85rem;
-        margin: 0.4rem 0.2rem;
-    }
-}
-
-/* 🌈 Variações por BUILD Moral (Hover refinado) */
-body.build-virtuoso .btn-opcao:hover {
-    background-color: #1c5533;
+/* ├──────── Variações por BUILD Moral (só no :hover e :focus) */
+body.build-virtuoso #evento .btn-opcao:hover{
+    background: linear-gradient(180deg, #1d3f30, #152b23);
     border-color: #10b981;
-    color: #a6f4c5;
-    box-shadow: 0 0 6px #10b98144;
+    color: #c9ffe5;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 14px 34px rgba(16,185,129,.25);
 }
-
-body.build-profano .btn-opcao:hover {
-    background-color: #7f1d1d;
+body.build-profano #evento .btn-opcao:hover{
+    background: linear-gradient(180deg, #4a1313, #2f0c0c);
     border-color: #ef4444;
-    color: #fecaca;
-    box-shadow: 0 0 6px #ef444444;
+    color: #ffd9d9;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 14px 34px rgba(239,68,68,.25);
 }
-
-body.build-anomalia .btn-opcao:hover {
-    background-color: #3b0764;
+body.build-anomalia #evento .btn-opcao:hover{
+    background: linear-gradient(180deg, #2a0a45, #1b072e);
     border-color: #a855f7;
-    color: #e9d5ff;
-    box-shadow: 0 0 6px #a855f744;
+    color: #f1e6ff;
+    box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 14px 34px rgba(168,85,247,.28);
 }
 
-/* ✨ Brilho ativo ritual (Ex: botão em destaque) */
-.btn-ritual-ativo {
-    animation: glow-botao 1.8s ease-in-out infinite;
+/* ├──────── Brilho ativo ritual (pouco intrusivo) */
+#evento .btn-opcao.btn-ritual-ativo{
+animation: glow-botao 1.8s ease-in-out infinite;
+}
+@keyframes glow-botao{
+    0%   { box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 8px 22px rgba(0,0,0,.45), 0 0 10px #6ef2b155; }
+    50%  { box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 8px 22px rgba(0,0,0,.45), 0 0 18px #6ef2b199; }
+    100% { box-shadow: 0 0 0 1px rgba(255,255,255,.04) inset, 0 8px 22px rgba(0,0,0,.45), 0 0 10px #6ef2b155; }
 }
 
-@keyframes glow-botao {
-    0%   { box-shadow: 0 0 4px #fff2, 0 0 8px #6ef2b155; }
-    50%  { box-shadow: 0 0 10px #6ef2b199, 0 0 20px #6ef2b144; }
-    100% { box-shadow: 0 0 4px #fff2, 0 0 8px #6ef2b155; }
+/* └──────── Responsividade */
+@media (max-width: 720px){
+    #evento .btn-opcao{ max-width: 100%; padding: .8rem 1rem; font-size: .92rem; }
+}
+@media (max-width: 480px){
+    #evento .btn-opcao{ padding: .7rem .9rem; font-size: .88rem; border-radius: 12px; }
+}
+@media (prefers-reduced-motion: reduce){
+    #evento .btn-opcao{ transition: none !important; animation: none !important; }
 }

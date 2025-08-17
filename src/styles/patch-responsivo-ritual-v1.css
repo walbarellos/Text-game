@@ -88,3 +88,61 @@
   fill: #fff;
   vertical-align: middle;
 }
+
+/* 🔧 HUD BUILD DOT — HOTFIX (fica por cima do badge e com glow correto) */
+/* Cole no final do seu hud.css para sobrescrever o que veio antes. */
+
+#hud-build{
+position: relative;           /* cria contexto de empilhamento local */
+isolation: isolate;           /* garante z-index dos filhos acima do bg */
+background-clip: padding-box; /* evita “wash” do gradiente sobre o conteúdo */
+padding-left: 1.75rem;        /* espaço para o dot absoluto (não empurra o texto) */
+}
+
+/* Dot acima do fundo com glow visível */
+#hud-build .dot{
+position: absolute;
+left: 10px;
+top: 50%;
+transform: translateY(-50%);
+width: 0.62rem;
+height: 0.62rem;
+border-radius: 999px;
+z-index: 2;                    /* 🔝 acima do fundo do badge */
+/* Núcleo + halo com blend que “brilha” sobre a cor do badge */
+background:
+radial-gradient(circle, #ffffffb8 0 35%, color-mix(in srgb, currentColor 60%, transparent) 36% 65%, transparent 70%);
+box-shadow:
+0 0 6px currentColor,
+0 0 14px color-mix(in srgb, currentColor 65%, transparent);
+mix-blend-mode: screen;        /* brilho por cima de vermelho/verde/roxo */
+pointer-events: none;
+}
+
+/* Label alinha sem ser empurrado pelo dot */
+#hud-build .label{
+position: relative;
+z-index: 1;
+display: inline-block;
+line-height: 1;
+}
+
+/* Tooltips continuam acima de tudo */
+#hud-build::after,
+#hud-build::before{
+z-index: 3;
+}
+
+/* Ajuste fino de altura/rounding para manter estética coesa */
+#hud-build{
+height: 30px;
+border-radius: 999px;
+}
+
+/* Opcional: leve realce no hover para todos os estados */
+#hud-build:hover{
+filter: saturate(1.05);
+box-shadow:
+0 12px 30px rgba(0,0,0,.45),
+0 0 0 1px rgba(255,255,255,.05) inset;
+}
