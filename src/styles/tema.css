@@ -1,4 +1,3 @@
-
 /* ──────────────────────────────────────────────────────────
  *   TEMAS (GRIMÓRIO / CAVERNA) + CARTÃO DO EVENTO + BOTÕES
  *   ────────────────────────────────────────────────────────── */
@@ -113,24 +112,91 @@ border: 1px solid rgba(255,255,255,.06);
     pointer-events:none;
 }
 
-/* Tipografia interna do evento */
+/* ───────────────── Tipografia interna do evento (refinada) ───────────────── */
+
+/* Títulos: equilíbrio, ligaturas e melhor leitura */
 #evento h1, #evento h2{
 margin: 0 0 18px 0;
-font-weight:700;
-font-size: 28px;
-line-height: 1.2;
-letter-spacing:.4px; text-align:center;
+font-weight: 700;
+font-size: clamp(24px, 3.4vw, 30px);
+line-height: 1.18;
+letter-spacing: .012em;
+text-align: center;
 text-shadow: 0 1px 0 rgba(0,0,0,.5), 0 0 30px rgba(255,255,255,.06);
+font-variant-ligatures: common-ligatures;
+font-feature-settings: "liga" 1, "kern" 1, "calt" 1;
 }
 .theme-grimoire #evento h1, .theme-grimoire #evento h2{
     font-family: Georgia, "Times New Roman", serif;
 }
-#evento p{
-margin: 0 auto 28px auto; max-width: 70ch; text-align:center;
-color: var(--card-ink); opacity:.92;
+@supports (text-wrap: balance){
+    #evento h1, #evento h2{ text-wrap: balance; }
 }
 
-/* Botões de opção (qualquer <button> dentro do #evento) */
+/* Corpo do texto – unificado (funciona com p diretos e em cartões) */
+#evento p{
+text-align: start;              /* anula centralização antiga */
+letter-spacing: 0;
+word-spacing: normal;
+
+line-height: 1.62;
+font-size: clamp(0.98rem, 1.2vw, 1.08rem);
+max-width: 68ch;
+margin: .75rem auto 1rem;
+
+overflow-wrap: anywhere;
+word-break: normal;
+hyphens: auto;
+
+color: var(--card-ink);
+opacity: .94;
+}
+
+/* Primeiro parágrafo um pouco maior (efeito editorial) + BFC p/ drop-cap */
+#evento p:first-of-type{
+display: flow-root;             /* contém o ::first-letter float */
+text-indent: 0;
+line-height: 1.58;              /* ajusta encaixe do drop-cap */
+font-size: clamp(1.02rem, 1.35vw, 1.14rem);
+}
+
+/* Drop-cap estável e sem “buraco” */
+#evento p:first-of-type::first-letter{
+float: left;
+font-family: "Cormorant Garamond", serif;
+font-weight: 600;
+font-size: 2.15em;
+line-height: .92;
+margin: .02em .06em 0 0;
+letter-spacing: 0;
+padding: 0;
+color: #e9edf2;
+text-shadow: 0 3px 18px var(--glow);
+shape-outside: margin-box;
+shape-margin: .02em;
+}
+
+/* (Opcional) Em telas muito estreitas, desliga o drop-cap */
+@media (max-width: 420px){
+    #evento p:first-of-type::first-letter{
+    float: none; font-size: 1em; margin: 0; line-height: inherit;
+    }
+}
+
+/* Neutraliza qualquer drop-cap global externo que possa conflitar */
+.historia p::first-letter{
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    letter-spacing: normal !important;
+    text-shadow: none !important;
+    color: inherit !important;
+}
+
+/* ───────────────── Botões de opção ───────────────── */
+
 #evento button{
 position:relative; width:100%;
 color: var(--fg); background: transparent;
@@ -140,6 +206,12 @@ transition: transform var(--speed), box-shadow var(--speed), background var(--sp
 box-shadow: var(--ring);
 background: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
 display:block; max-width:620px; margin: 0 auto 14px auto;
+
+/* leve refinamento tipográfico do botão */
+font-weight: 560;
+letter-spacing: .015em;
+backdrop-filter: blur(2px);
+outline: none;
 }
 #evento button small{
 display:block; margin-top:6px; font-size:.84rem; color: var(--muted);
@@ -150,6 +222,13 @@ box-shadow: 0 10px 30px var(--shadow), var(--ring);
 background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
 }
 #evento button:active{ transform: translateY(0); }
+
+/* Foco visível AA */
+#evento button:focus-visible{
+box-shadow:
+0 0 0 3px color-mix(in oklab, var(--card-ink) 35%, #fff),
+0 6px 24px var(--shadow), var(--ring);
+}
 
 /* Variações de botão por tema */
 .theme-cavern #evento button{

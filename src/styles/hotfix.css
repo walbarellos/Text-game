@@ -248,3 +248,175 @@ pointer-events:none;
 filter:saturate(1.05);
 box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05) inset;
 }
+
+/* ===============================
+ *  Dia 8 e creditos
+ * =============================== */
+
+.evento-condicional p { line-height: 1.6; margin: .75rem 0; }
+
+.evento-condicional .cond-virtuoso_alto {
+    opacity: .95;
+    text-shadow: 0 0 8px rgba(100, 220, 160, .25);
+}
+
+.evento-condicional .cond-profano_alto {
+    opacity: .9;
+    text-shadow: 0 0 8px rgba(220, 90, 90, .25);
+}
+
+.evento-condicional .cond-anomalo_persistente {
+    position: relative;
+    white-space: pre-wrap;
+    animation: glitchy 1.6s infinite steps(2, end);
+}
+@keyframes glitchy {
+    0%, 100% { transform: translate(0,0); filter: none; }
+    20% { transform: translate(0.5px,-0.5px); }
+    40% { transform: translate(-0.6px,0.4px); }
+    60% { transform: translate(0.2px,0.2px); }
+    80% { transform: translate(-0.4px,-0.3px); }
+}
+
+
+
+/* ---------- base do cartão de texto ---------- */
+.evento-bloco, .evento-fim {
+    --pad: clamp(18px, 3.2vmin, 28px);
+    --w: min(74ch, 92vw);
+    --tone: #cfd6dc;     /* cor base do texto */
+    --glow: #ffffff12;   /* brilho suave */
+    --accent: #9aa4ad;
+
+    margin: 4vh auto;
+    width: var(--w);
+    padding: var(--pad);
+    color: var(--tone);
+    background:
+    radial-gradient(120% 100% at 50% -10%, #00000080 0%, #00000000 55%) /* vinheta em cima */,
+    linear-gradient(180deg, #121417cc, #0d0f11cc);                      /* leve card */
+    border: 1px solid #ffffff0f;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px #00000066 inset, 0 8px 28px #00000066;
+    backdrop-filter: blur(6px);
+}
+
+/* granulado discreto */
+.evento-bloco::before,
+.evento-fim::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.035'/%3E%3C/svg%3E");
+    border-radius: 16px;
+}
+
+/* ---------- títulos ---------- */
+.evento-bloco h2, .evento-fim h2{
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: clamp(26px, 4.6vmin, 44px);
+    line-height: 1.05;
+    letter-spacing: .01em;
+    margin: 0 0 .6rem 0;
+    /* leve gradiente no título */
+    background: linear-gradient(180deg, #fff, #dfe6ee);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 2px 22px var(--glow);
+}
+
+/* 1) remova o drop-cap genérico da classe .historia (só se quiser manter a tipografia, mantenha o bloco SEM ::first-letter)
+ *   Se não puder remover, neutralize assim: */
+.historia p::first-letter {
+    float: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-size: inherit !important;
+    line-height: inherit !important;
+    text-shadow: none !important;
+    color: inherit !important;
+}
+
+/* 2) drop-cap único e estável nos cartões do jogo */
+.evento-bloco p:first-of-type,
+.evento-fim   p:first-of-type{
+    text-indent: 0;          /* evita recuo da 1ª linha */
+    text-align: initial;     /* evita justify abrir espaços demais na 1ª linha */
+}
+
+/* ÚNICA regra de ::first-letter que vale */
+.evento-bloco p:first-of-type::first-letter,
+.evento-fim   p:first-of-type::first-letter{
+    float: left;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 600;
+    font-size: 2.25em;       /* menor que 2.6/2.8 para reduzir o “vão” */
+    line-height: .86;        /* cola verticalmente */
+    margin: .02em .02em 0 0; /* top right bottom left — encosta sem esmagar */
+    padding: 0;              /* zera padding que empurra o texto */
+    letter-spacing: 0;       /* garante sem espaçamento extra */
+    color: #e9edf2;
+    text-shadow: 0 3px 18px var(--glow);
+}
+
+
+/* separador ornamental (use <hr class="orn"> se quiser) */
+hr.orn{
+    border: none;
+    height: 1px;
+    margin: 1.2rem auto;
+    width: 70%;
+    background: linear-gradient(90deg,#0000,#ffffff33,#0000);
+}
+
+/* botões já existentes ganham elevação suave */
+.evento-bloco .btn-opcao, .evento-fim .ritual-final-btn{
+    box-shadow: 0 4px 14px #00000066;
+}
+
+/* ---------- variação por build (aproveita suas classes do <body>) ---------- */
+body.build-virtuoso .evento-bloco, body.build-virtuoso .evento-fim{
+    --accent: #8be9c0;
+    --glow: #8be9c022;
+}
+body.build-profano .evento-bloco, body.build-profano .evento-fim{
+    --accent: #f48282;
+    --glow: #f4828222;
+}
+body.build-anomalia .evento-bloco, body.build-anomalia .evento-fim{
+    --accent: #b79cf7;
+    --glow: #b79cf722;
+}
+
+
+/* fiozinho de cor no topo do card, por build */
+.evento-bloco, .evento-fim {
+    position: relative;
+}
+.evento-bloco::after, .evento-fim::after{
+    content:"";
+    position:absolute;
+    left:10%;
+    right:10%;
+    top:-1px;
+    height:2px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent), transparent);
+    filter: drop-shadow(0 0 6px var(--accent));
+    opacity: .8;
+}
+
+/* ---------- micro-movimento (sem enjoar) ---------- */
+@media (prefers-reduced-motion: no-preference){
+    .evento-bloco.fade-in, .evento-fim.fade-in{
+        animation: fadeRise .45s ease-out both;
+    }
+    @keyframes fadeRise {
+        from { opacity: 0; transform: translateY(6px); }
+        to   { opacity: 1; transform: translateY(0); }
+    }
+}
+

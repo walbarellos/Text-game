@@ -30,6 +30,26 @@
     .replaceAll("'", '&#39;');
   }
 
+
+  /**
+   * Renderiza um evento na tela com efeitos e interações.
+   */
+  // Remove metanotas "Se ... → ..." em finais (sem alterar o resto do texto)
+  function ocultarMetanotasDeFim(texto) {
+    if (!texto) return '';
+    let t = String(texto);
+
+    // Remove linhas inteiras que contenham "Se ... → ..."
+    t = t.split('\n').filter(l => !/\b[Ss]e\s[^→\n]+→/.test(l)).join('\n');
+
+    // Remove metanota colada no fim da frase (mesma linha)
+    t = t.replace(/\s*[–—-]?\s*\b[Ss]e\s[^→\n]+→[^\n]*/g, '');
+
+    // Normaliza espaços em branco
+    t = t.replace(/\n{3,}/g, '\n\n').trim();
+    return t;
+  }
+
   /**
   * Renderiza um evento na tela com efeitos e interações.
   */
@@ -94,7 +114,7 @@
       renderSafeHTML(destino, `
       <section class="evento-fim fade-in" aria-live="polite" aria-label="Relatório do dia">
       <h2>🕯️ ${escapeHTML(titulo)}</h2>
-      <p>${escapeHTML(descricao)}</p>
+      <p>${escapeHTML(ocultarMetanotasDeFim(descricao))}</p>
 
       <div class="relatorio-final">
       <p><strong>🧭 Caminho dominante:</strong> ${escapeHTML(build.toUpperCase())}</p>

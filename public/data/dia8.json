@@ -18,33 +18,33 @@
       "id": "d8_memoria",
       "tipo": "evento",
       "titulo": "Fragmentos de Dias",
-      "descricao": "As sombras, o mural rachado, a praça, a pedra… tudo aparece em flashes. Personagens e escolhas passadas ecoam, como se nunca tivessem ido embora. \n\n🔹 Virtuoso acumulado → Jardins e respirações suaves surgem entre as imagens. \n🔸 Profano acumulado → Gritos e paredes rachadas reverberam, pesados. \n⚡ Anômalo persistente → Frases piscam quebradas: “ec…o…///…não…fi…nal”.",
+      "descricao": "As sombras, o mural rachado, a praça, a pedra… tudo aparece em flashes. Personagens e escolhas passadas ecoam, como se nunca tivessem ido embora.",
       "opcoes": [
         { "texto": "Aceitar os fragmentos como parte de você", "proximo": "d8_fim_virtuoso", "buildImpact": "virtuoso" },
         { "texto": "Rejeitar as lembranças e fechar a fenda", "proximo": "d8_fim_profano", "buildImpact": "profano" },
         { "texto": "Tentar reordenar os fragmentos de outra forma", "proximo": "d8_fim_anomalia", "buildImpact": "anomalia" },
-        { "textoSecreto": "Deixar o eco decidir", "proximo": "d8_fim_autonomo", "buildImpact": "anomalia", "condicao": "inatividade10s" }
+        { "texto": "Deixar o eco decidir", "proximo": "d8_fim_autonomo", "buildImpact": "anomalia", "condicao": "inatividade10s", "secreto": true }
       ]
     },
     {
       "id": "d8_fim_virtuoso",
       "tipo": "fim",
       "titulo": "Eco Virtuoso",
-      "descricao": "🌿 O silêncio floresceu em continuidade. Seu caminho molda não só você, mas o mundo — que agora respira em uníssono.\n\nSe virtuoso acumulado → Um final sereno de união plena: os NPCs-sombra se juntam a você, sorrindo em silêncio.",
+      "descricao": "🌿 O silêncio floresceu em continuidade. Seu caminho molda não só você, mas o mundo — que agora respira em uníssono.",
       "fraseChave": "eco-virt"
     },
     {
       "id": "d8_fim_profano",
       "tipo": "fim",
       "titulo": "Eco Profano",
-      "descricao": "🔥 Você recusou o eco, mas ele não te recusa. Os fragmentos se colam de forma áspera, e o mundo parece suportar sua recusa apenas por te carregar consigo.\n\nSe profano dominante → Final mais denso: as paredes rachadas se fecham sobre você, deixando apenas uma fresta de luz.",
+      "descricao": "🔥 Você recusou o eco, mas ele não te recusa. Os fragmentos se colam de forma áspera, e o mundo parece suportar sua recusa apenas por te carregar consigo.",
       "fraseChave": "eco-prof"
     },
     {
       "id": "d8_fim_anomalia",
       "tipo": "fim",
       "titulo": "Eco Anômalo",
-      "descricao": "⚡ O eco não é linha, nem círculo. Ele se parte em ruído, piscando além do que qualquer ordem suportaria. \n\nSe anômalo persistente → Final ainda mais glitchado: palavras se corrompem → '∑∑ eco /// quebrad0 ∴ fi///m n~ao fi…nal'.",
+      "descricao": "⚡ O eco não é linha, nem círculo. Ele se parte em ruído, piscando além do que qualquer ordem suportaria.",
       "fraseChave": "eco-anom"
     },
     {

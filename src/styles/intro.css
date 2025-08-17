@@ -1,74 +1,103 @@
-/* ===== INTRO CINEMATOGRÁFICA (compatível com seu HTML atual) ===== */
+/* ──────────────────────────────────────────────────────────
+ *   INTRO CINEMATOGRÁFICA — overlay estável, tipagem e acessibilidade
+ *   ────────────────────────────────────────────────────────── */
 
-/* Overlay ocupa a viewport e centraliza o "card" (.intro-texto + botão) */
-#intro-cinematica {
-position: fixed;
-inset: 0;
-display: grid;
-place-items: center;
-padding: max(2rem, 1.5rem + env(safe-area-inset-top))
+/* ===== Variáveis utilitárias (opcionais) ===== */
+:root{
+    --intro-z: 9999;
+    --intro-backdrop: rgba(6,8,10,.58);       /* véu ao fundo */
+    --intro-card-bg: #000;                    /* fundo do card */
+    --intro-card-ink: #fff;                   /* texto do card */
+    --intro-accent: #6ef2b1;                  /* botão/realces */
+    --intro-radius: 16px;
+    --intro-shadow: 0 24px 80px rgba(0,0,0,.65), 0 0 0 1px rgba(255,255,255,.04) inset;
+    --intro-speed: .6s;
+}
+
+/* ===== Overlay ocupa viewport, sem flicker e sem CLS ===== */
+#intro-cinematica{
+position: fixed; inset: 0;
+display: grid; place-items: center;
+padding:
+max(2rem, 1.5rem + env(safe-area-inset-top))
 max(1.5rem, 1rem + env(safe-area-inset-right))
 max(2rem, 1.5rem + env(safe-area-inset-bottom))
 max(1.5rem, 1rem + env(safe-area-inset-left));
-z-index: 9999;
+z-index: var(--intro-z);
 
 /* estado base = oculto */
 opacity: 0;
 visibility: hidden;
 pointer-events: none;
-transition: opacity .6s ease, visibility .6s ease;
 
-background: transparent; /* não escurece a página por padrão */
+/* transições suaves e previsíveis */
+transition: opacity var(--intro-speed) ease, visibility var(--intro-speed) ease;
+
+/* camada de backdrop separada (controlada no ::before) */
+background: transparent;
+
+/* garante que filtros não “borrem” o layout */
+contain: paint;
 }
 
-/* “Card” interno é o próprio #intro-texto (sua marcação atual) */
-#intro-texto {
-width: clamp(280px, 90vw, 600px);
-max-height: min(60vh, 80svh);
+/* Backdrop (véu) com blur, desligável por preferências de usuário */
+#intro-cinematica::before{
+content:"";
+position:absolute; inset:0;
+background: var(--intro-backdrop);
+-webkit-backdrop-filter: blur(6px);
+backdrop-filter: blur(6px);
+opacity: 0;                         /* segue estado do overlay */
+transition: opacity var(--intro-speed) ease;
+pointer-events: none;
+}
+
+/* ===== Card interno (seu #intro-texto) ===== */
+#intro-texto{
+width: clamp(300px, 90vw, 640px);
+max-height: min(72vh, 82svh);
 overflow: hidden auto;
 
-background: #000;
-color: #fff;
+background: var(--intro-card-bg);
+color: var(--intro-card-ink);
 font-family: 'Share Tech Mono', monospace;
-font-size: clamp(1rem, 2.5vw, 1.4rem);
+font-size: clamp(1rem, 2.1vw, 1.25rem);
+line-height: 1.6;
 text-align: center;
 
-border-radius: 1rem;
-box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-padding: 2rem 1.5rem;
+border-radius: var(--intro-radius);
+box-shadow: var(--intro-shadow);
+padding: clamp(1.5rem, 3.2vw, 2.25rem) clamp(1.2rem, 2.6vw, 1.8rem);
+
+/* micro-entrada quando mostrar */
+transform: translateY(6px) scale(.995);
+opacity: .98;
+transition: transform .45s ease, opacity .45s ease, box-shadow .45s ease;
 }
 
-/* Estados */
-#intro-cinematica.mostrar {
+/* ===== Estados do overlay ===== */
+#intro-cinematica.mostrar{
 opacity: 1;
 visibility: visible;
 pointer-events: auto;
 }
-#intro-cinematica.ocultar {
+#intro-cinematica.mostrar::before{ opacity: 1; }
+
+#intro-cinematica.mostrar #intro-texto{
+transform: translateY(0) scale(1);
+opacity: 1;
+}
+
+/* Saída (se precisar forçar sem remover do DOM) */
+#intro-cinematica.ocultar{
 opacity: 0;
 visibility: hidden;
 pointer-events: none;
 }
+#intro-cinematica.ocultar::before{ opacity: 0; }
 
-/* Botão “Pular” (sua classe atual) */
-.pular-intro {
-    margin-top: 1.25rem;
-    background: #6ef2b1;
-    color: #000;
-    font-weight: 700;
-    padding: 0.5rem 1.2rem;
-    font-size: clamp(0.8rem, 1.5vw, 1rem);
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: background .25s ease, transform .12s ease;
-}
-.pular-intro:hover { background: #4cd69d; transform: translateY(-1px); }
-.pular-intro:active { transform: translateY(0); }
-.pular-intro:focus-visible { outline: 3px solid #c0c8ff; outline-offset: 2px; }
-
-/* Tipografia do título sem “text-wrap: pretty”; com fallback e balance onde houver */
-.titulo-animado {
+/* ===== Tipografia do título ===== */
+.titulo-animado{
     font-size: clamp(1.6rem, 6vw, 3.2rem);
     text-align: center;
     overflow-wrap: anywhere;
@@ -76,88 +105,127 @@ pointer-events: none;
     hyphens: auto;
     max-width: 90vw;
     margin: 0 auto;
+    letter-spacing: .01em;
+    line-height: 1.15;
 }
-@supports (text-wrap: balance) {
-    .titulo-animado { text-wrap: balance; }
-}
-
-/* Reduz animação para quem prefere menos movimento */
-@media (prefers-reduced-motion: reduce) {
-    #intro-cinematica { transition: none !important; }
-    .pular-intro { transition: none !important; }
+@supports (text-wrap: balance){
+    .titulo-animado{ text-wrap: balance; }
 }
 
-/* Alto contraste / cores forçadas: legibilidade garantida */
-@media (prefers-contrast: more) {
-    #intro-cinematica { background: rgba(0,0,0,0.85); }
-    #intro-texto {
-    background: #000;
-    box-shadow: none;
-    border: 1px solid rgba(255,255,255,0.2);
-    }
-}
-@media (forced-colors: active) {
-    #intro-cinematica { background: Canvas; }
-    #intro-texto {
-    background: Canvas;
-    color: CanvasText;
-    box-shadow: none;
-    border: 1px solid ButtonBorder;
-    }
-    .pular-intro {
-        background: ButtonFace;
-        color: ButtonText;
-        border: 1px solid ButtonBorder;
-    }
-}
-
-/* (Opcional) Travar scroll da página sob a intro */
-html.intro-lock, body.intro-lock { overflow: hidden; }
-
-/* ===== TÍTULO: efeito "typing" com caret ===== */
-
-/* Base necessária pro efeito */
-.titulo-ritual .titulo-animado {
-    display: inline-block;      /* permite "cortar" texto */
-    white-space: nowrap;        /* não quebra linha durante typing */
-    overflow: hidden;           /* esconde a parte não "digitada" */
+/* ===== Efeito "typing" com caret ===== */
+.titulo-ritual .titulo-animado{
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;              /* esconde o texto “não digitado” */
     border-right: 2px solid currentColor; /* caret */
-    line-height: 1.1;
+    will-change: clip-path;        /* otimiza animação */
 }
 
-/* Efeito typing usando clip-path (melhor que width) */
-@keyframes typing {
+/* Preferência: animação principal via clip-path (mais suave) */
+@keyframes typing{
     from { clip-path: inset(0 100% 0 0); }
     to   { clip-path: inset(0 0    0 0); }
 }
 
-/* Caret piscando */
-@keyframes blink-caret {
+@keyframes blink-caret{
     0%, 49%, 100% { border-right-color: transparent; }
     50%           { border-right-color: currentColor; }
 }
 
-/* Fallback para engines sem clip-path animável (mais amplo) */
-@supports not (clip-path: inset(0 0 0 0)) {
-    .titulo-ritual .titulo-animado { clip-path: none; width: 0; }
-    @keyframes typing {
+/* Fallback amplo (engines sem clip-path animável) */
+@supports not (clip-path: inset(0 0 0 0)){
+    .titulo-ritual .titulo-animado{ clip-path: none; width: 0; }
+    @keyframes typing{
         from { width: 0; }
         to   { width: 100%; }
     }
 }
 
-/* Acessibilidade: reduzir movimento */
-@media (prefers-reduced-motion: reduce) {
-    .titulo-ritual .titulo-animado {
-        animation: none !important;
-        border-right: 0;
+/* Ativação do efeito (aplique via JS adicionando .digitar no contêiner) */
+.titulo-ritual.digitar .titulo-animado{
+    animation:
+    typing 2.8s steps(40, end) forwards,
+    blink-caret .9s step-end infinite;
+}
+
+/* ===== Sequência de linhas de texto (stagger) — opcional ===== */
+/* Use .linha nas frases dentro do #intro-texto para entrada escalonada */
+#intro-texto .linha{
+opacity: 0; transform: translateY(6px);
+transition: opacity .5s ease, transform .5s ease;
+}
+#intro-cinematica.mostrar #intro-texto .linha{ opacity: 1; transform: translateY(0); }
+#intro-cinematica.mostrar #intro-texto .linha:nth-child(1){ transition-delay: .06s; }
+#intro-cinematica.mostrar #intro-texto .linha:nth-child(2){ transition-delay: .14s; }
+#intro-cinematica.mostrar #intro-texto .linha:nth-child(3){ transition-delay: .22s; }
+#intro-cinematica.mostrar #intro-texto .linha:nth-child(4){ transition-delay: .30s; }
+
+/* ===== Botão “Pular” ===== */
+.pular-intro{
+    margin-top: 1.25rem;
+    background: var(--intro-accent);
+    color: #000;
+    font-weight: 700;
+    padding: 0.55rem 1.2rem;
+    font-size: clamp(.85rem, 1.6vw, 1rem);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .22s ease, transform .12s ease, box-shadow .22s ease;
+    box-shadow: 0 10px 26px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.06) inset;
+}
+.pular-intro:hover{
+    background: color-mix(in oklab, var(--intro-accent) 86%, #fff);
+    transform: translateY(-1px);
+}
+.pular-intro:active{ transform: translateY(0); }
+.pular-intro:focus-visible{
+    outline: none;
+    box-shadow:
+    0 0 0 3px #c0c8ff,
+    0 0 0 5px rgba(192,200,255,.25);
+}
+
+/* ===== Acessibilidade e preferências do usuário ===== */
+@media (prefers-reduced-motion: reduce){
+    #intro-cinematica{ transition: none !important; }
+    #intro-cinematica::before{ transition: none !important; }
+    #intro-texto{ transition: none !important; transform: none !important; }
+    .pular-intro{ transition: none !important; }
+    .titulo-ritual .titulo-animado{ animation: none !important; border-right: 0; }
+}
+
+/* Alto contraste */
+@media (prefers-contrast: more){
+    #intro-cinematica::before{ background: rgba(0,0,0,.85); }
+    #intro-texto{
+    background:#000; box-shadow:none;
+    border: 1px solid rgba(255,255,255,.22);
     }
 }
 
-/* Mobile: mantendo seu comportamento atual (overlay opcional)
- *   — estes ajustes NÃO desativam o typing, apenas o posicionamento overlay */
-@media (max-width: 768px) {
-    .titulo-ritual .titulo-animado {
-        /* continua com typing; só não flutua por cima */
+/* Modo de cores forçadas (Windows) */
+@media (forced-colors: active){
+    #intro-cinematica{ background: Canvas; }
+    #intro-cinematica::before{ display:none; }
+    #intro-texto{
+    background: Canvas; color: CanvasText;
+    box-shadow: none; border: 1px solid ButtonBorder;
+    }
+    .pular-intro{
+        background: ButtonFace; color: ButtonText; border: 1px solid ButtonBorder;
     }
 }
+
+/* Travar scroll da página sob a intro (ativar via JS: add .intro-lock no html/body) */
+html.intro-lock, body.intro-lock{ overflow: hidden; }
+
+/* ===== Responsividade ===== */
+@media (max-width: 768px){
+    #intro-texto{ max-height: min(76vh, 84svh); }
+    .titulo-animado{ font-size: clamp(1.4rem, 7vw, 2.2rem); }
+}
+
+/* ===== Helpers (se precisar “forçar” exibição sem transições) ===== */
+#intro-cinematica.is-visible{ opacity: 1; visibility: visible; pointer-events: auto; }
+#intro-cinematica.is-hidden{ opacity: 0; visibility: hidden; pointer-events: none; }

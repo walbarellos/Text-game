@@ -73,10 +73,12 @@ async function iniciarJogo() {
       estado.diaAtual = 1;
     }
     // - se a âncora traz um "fim*" de outro dia, ignore no boot do novo dia
-    if (typeof estado.eventoAtualId === 'string' && /^fim/i.test(estado.eventoAtualId)) {
+    // - ignore âncoras que indiquem final de bloco: "fim", "fim1", "d2_fim", "x-fim" etc.
+    if (typeof estado.eventoAtualId === 'string' && /(^|[_\W-])fim\d*$/i.test(estado.eventoAtualId)) {
       estado.eventoAtualId = null;
       try { salvarProgresso({ diaAtual: estado.diaAtual, eventoAtualId: null }); } catch {}
     }
+
 
     // 🔑 Preserve a build do save para exibir coerente no novo dia
     const buildInicial = typeof estado.build === 'string' ? estado.build : 'profano';
@@ -365,12 +367,16 @@ document.addEventListener('DOMContentLoaded', () => {
     intro.classList.add('mostrar');
 
     const frases = [
-      '☉ What Is Life',
-      'Um jogo sobre moralidade, escolhas e degeneração.',
-      'Você será julgado.',
-      'E você sabe disso.',
-      '...',
-      'Comece.',
+      '☉ 7 Lives',
+      'Não é apenas um jogo.',
+      'É um espelho de escolhas, de silêncio e de ruínas.',
+      'Cada decisão deixa um traço — visível ou oculto.',
+      'Aqui, virtude, desordem e anomalia não são só caminhos.',
+      'São reflexos de quem você decide ser.',
+      'Respire fundo.',
+      'O julgamento não vem de fora.',
+      'Ele brota de dentro.',
+      'Comece.'
     ];
 
     let i = 0;
