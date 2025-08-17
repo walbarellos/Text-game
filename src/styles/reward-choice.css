@@ -1,106 +1,90 @@
-/* ──────────────────────────────────────────────────────────
- *  REWARD RITUAL — SÍMBOLO CENTRAL + MANDALA (só CSS)
- *  Cole AO FINAL do seu arquivo atual. Não remove nada; só adiciona.
- * ────────────────────────────────────────────────────────── */
+/* ✅ Reset seguro: não mexe nos filhos, só mata fundos/pseudo antigos */
+.action-reward{ background: none !important; }
+.action-reward::before,
+.action-reward::after,
+.action-reward *::before,
+.action-reward *::after { content: none !important; display: none !important; }
 
-/* Símbolo central (substitui o “M”) */
-.action-reward::after{
-    content: "✦";                                /* será trocado por build abaixo */
-    position: absolute;
-    inset: 0;
-    margin: auto;
-    width: max(64px, 6.5vmin);
-    height: max(64px, 6.5vmin);
-    display: grid;
-    place-items: center;
-    font-family: 'Share Tech Mono', monospace;  /* mantém identidade */
-    font-size: clamp(36px, 6.2vmin, 88px);
-    line-height: 1;
-    color: currentColor;
-    text-shadow:
-    0 0 10px currentColor,
-    0 0 20px currentColor,
-    0 0 36px color-mix(in srgb, currentColor 65%, transparent);
-    filter: drop-shadow(0 0 10px color-mix(in srgb, currentColor 55%, transparent));
-    opacity: 0;
-    transform: scale(.7) rotate(-6deg);
-    animation: arSymbolIn 900ms cubic-bezier(.2,.8,.2,1) forwards;
-    z-index: 3;                                  /* acima dos anéis/scan */
+/* Cor “base” por build (manda no currentColor da mandala) */
+.action-reward[data-build="virtuoso"] { color: #6ef2b1; }  /* verde */
+.action-reward[data-build="profano"]  { color: #f85b5b; }  /* vermelho */
+.action-reward[data-build="anomalia"] { color: #a87ef8; }  /* violeta */
+
+/* (Opcional) ajuste fino do ring/scan por build */
+.action-reward[data-build="virtuoso"] .ar-ring { box-shadow: 0 0 0 1.5px color-mix(in srgb, #6ef2b1 65%, #fff) inset; }
+.action-reward[data-build="profano"]  .ar-ring { box-shadow: 0 0 0 1.5px color-mix(in srgb, #f85b5b 65%, #fff) inset; }
+.action-reward[data-build="anomalia"] .ar-ring { box-shadow: 0 0 0 1.5px color-mix(in srgb, #a87ef8 65%, #fff) inset; }
+
+
+/* Base do overlay */
+:root { --reward-d: clamp(140px, 20vmin, 220px); }
+
+.action-reward{
+    position: fixed; inset: 0;
+    display: grid; place-items: center;
+    pointer-events: none; z-index: 9999;
+    opacity: 0; transform: scale(.92);
+    transition: opacity .18s ease, transform .18s ease;
+}
+.action-reward.show{ opacity: 1; transform: scale(1); }
+
+/* Viewport pequena que impede qualquer vazamento */
+.action-reward .ar-wrap{
+    position: relative;
+    width: var(--reward-d); height: var(--reward-d);
+    overflow: hidden;
+    clip-path: circle(49% at 50% 50%);
+    -webkit-clip-path: circle(49% at 50% 50%);
+    isolation: isolate;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,.18));
 }
 
-/* Conteúdo simbólico por build (escolhas legíveis cross-font) */
-body.build-virtuoso  .action-reward::after { content: "✦"; } /* estrela/luz */
-body.build-profano   .action-reward::after { content: "⨂"; } /* ruptura/sinete */
-body.build-anomalia  .action-reward::after { content: "⧉"; } /* anomalia/glitch */
-
-/* Entrada do símbolo */
-@keyframes arSymbolIn{
-    0%   { opacity:0; transform: scale(.7) rotate(-6deg); }
-    55%  { opacity:1; transform: scale(1.18) rotate(2deg); }
-    100% { opacity:.92; transform: scale(1) rotate(0deg); }
+/* Anel externo */
+.ar-ring{
+    position: absolute; inset: 0; border-radius: 50%;
+    box-shadow: 0 0 0 1.5px rgba(255,255,255,.18) inset;
+    animation: rc-spin 4s linear infinite;
 }
 
-/* Mandala/selo aurático opcional (se você inserir um <svg class="ar-mandala">) */
-.ar-mandala{
-    position: absolute;
-    width: clamp(120px, 18vmin, 260px);
-    aspect-ratio: 1;
-    inset: 0;
-    margin: auto;
-    opacity: .42;
+/* Scanner — o efeito visual (NÃO PODE receber background: transparent) */
+.ar-scan{
+    position: absolute; inset: 0; border-radius: 50%;
+    background: conic-gradient(
+        from 0deg,
+        rgba(255,255,255,.28) 0deg,
+                               rgba(255,255,255,.10) 40deg,
+                               transparent 80deg 360deg
+    );
     mix-blend-mode: screen;
-    z-index: 2; /* fica entre o símbolo (::after) e o ring/scan */
-    animation: mandalaSpin 6.5s linear infinite;
+    animation: rc-spin 3s linear infinite;
 }
-.ar-mandala [stroke]{
-    stroke: currentColor;
-    stroke-width: .9;
-    fill: none;
+
+/* Mandala */
+.ar-mandala{
+    position: absolute; inset: 26%;
+    width: 48%; height: 48%;
+    opacity: .95;
+    animation: rc-pulse 2s ease-in-out infinite;
+    pointer-events: none;
+}
+.ar-mandala, .ar-mandala *{
+    fill: none !important;
+    stroke: currentColor !important;
+    stroke-width: 2;
     vector-effect: non-scaling-stroke;
-    stroke-linecap: round;
-    stroke-dasharray: 2.4 3.2;
-    animation: dashPhase 3.2s ease-in-out infinite;
-}
-@keyframes mandalaSpin{
-    from { transform: rotate(0deg) scale(.98); }
-    to   { transform: rotate(360deg) scale(1.02); }
-}
-@keyframes dashPhase{
-    0%,100% { stroke-dashoffset: 0;   opacity:.55; }
-    50%     { stroke-dashoffset: 18;  opacity:.85; }
 }
 
-/* Realce breve quando o reward aparece */
-.action-reward.show::after{
-    animation: arSymbolIn 900ms cubic-bezier(.2,.8,.2,1) forwards,
-    arSymbolGlow 1.4s ease-out 120ms forwards;
+/* Estilo por build */
+.action-reward[data-build="virtuoso"] .ar-mandala * {
+    stroke: #6f6; /* verde luminoso */
 }
-@keyframes arSymbolGlow{
-    0%   { text-shadow: 0 0 10px currentColor, 0 0 20px currentColor, 0 0 36px color-mix(in srgb, currentColor 65%, transparent); }
-    100% { text-shadow: 0 0 6px currentColor,  0 0 16px currentColor, 0 0 22px color-mix(in srgb, currentColor 45%, transparent); }
+.action-reward[data-build="profano"] .ar-mandala * {
+    stroke: #f66; /* vermelho */
 }
-
-/* Sutil “respirar” do anel já existente durante o reward */
-.action-reward.show .ar-ring{
-    animation: arPulse 900ms ease-out forwards, arRingBreathe 2.2s ease-in-out 300ms 1;
-}
-@keyframes arRingBreathe{
-    0%   { transform: scale(1);    opacity:.22; }
-    50%  { transform: scale(1.06); opacity:.28; }
-    100% { transform: scale(1.02); opacity:.20; }
+.action-reward[data-build="anomalia"] .ar-mandala * {
+    stroke: #6cf; /* azul/ciano */
 }
 
-/* Pequenos estilhaços (se quiser, basta criar spans .ar-spark via JS) */
-.ar-spark{
-    position:absolute;
-    width: 6px; height: 6px; border-radius: 50%;
-    background: currentColor;
-    filter: blur(.2px);
-    opacity: .9;
-    z-index: 3;
-    animation: sparkFly 700ms ease-out forwards;
-}
-@keyframes sparkFly{
-    from { transform: translate(0,0) scale(.7); opacity: .9; }
-    to   { transform: translate(var(--dx,30px), var(--dy,-24px)) scale(.1); opacity: 0; }
-}
+/* Animações */
+@keyframes rc-spin { to { transform: rotate(360deg); } }
+@keyframes rc-pulse { 0%,100%{ transform:scale(1);opacity:.95 } 50%{ transform:scale(1.06);opacity:1 } }

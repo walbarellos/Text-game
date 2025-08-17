@@ -256,6 +256,27 @@
     window.addEventListener('resize', syncTituloHeight);
   </script>
 
+<!-- 📌 index.html — mantenha ESTA estrutura com o .ar-wrap -->
+ <div class="action-reward" id="action-reward">
+   <div class="ar-wrap">
+     <div class="ar-ring"></div>
+     <div class="ar-scan"></div>
+     <svg class="ar-mandala" viewBox="0 0 100 100" aria-hidden="true">
+       <circle cx="50" cy="50" r="40"/>
+       <polygon points="50,10 61,35 88,35 66,54 74,80 50,65 26,80 34,54 12,35 39,35"/>
+     </svg>
+   </div>
+ </div>
+
+<script>
+  /* Mostra/esconde suavemente o efeito */
+  function showReward(){
+    const el = document.getElementById('action-reward');
+    if(!el) return;
+    el.classList.add('show');
+    setTimeout(()=>el.classList.remove('show'), 900);
+  }
+</script>
 
   </body>
 </html>
