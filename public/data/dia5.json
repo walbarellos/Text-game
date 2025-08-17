@@ -1,16 +1,16 @@
 {
-  "nome": "Dia 5",
+  "nome": "Dia 5 — O Instinto que Grita",
   "fraseInspiradora": "🐦 O voo mais alto começa no chão.",
-  "descricao": "No quinto dia, a vida se move. As águas se enchem de peixes, e os céus, de aves. É o nascimento do instinto, da liberdade, do impulso de viver. Agora, a consciência não apenas observa — ela reage.",
+  "descricao": "No quinto dia, a vida se move. Os mares ganham peixes, os céus se enchem de aves. É o dia em que a existência aprende a reagir, não apenas a contemplar. A consciência agora dança entre impulso e escolha.",
   "blocos": [
     {
       "id": "historia1",
       "tipo": "rotina",
       "titulo": "Banho Frio",
-      "descricao": "Você se atrasa. No chuveiro, a água está fria. O corpo acorda antes da mente. Você percebe que hoje não pensa: apenas age.",
+      "descricao": "Acordar atrasado já é guerra. O chuveiro despeja água gelada, que fere a pele como lâminas transparentes. O corpo desperta antes do pensamento. Hoje, você é mais instinto que ideia.",
       "opcoes": [
         {
-          "texto": "Ficar parado sentindo o frio como um teste",
+          "texto": "Ficar imóvel, aceitando o frio como rito de força",
           "proximo": "historia2",
           "buildImpact": "virtuoso",
           "dica": "Domar o corpo é o início da alma.",
@@ -18,7 +18,7 @@
           "fraseChave": "resistir"
         },
         {
-          "texto": "Gritar, reclamar e sair correndo",
+          "texto": "Gritar, xingar e escapar da água como fera acuada",
           "proximo": "historia2",
           "buildImpact": "profano",
           "dica": "Impulsos não domados viram gritos.",
@@ -26,7 +26,7 @@
           "fraseChave": "fuga"
         },
         {
-          "texto": "Fingir que está tudo bem enquanto treme",
+          "texto": "Rir sozinho, fingindo que nada dói",
           "proximo": "historia2",
           "buildImpact": "anomalia",
           "dica": "O corpo mente às vezes.",
@@ -39,10 +39,10 @@
       "id": "historia2",
       "tipo": "historia",
       "titulo": "Impulso",
-      "descricao": "Na rua, um cachorro atravessa na frente de um carro. Você grita — o motorista freia. O animal escapa. Um grupo te olha como se você fosse maluco. Mas o cachorro viveu.",
+      "descricao": "Na rua, um cachorro atravessa diante de um carro. O farol não basta: você grita. O motorista freia. O animal escapa. O silêncio da multidão pesa. Olhos o encaram como se fosse um louco. Mas o cachorro respira. E você também.",
       "opcoes": [
         {
-          "texto": "Sentir vergonha e se esconder",
+          "texto": "Sentir vergonha e abaixar a cabeça",
           "proximo": "rotina1",
           "buildImpact": "anomalia",
           "dica": "A vergonha é o espinho da empatia.",
@@ -50,7 +50,7 @@
           "fraseChave": "pudor"
         },
         {
-          "texto": "Ignorar os olhares e continuar andando",
+          "texto": "Seguir andando, ignorando os olhares",
           "proximo": "rotina1",
           "buildImpact": "virtuoso",
           "dica": "Fazer o certo basta.",
@@ -58,7 +58,7 @@
           "fraseChave": "propósito"
         },
         {
-          "texto": "Sorrir como um herói e fazer pose",
+          "texto": "Abrir um sorriso como quem salvou o mundo",
           "proximo": "rotina1",
           "buildImpact": "profano",
           "dica": "Vaidade disfarça intenção.",
@@ -71,10 +71,10 @@
       "id": "rotina1",
       "tipo": "rotina",
       "titulo": "Pátio Selvagem",
-      "descricao": "Na escola, algo mudou. Os colegas parecem animais no cio. Correria, gritos, cheiros. Há um impulso no ar. Você sente vontade de correr. Ou de se esconder.",
+      "descricao": "Na escola, os corredores viram selva. Risos explodem como aves, passos batem como cascos, olhares brilham como presas. O ar é um instinto coletivo. Você sente: ou corre junto, ou desaparece.",
       "opcoes": [
         {
-          "texto": "Imitar os sons e se misturar à loucura",
+          "texto": "Imitar os sons e se fundir à matilha",
           "proximo": "historia3",
           "buildImpact": "profano",
           "dica": "Animalizar-se é mais fácil que humanizar-se.",
@@ -82,7 +82,7 @@
           "fraseChave": "instinto"
         },
         {
-          "texto": "Subir num canto e observar como um corvo",
+          "texto": "Subir num muro e observar como corvo",
           "proximo": "historia3",
           "buildImpact": "anomalia",
           "dica": "O observador também dança no caos.",
@@ -90,7 +90,7 @@
           "fraseChave": "vigia"
         },
         {
-          "texto": "Chamar alguém para conversar calmamente",
+          "texto": "Chamar alguém e criar um oásis de diálogo",
           "proximo": "historia3",
           "buildImpact": "virtuoso",
           "dica": "Mesmo na selva, há sabedoria.",
@@ -103,10 +103,10 @@
       "id": "historia3",
       "tipo": "historia",
       "titulo": "Asas ou Nado",
-      "descricao": "No almoço, te perguntam: 'Você é mais do tipo que voa ou que mergulha?' Você hesita. Nadar exige fôlego. Voar exige leveza. Mas viver exige ambos.",
+      "descricao": "No almoço, alguém pergunta: 'Você prefere voar ou mergulhar?'. Risos, olhares. A escolha é mais que metáfora: é um retrato da alma. O céu exige coragem. As águas exigem entrega.",
       "opcoes": [
         {
-          "texto": "Responder que prefere voar — ver o todo",
+          "texto": "Dizer que prefere voar — enxergar o todo",
           "proximo": "evento1",
           "buildImpact": "virtuoso",
           "dica": "Visão ampla é sabedoria em voo.",
@@ -114,7 +114,7 @@
           "fraseChave": "altitude"
         },
         {
-          "texto": "Responder que prefere mergulhar — sentir fundo",
+          "texto": "Responder que mergulhar — sentir o fundo",
           "proximo": "evento1",
           "buildImpact": "anomalia",
           "dica": "O fundo esconde verdades.",
@@ -122,7 +122,7 @@
           "fraseChave": "profundidade"
         },
         {
-          "texto": "Dizer que ainda não aprendeu a respirar",
+          "texto": "Brincar: 'Ainda não sei nem respirar direito'",
           "proximo": "evento1",
           "buildImpact": "profano",
           "dica": "Adiar a escolha é uma escolha.",
@@ -135,11 +135,11 @@
       "id": "evento1",
       "tipo": "evento",
       "titulo": "A Pedra Grita",
-      "descricao": "De repente, uma rajada de vento. A Pedra aparece, girando no ar, envolta por penas e gotas. Ela diz: 'A vida pulsa quando você não pensa. Mas quem vive só pelo instinto... voa sem asas, nada sem brânquias. Escolha teu fôlego.'",
+      "descricao": "O vento arranca papéis do chão. Penas caem do nada. A Pedra surge, suspensa entre água e céu, envolta por um rugido silencioso. Ela diz: 'O instinto move, mas também engole. Quem vive sem pausa, voa sem asas, nada sem brânquias. Escolha teu fôlego.'",
       "npc": "npc7",
       "opcoes": [
         {
-          "texto": "Agachar e tocar o chão com a mão direita",
+          "texto": "Agachar e tocar o chão, pedindo raiz",
           "proximo": "rotina2",
           "buildImpact": "virtuoso",
           "dica": "A conexão com o chão revela direção.",
@@ -147,7 +147,7 @@
           "fraseChave": "raiz"
         },
         {
-          "texto": "Fechar os olhos e escutar os batimentos",
+          "texto": "Fechar os olhos e escutar o próprio coração",
           "proximo": "rotina2",
           "buildImpact": "anomalia",
           "dica": "O corpo revela segredos ao atento.",
@@ -155,7 +155,7 @@
           "fraseChave": "ritmo"
         },
         {
-          "texto": "Pular e girar como se voasse",
+          "texto": "Pular e girar como ave sem ninho",
           "proximo": "rotina2",
           "buildImpact": "profano",
           "dica": "Nem todo voo tem direção.",
@@ -168,10 +168,10 @@
       "id": "rotina2",
       "tipo": "rotina",
       "titulo": "Antes do Sono",
-      "descricao": "Em casa, antes de dormir, você lembra do dia: instintos, reações, reflexos. Percebe que reagir não é errado — é natural. Mas a diferença entre homem e fera está na pausa entre impulso e ação.",
+      "descricao": "À noite, no quarto escuro, o corpo ainda pulsa. Você entende: o instinto não é inimigo, mas mensageiro. A diferença entre fera e humano está no segundo de silêncio antes da resposta.",
       "opcoes": [
         {
-          "texto": "Anotar os impulsos que teve hoje",
+          "texto": "Anotar os impulsos do dia como mapa secreto",
           "proximo": "fim1",
           "buildImpact": "virtuoso",
           "dica": "Refletir é moldar-se.",
@@ -179,7 +179,7 @@
           "fraseChave": "memória"
         },
         {
-          "texto": "Se entregar ao sono sem pensar",
+          "texto": "Deixar o corpo cair no sono sem luta",
           "proximo": "fim1",
           "buildImpact": "profano",
           "dica": "O cansaço também escolhe por você.",
@@ -187,7 +187,7 @@
           "fraseChave": "rendição"
         },
         {
-          "texto": "Ouvir música como anestesia",
+          "texto": "Colocar música e afogar a mente em som",
           "proximo": "fim1",
           "buildImpact": "anomalia",
           "dica": "A fuga sonora esconde vozes reais.",
@@ -200,7 +200,7 @@
       "id": "fim1",
       "tipo": "fim",
       "titulo": "Fim do Dia 5",
-      "descricao": "🐟 O quinto dia termina. Você se moveu, correu, reagiu. Mas também viu que viver sem pensar é viver pela metade. O corpo é uma flecha. Mas é a alma que escolhe o alvo."
+      "descricao": "🐟 O quinto dia termina. Você correu, gritou, reagiu. Descobriu que instinto é chama — mas só consciência transforma faísca em caminho. O corpo é uma flecha. A alma, o alvo."
     }
   ],
   "tooltips": {

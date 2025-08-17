@@ -1,7 +1,7 @@
 {
-  "nome": "Dia 4",
-  "fraseInspiradora": "🌞 Cada luz tem sua hora. Até o Sol sabe a hora de se pôr.",
-  "descricao": "No quarto dia, surgem os luminares. O Sol para o dia, a Lua para a noite, as estrelas para os ciclos. É o dia em que a luz ganha direção. A consciência agora busca se orientar.",
+  "nome": "Dia 4 — Luminares",
+  "fraseInspiradora": "🌞 Cada luz tem sua hora. Até o Sol conhece o instante de se pôr.",
+  "descricao": "No quarto dia, surgem os luminares. O Sol para o dia, a Lua para a noite, as estrelas para os rumos. É o dia em que a luz ganha direção. A consciência busca orientação.",
   "tooltips": {
     "virtuoso": {
       "texto": "🕊️ Seu espírito se eleva. Você é um farol.",
@@ -190,7 +190,7 @@
           "texto": "Fechar tudo e guardar a pedra sob o travesseiro",
           "proximo": "fim4",
           "buildImpact": "profano",
-          "dica": "Proteger-se pode virar prisão.",
+          "dica": "Guardar-se demais é perder-se dentro.",
           "efeitoTexto": "esmaecer",
           "fraseChave": "defesa"
         },
@@ -208,12 +208,15 @@
       "id": "fim4",
       "tipo": "fim",
       "titulo": "Fim do Dia 4",
-      "descricao": "🌕 O quarto dia termina. Agora você sabe: cada luz ilumina um tipo de dor — e escolher qual seguir também é um ato de criação."
+      "descricao": "🌕 O quarto dia termina. Agora você sabe: cada luz ilumina um tipo de dor — e escolher qual seguir também é um ato de criação.",
+      "fraseChave": "luz",
+      "pressagio": "Nem toda claridade afasta a sombra.",
+      "reflexao": "As escolhas brilham, mas também queimam. Sua marca está no que decidiu seguir."
     }
   ],
   "frasesFinais": {
     "virtuoso": "Mesmo ferido, você escolhe não ferir.",
-    "profano": "Negar o chamado também é um tipo de resposta.",
-    "anomalia": "Quem sente demais, às vezes quebra para não ser moldado."
+    "profano": "Negar o chamado também é uma resposta.",
+    "anomalia": "Quem sente demais, às vezes se quebra para não ser moldado."
   }
 }

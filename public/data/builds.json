@@ -30,15 +30,15 @@
   {
     "id": "anomalia",
     "nome": "Anomalia",
-    "descricao": "Aquele que rompe as margens. Caos criador ou destruidor.",
+    "descricao": "Quem caminha entre extremos: cai e levanta, testa limites e retorna ao eixo. Não é bom nem mau — tenta ser íntegro.",
     "cor": "#cc3366",
     "simbolo": "🟣",
-    "lema": "Só quem quebra tudo pode ver o que há por trás.",
+    "lema": "Cair e levantar também é caminho.",
     "caracteristicas": [
-      "Transgressor",
-      "Impulsivo",
-      "Sarcasmo como armadura",
-      "Desafia sistemas"
+      "Ambivalência consciente",
+      "Autoironia (sem cinismo)",
+      "Experimenta limites sem perder o eixo",
+      "Levanta-se após a queda"
     ]
   }
 ]

@@ -1,19 +1,19 @@
 {
-  "nome": "Dia 1",
-  "fraseInspiradora": "🕯️ Mesmo na escuridão, há quem encontre o rumo.",
-  "descricao": "Um dia sem forma, envolto em trevas. Nada ainda foi criado, mas tudo já foi ferido.",
+  "nome": "Dia 1 — O Caos e a Pedra",
+  "fraseInspiradora": "🕯️ Mesmo na escuridão, há quem encontre um rumo escondido.",
+  "descricao": "Um dia sem forma, envolto em trevas. Nada ainda tem nome, mas tudo já pulsa pedindo saída.",
   "blocos": [
     {
       "id": "historia1",
       "tipo": "historia",
       "titulo": "A Casa Silenciosa",
-      "descricao": "Você acorda com o som de garrafas caindo. Lá fora ainda é noite. Sua mãe dorme no sofá com a TV ligada. O silêncio é pesado.",
+      "descricao": "Você acorda com o barulho de garrafas caindo no quintal. Lá fora ainda é noite. Sua mãe dorme no sofá, a TV brilha em silêncio. O ar parece pesado demais para ser respirado.",
       "opcoes": [
         {
           "texto": "Olhar pela janela",
           "proximo": "npc1_bloco",
           "buildImpact": "virtuoso",
-          "dica": "Atenção aos sinais do mundo exterior.",
+          "dica": "Às vezes, o mundo exterior mostra o que você não quer ver.",
           "efeitoTexto": "brilhar",
           "fraseChave": "transicao"
         },
@@ -21,15 +21,15 @@
           "texto": "Voltar a dormir",
           "proximo": "npc1_bloco",
           "buildImpact": "profano",
-          "dica": "Ignorar também é uma decisão.",
+          "dica": "Fechar os olhos não faz o peso sumir.",
           "efeitoTexto": "esmaecer",
           "fraseChave": "sono"
         },
         {
-          "texto": "Andar sem rumo",
+          "texto": "Andar sem rumo pela casa",
           "proximo": "npc3_bloco",
           "buildImpact": "anomalia",
-          "dica": "Caminhar sem rumo é negar o sistema.",
+          "dica": "Caminhar sem rumo é se rebelar contra o roteiro.",
           "efeitoTexto": "tremer",
           "fraseChave": "humor"
         }
@@ -40,10 +40,10 @@
       "npc": "npc1",
       "tipo": "historia",
       "titulo": "A Janela",
-      "descricao": "Ao abrir a cortina, a noite parece sussurrar algo que só você entende.",
+      "descricao": "A cortina abre. A rua parece segurar a respiração. Um cachorro late para o vazio, como se enxergasse algo que você não vê.",
       "opcoes": [
         {
-          "texto": "Ir tomar café",
+          "texto": "Ir tomar café frio",
           "proximo": "rotina1",
           "buildImpact": "virtuoso"
         }
@@ -54,10 +54,10 @@
       "npc": "npc6",
       "tipo": "historia",
       "titulo": "Desvio Silencioso",
-      "descricao": "Você tropeça nos próprios pés e sente que talvez esteja indo pelo caminho errado de propósito.",
+      "descricao": "Você tropeça nos próprios pés, mas não cai. É como se o chão quisesse te avisar que o caminho não é esse.",
       "opcoes": [
         {
-          "texto": "Seguir pra onde der",
+          "texto": "Seguir mesmo assim",
           "proximo": "historia2",
           "buildImpact": "anomalia"
         }
@@ -67,13 +67,13 @@
       "id": "rotina1",
       "tipo": "rotina",
       "titulo": "Manhã Fragmentada",
-      "descricao": "O café está frio. Seu pai não está em casa. Você sente o vazio entre as coisas. Mas a vida te obriga a sair.",
+      "descricao": "O café está frio. A cadeira vazia na mesa pesa mais que qualquer presença. A vida te obriga a sair, mesmo quando você só queria sumir.",
       "opcoes": [
         {
           "texto": "Ir pra escola",
           "proximo": "historia2",
           "buildImpact": "virtuoso",
-          "dica": "Enfrentar a realidade pode curar.",
+          "dica": "Enfrentar o mundo pode ser a cura.",
           "efeitoTexto": "brilhar",
           "fraseChave": "transicao"
         },
@@ -81,15 +81,15 @@
           "texto": "Ficar em casa",
           "proximo": "historia2",
           "buildImpact": "profano",
-          "dica": "Evitar a rotina não apaga o vazio.",
+          "dica": "Esquivar da rotina não apaga o vazio.",
           "efeitoTexto": "esmaecer",
           "fraseChave": "inercia"
         },
         {
-          "texto": "Andar sem rumo",
+          "texto": "Vagar pelas ruas sem destino",
           "proximo": "historia2",
           "buildImpact": "anomalia",
-          "dica": "Caminhar sem rumo é negar o sistema.",
+          "dica": "Às vezes se perder é a única forma de existir.",
           "efeitoTexto": "tremer",
           "fraseChave": "humor"
         }
@@ -99,18 +99,18 @@
       "id": "historia2",
       "tipo": "historia",
       "titulo": "O Tapa Invisível",
-      "descricao": "Lembra de quando brincou alto demais e ele te bateu com o cinto? A marca ficou por dias. Ninguém notou. Hoje você ri baixo.",
+      "descricao": "Você lembra de uma vez que brincou alto demais. O cinto veio rápido. A marca ficou dias escondida. Hoje você sorri baixo para não acordar fantasmas.",
       "opcoes": [
         {
-          "texto": "Seguir o dia como se nada",
+          "texto": "Seguir o dia como se nada tivesse acontecido",
           "proximo": "evento1",
           "buildImpact": "profano",
-          "dica": "Fingir é sobreviver... ou não?",
+          "dica": "Fingir é sobreviver... por um tempo.",
           "efeitoTexto": "esmaecer",
           "fraseChave": "inercia"
         },
         {
-          "texto": "Prometer que não será como ele",
+          "texto": "Prometer a si mesmo que não repetirá isso",
           "proximo": "evento1",
           "buildImpact": "virtuoso",
           "dica": "Você pode quebrar o ciclo.",
@@ -118,10 +118,10 @@
           "fraseChave": "transicao"
         },
         {
-          "texto": "Odiar tudo em silêncio",
+          "texto": "Guardar o ódio em silêncio",
           "proximo": "evento1",
           "buildImpact": "anomalia",
-          "dica": "O ódio calado se acumula.",
+          "dica": "O silêncio pesado se acumula em pedras.",
           "efeitoTexto": "tremer",
           "fraseChave": "pedra"
         }
@@ -131,7 +131,7 @@
       "id": "evento1",
       "tipo": "evento",
       "titulo": "A Voz da Pedra",
-      "descricao": "Enquanto caminha pela rua, você vê uma pedra negra no chão. Ao tocá-la, ela sussurra: 'Mesmo no caos, há forma escondida.'",
+      "descricao": "Na rua, uma pedra negra te chama atenção. Ao tocá-la, você escuta: 'Mesmo no caos, há forma escondida.'",
       "opcoes": [
         {
           "texto": "Guardar a pedra",
@@ -153,7 +153,7 @@
           "texto": "Chutar com raiva",
           "proximo": "rotina2",
           "buildImpact": "anomalia",
-          "dica": "Às vezes quebrar é comunicar.",
+          "dica": "Às vezes quebrar também é uma forma de falar.",
           "efeitoTexto": "tremer",
           "fraseChave": "humor"
         }
@@ -163,7 +163,7 @@
       "id": "rotina2",
       "tipo": "rotina",
       "titulo": "Volta pra Casa",
-      "descricao": "A noite chega. Você não tem forças pra estudar. Sua mãe pergunta se está tudo bem. Você responde: 'Tá sim.'",
+      "descricao": "A noite chega. Você não tem forças para abrir um livro. Sua mãe pergunta se está tudo bem. Você responde: 'Tá sim.' — mas sua voz não convence nem a si mesmo.",
       "opcoes": [
         {
           "texto": "Tentar dormir",
@@ -177,15 +177,15 @@
           "texto": "Ficar acordado pensando",
           "proximo": "fim1",
           "buildImpact": "virtuoso",
-          "dica": "Refletir é se posicionar.",
+          "dica": "Refletir também é se posicionar.",
           "efeitoTexto": "brilhar",
           "fraseChave": "transicao"
         },
         {
-          "texto": "Jogar algo até apagar",
+          "texto": "Jogar até o corpo apagar",
           "proximo": "fim1",
           "buildImpact": "anomalia",
-          "dica": "Afogar-se no mundo virtual é uma escolha também.",
+          "dica": "O mundo virtual pode ser um esconderijo.",
           "efeitoTexto": "tremer",
           "fraseChave": "humor"
         }
@@ -195,7 +195,7 @@
       "id": "fim1",
       "tipo": "fim",
       "titulo": "Fim do Dia 1",
-      "descricao": "🕯️ Você sobreviveu ao Tohu VaVohu. Mas algo dentro de você quebrou e outra coisa se fortaleceu. O que será?"
+      "descricao": "🕯️ Você sobreviveu ao vazio inicial. Algo dentro de você quebrou, mas outra coisa começou a nascer. A Pedra te observa."
     }
   ],
   "tooltips": {
@@ -217,7 +217,7 @@
   },
   "frasesFinais": {
     "virtuoso": "Mesmo ferido, você escolhe não ferir.",
-    "profano": "Negar o chamado também é um tipo de resposta.",
+    "profano": "Negar o chamado também é uma resposta.",
     "anomalia": "Quem sente demais, às vezes quebra para não ser moldado."
   }
 }

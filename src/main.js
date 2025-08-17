@@ -41,6 +41,9 @@ import './ui/fog.js';
 // ✨ UI Rewards
 import { playChoiceReward, pulseBuildBadge } from './ui/rewardChoice.js';
 
+// ✨ UI mostrarCreditos
+import { mostrarCreditos } from './ui/credits.js';
+
 // 📊 Estado global
 let estado = {
   diaAtual: 1,
@@ -64,18 +67,21 @@ async function iniciarJogo() {
       console.log('📁 Progresso carregado:', progressoSalvo);
     }
 
-    const maxDias = 7;
-    if (estado.diaAtual > maxDias) {
-      console.warn(`🧼 Dia ${estado.diaAtual} excede o máximo. Resetando...`);
-      localStorage.clear();
-      location.reload();
-      return;
+    // 🔒 Normalizações leves (sem reset destrutivo)
+    // - diaAtual mínimo = 1
+    if (!Number.isFinite(estado.diaAtual) || estado.diaAtual < 1) {
+      estado.diaAtual = 1;
+    }
+    // - se a âncora traz um "fim*" de outro dia, ignore no boot do novo dia
+    if (typeof estado.eventoAtualId === 'string' && /^fim/i.test(estado.eventoAtualId)) {
+      estado.eventoAtualId = null;
+      try { salvarProgresso({ diaAtual: estado.diaAtual, eventoAtualId: null }); } catch {}
     }
 
     // 🔑 Preserve a build do save para exibir coerente no novo dia
-    const buildInicial = estado.build || 'profano';
+    const buildInicial = typeof estado.build === 'string' ? estado.build : 'profano';
 
-    // Carrega o dia atual
+    // Carrega o dia atual (dinâmico; se não existir, o próprio carregamento tratará)
     await carregarDia(estado.diaAtual);
 
     // Aplica HUD/título com a build salva (sem recalcular dominante agora)
@@ -83,31 +89,57 @@ async function iniciarJogo() {
     atualizarHUD(estado.nomeDia, estado.build);
     atualizarGlowTitulo(estado.build);
 
-    // Agora sim, zera apenas o acumulador diário (não mexe no rótulo da build)
+    // Zera apenas o acumulador diário (não mexe no rótulo atual da build)
     try { resetarBuild(); } catch {}
 
   } catch (err) {
     console.error('💥 Falha ao iniciar o jogo:', err);
   }
 }
-
 /* ---------------------------------------
  *   Carregar e preparar o dia
  * ----------------------------------------*/
 async function carregarDia(numeroDia) {
   try {
-    const resposta = await fetch(`/data/dia${numeroDia}.json`);
-    if (!resposta.ok) throw new Error(`Status ${resposta.status} - ${resposta.statusText}`);
+    const url = `/data/dia${numeroDia}.json`;
+    const resposta = await fetch(url);
+
+    if (!resposta.ok) {
+      // 👉 Dia inexistente: encerramento elegante com Créditos
+      throw new Error(`Dia ${numeroDia} indisponível (${resposta.status} ${resposta.statusText}).`);
+    }
 
     const textoBruto = await resposta.text();
-    // console.log('📄 Conteúdo JSON recebido:', textoBruto);
     const dadosDia = JSON.parse(textoBruto);
 
-    estado.eventos = dadosDia.blocos || [];
+    // Eventos do dia
+    const blocos = Array.isArray(dadosDia.blocos) ? dadosDia.blocos : [];
+    estado.eventos = blocos;
     estado.nomeDia = dadosDia.nome || `Dia ${numeroDia}`;
-    estado.eventoAtual = estado.eventos[0] || null;
 
-    // tooltip do botão "DIA"
+    // Se o JSON está vazio/sem blocos, trate como final (Créditos)
+    if (blocos.length === 0) {
+      throw new Error(`Dia ${numeroDia} sem blocos válidos.`);
+    }
+
+    // Seleção do bloco inicial guiada por âncora (ignorando âncoras "fim*")
+    const ancoraValida =
+    (typeof estado.eventoAtualId === 'string' && !/^fim/i.test(estado.eventoAtualId))
+    ? estado.eventoAtualId
+    : null;
+
+    const blocoInicial = ancoraValida
+    ? (blocos.find(b => b?.id === ancoraValida) || blocos[0] || null)
+    : (blocos[0] || null);
+
+    if (!blocoInicial) {
+      // Sem bloco inicial resolvível → final (Créditos)
+      throw new Error(`Dia ${numeroDia} sem bloco inicial resolvível.`);
+    }
+
+    estado.eventoAtual = blocoInicial;
+
+    // Tooltip do botão "DIA"
     const hudDia = document.getElementById('hud-dia');
     if (hudDia) {
       if (dadosDia.fraseInspiradora) {
@@ -117,17 +149,37 @@ async function carregarDia(numeroDia) {
       }
     }
 
+    // HUD coerente com a build atual
     atualizarHUD(estado.nomeDia, estado.build);
     atualizarGlowTitulo(estado.build);
 
-    if (estado.eventoAtual) {
-      renderizarEvento(estado.eventoAtual, eventoContainer);
-    } else {
-      eventoContainer.innerHTML = `<p class="erro">⚠️ Este dia não possui blocos.</p>`;
-    }
+    // Persiste âncora leve do bloco atual (se houver)
+    try {
+      const idAtual = typeof blocoInicial.id === 'string' ? blocoInicial.id : null;
+      salvarProgresso({ diaAtual: numeroDia, eventoAtualId: idAtual });
+    } catch {}
+
+    // Renderização
+    renderizarEvento(estado.eventoAtual, eventoContainer);
+
   } catch (erro) {
     console.error('❌ Erro ao carregar o dia:', erro);
-    eventoContainer.innerHTML = `<p class="erro">⚠️ Dia não encontrado ou JSON inválido.</p>`;
+
+    // 👉 Encerramento elegante com Créditos, respeitando a build atual
+    try {
+      mostrarCreditos({
+        build: estado.build || 'misto',
+        stats: {} // opcional: passe métricas agregadas aqui
+      });
+    } catch (e2) {
+      // Fallback visual se, por algum motivo, os créditos não puderem ser exibidos
+      eventoContainer.innerHTML = `
+      <div class="erro">
+      <p>⚠️ Dia não encontrado ou JSON inválido.</p>
+      <p>Se você pretendia jogar o Dia ${numeroDia}, verifique se o arquivo <code>data/dia${numeroDia}.json</code> existe e está válido.</p>
+      </div>
+      `;
+    }
   }
 }
 

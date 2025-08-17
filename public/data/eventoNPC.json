@@ -3,27 +3,27 @@
     "id": "npc1",
     "nome": "Seu Toin da Kombi",
     "falas": {
-      "profano": "Você aí... quer resolver seus problemas com uma coxinha? Não resolve, mas engorda.",
-      "anomalia": "Tô te observando desde o início, viu? Tô vendo você comer o mundo e cuspir cinzas.",
-      "virtuoso": "Tem gente que medita... eu mastigo devagar. Dá no mesmo, ué."
+      "profano": "Quer resolver seus problemas com uma coxinha? Não resolve nada, só pesa na alma.",
+      "anomalia": "Tô te observando desde o início... você mastiga o mundo e cospe cinzas.",
+      "virtuoso": "Tem gente que medita. Eu mastigo devagar. Dá quase no mesmo."
     }
   },
   {
     "id": "npc2",
     "nome": "Mãe Zuzu",
     "falas": {
-      "profano": "Tava escrito nas linhas da sua tela rachada: vai dar ruim, meu filho.",
-      "anomalia": "Você brincou com o tempo, e o tempo agora brinca com você. Tome chá de boldo.",
-      "virtuoso": "Nem tudo que reluz é sabedoria. Às vezes é só reflexo de tela oleosa."
+      "profano": "As rachaduras da tua tela já diziam: vai dar ruim, meu filho.",
+      "anomalia": "Você brincou com o tempo, e o tempo agora ri de você. Toma um chá amargo.",
+      "virtuoso": "Nem tudo que reluz é sabedoria. Às vezes é só reflexo de vidro oleoso."
     }
   },
   {
     "id": "npc3",
     "nome": "Jubileu do Céu Cinza",
     "falas": {
-      "profano": "Tuas escolhas são como miojo sem tempero. Rápidas, mas tristes.",
-      "anomalia": "Rimaste com o abismo e agora ele te aplaude em rimas tortas.",
-      "virtuoso": "Poeta não é quem escreve, é quem sobrevive com beleza onde há concreto."
+      "profano": "Suas escolhas são miojo sem tempero: rápidas e tristes.",
+      "anomalia": "Você rimou com o abismo — e agora o abismo declama contigo.",
+      "virtuoso": "Poeta não é quem escreve; é quem respira beleza onde há concreto."
     }
   },
   {
@@ -31,7 +31,7 @@
     "nome": "O NPC Misterioso",
     "falas": {
       "profano": "Shhh... até o vazio tem ouvidos. Cuidado com o que não diz.",
-      "anomalia": "Você achou que era diferente. E era. Mas agora está marcado.",
+      "anomalia": "Você achou que era diferente. E era. Agora carrega uma marca.",
       "virtuoso": "Se chegou até aqui é porque ouviu o silêncio que muitos ignoram."
     }
   },
@@ -39,36 +39,36 @@
     "id": "npc5",
     "nome": "Supremo Mestre & Bardo Graciliano",
     "falas": {
-      "profano": "O discípulo que mente ao espelho cava sua própria ruína com versos quebrados.",
-      "anomalia": "No limite do nonsense, dançamos nus com as palavras. Eu só toquei o alaúde.",
-      "virtuoso": "Torne cada escolha um poema. Torne cada poema um templo. Torne-se verbo."
+      "profano": "Quem mente ao espelho cava a própria ruína em versos quebrados.",
+      "anomalia": "No limite do nonsense, dançamos com palavras até virar canção estranha.",
+      "virtuoso": "Faça de cada escolha um poema. De cada poema, um templo. Torne-se verbo."
     }
   },
   {
     "id": "npc6",
     "nome": "Xandão, o Supremo de Si Mesmo",
     "falas": {
-      "profano": "Liberdade de expressão? Só se você expressar o que eu gosto.",
-      "anomalia": "Hackei seu pensamento em tempo real. Não tente processar, já censurei.",
-      "virtuoso": "A democracia é linda. Principalmente quando sou eu quem dita as regras."
+      "profano": "Liberdade de expressão? Só se for a minha versão.",
+      "anomalia": "Hackei seus pensamentos em tempo real. Nem tente processar, já editei.",
+      "virtuoso": "Democracia é bela... principalmente quando sou eu quem dita as regras."
     }
   },
   {
     "id": "npc7",
     "nome": "Lula, o Retorno do Encantador de Iludidos",
     "falas": {
-      "profano": "Roubar é feio... exceto se for com carisma e uma camiseta do MST.",
-      "anomalia": "Eu não sabia de nada. Inclusive, esqueci que já fui presidente.",
-      "virtuoso": "Prometi mudar o Brasil. Mudei de apartamento."
+      "profano": "Roubar é feio... mas fica quase bonito com carisma e camiseta de sindicato.",
+      "anomalia": "Esqueci do que não sabia... inclusive que já fui presidente.",
+      "virtuoso": "Prometi mudar o país. Mudei de endereço — ao menos cumpri algo."
     }
   },
   {
     "id": "npc8",
     "nome": "Bolsonárion, o Capitão do Apocalipse",
     "falas": {
-      "profano": "Vacina é coisa de comunista. Prefiro cloroquina com leite condensado.",
-      "anomalia": "E daí? Não sou coveiro. Só cavei um buraco e caí junto.",
-      "virtuoso": "Se fiz algo de bom... foi sem querer. Juro por Deus. E pelas armas."
+      "profano": "Vacina é conspiração. Prefiro cloroquina com leite condensado.",
+      "anomalia": "E daí? Não sou coveiro. Só cavei um buraco e caí dentro.",
+      "virtuoso": "Se fiz algo de bom, foi sem querer. E ainda jurei pelas armas."
     }
   }
 ]

@@ -1,97 +1,133 @@
 {
-  "nome": "Dia 2 — Fragmento 1",
-  "fraseInspiradora": "🪞 O mundo não mudou — você sim.",
-  "descricao": "Ainda é o mesmo dia. Mas algo em você deslocou. O cenário é igual, a alma... talvez não.",
+  "nome": "Dia 2 — A Separação das Águas",
+  "fraseInspiradora": "🪞 O mundo é o mesmo. Você começa a distinguir o que é reflexo e o que é fundo.",
+  "descricao": "Ainda é o mesmo dia. Mas algo em você deslocou. O cenário parece igual — a alma já não.",
   "blocos": [
     {
-      "id": "bloco0_historia",
+      "id": "d2_h0",
       "tipo": "historia",
       "titulo": "O Ruído da Lixeira",
-      "descricao": "Enquanto sai de casa, você vê um homem revirando a lixeira da frente. Ele para, olha nos seus olhos e diz: 'Você perdeu alguma coisa aqui dentro?'",
+      "descricao": "Ao sair de casa, um homem revirando a lixeira te encara e pergunta: “Perdeu alguma coisa aqui dentro?”.",
       "opcoes": [
         {
           "texto": "Ignorar e seguir",
-          "proximo": "bloco1_rotina",
-          "buildImpact": "profano"
+          "proximo": "d2_r1",
+          "buildImpact": "profano",
+          "fraseChave": "inercia"
         },
         {
-          "texto": "Responder 'talvez minha infância'",
-          "proximo": "bloco1_rotina",
-          "buildImpact": "anomalia"
+          "texto": "Responder: “Talvez minha infância.”",
+          "proximo": "d2_r1",
+          "buildImpact": "anomalia",
+          "fraseChave": "humor"
         },
         {
-          "texto": "Oferecer algo sem dizer nada",
-          "proximo": "bloco1_rotina",
-          "buildImpact": "virtuoso"
+          "texto": "Oferecer algo em silêncio",
+          "proximo": "d2_r1",
+          "buildImpact": "virtuoso",
+          "fraseChave": "transicao"
         }
       ]
     },
     {
-      "id": "bloco1_rotina",
+      "id": "d2_r1",
       "tipo": "rotina",
       "titulo": "Caminho Costurado",
-      "descricao": "Você caminha devagar, tentando não tropeçar no próprio passado. Cada passo é uma costura entre quem você foi e quem talvez ainda seja.",
+      "descricao": "Você anda devagar, tentando não tropeçar no próprio passado. Cada passo costura quem você foi com quem tenta ser.",
       "opcoes": [
         {
-          "texto": "Andar mais devagar, respirando como quem costura com o vento",
-          "proximo": "bloco2_evento",
-          "buildImpact": "virtuoso"
+          "texto": "Respirar fundo e andar ainda mais devagar",
+          "proximo": "d2_e2",
+          "buildImpact": "virtuoso",
+          "fraseChave": "transicao"
         },
         {
-          "texto": "Acelerar, como quem foge de si mesmo",
-          "proximo": "bloco2_evento",
-          "buildImpact": "profano"
+          "texto": "Acelerar como quem foge de si",
+          "proximo": "d2_e2",
+          "buildImpact": "profano",
+          "fraseChave": "inercia"
         },
         {
           "texto": "Pisar em todas as linhas da calçada de propósito",
-          "proximo": "bloco2_evento",
-          "buildImpact": "anomalia"
+          "proximo": "d2_e2",
+          "buildImpact": "anomalia",
+          "fraseChave": "humor"
         }
       ]
     },
     {
-      "id": "bloco2_evento",
+      "id": "d2_e2",
       "tipo": "evento",
       "titulo": "O Grito Mudo",
-      "descricao": "Na esquina, uma criança te encara e diz: 'Você já gritou por dentro?'. Não há ninguém com ela. Nem com você.",
+      "descricao": "Na esquina, uma criança te encara: “Você já gritou por dentro?”. O vento carrega a pergunta como se fosse só tua.",
       "opcoes": [
         {
-          "texto": "Responder mentalmente: 'todos os dias'",
-          "proximo": "bloco_intermediario_npc",
-          "buildImpact": "anomalia"
+          "texto": "Responder mentalmente: “Todos os dias.”",
+          "proximo": "d2_npc",
+          "buildImpact": "anomalia",
+          "fraseChave": "pedra"
         },
         {
           "texto": "Dar um sorriso triste e seguir",
-          "proximo": "bloco_intermediario_npc",
-          "buildImpact": "profano"
+          "proximo": "d2_npc",
+          "buildImpact": "profano",
+          "fraseChave": "inercia"
         },
         {
           "texto": "Agachar e perguntar se ela quer conversar",
-          "proximo": "bloco_intermediario_npc",
-          "buildImpact": "virtuoso"
+          "proximo": "d2_npc",
+          "buildImpact": "virtuoso",
+          "fraseChave": "transicao"
         }
       ]
     },
     {
-      "id": "bloco_intermediario_npc",
+      "id": "d2_npc",
       "npc": "npc2",
       "tipo": "historia",
       "titulo": "Eco Silencioso",
-      "descricao": "Ela se aproxima e diz: 'Às vezes, só de escutar já se muda tudo.'",
+      "descricao": "Mãe Zuzu surge como se sempre estivesse ali: “Às vezes, só de escutar, já se muda tudo.”",
       "opcoes": [
         {
-          "texto": "Encerrar o dia",
-          "proximo": "fim",
-          "buildImpact": "virtuoso"
+          "texto": "Seguir em frente, guardando o conselho",
+          "proximo": "d2_e3",
+          "buildImpact": "virtuoso",
+          "fraseChave": "transicao"
         }
       ]
     },
     {
-      "id": "fim",
+      "id": "d2_e3",
+      "tipo": "evento",
+      "titulo": "Água e Vidro",
+      "descricao": "No banheiro da escola, a torneira pinga. O espelho embaça. Por um instante, você vê dois rostos: o de ontem e o de agora.",
+      "opcoes": [
+        {
+          "texto": "Lavar o rosto e encarar o reflexo",
+          "proximo": "d2_fim",
+          "buildImpact": "virtuoso",
+          "fraseChave": "transicao"
+        },
+        {
+          "texto": "Passar reto, fingindo não se ver",
+          "proximo": "d2_fim",
+          "buildImpact": "profano",
+          "fraseChave": "inercia"
+        },
+        {
+          "texto": "Rabiscar o vapor com o dedo, abrindo uma fenda",
+          "proximo": "d2_fim",
+          "buildImpact": "anomalia",
+          "fraseChave": "humor"
+        }
+      ]
+    },
+    {
+      "id": "d2_fim",
       "tipo": "fim",
-      "titulo": "Fragmento Encerrado",
-      "descricao": "🌒 O mesmo dia terminou de novo. Ou você terminou ele. Um fragmento a menos — ou a mais — na colcha do seu ser.",
-      "fraseChave": "fragmento"
+      "titulo": "Fim do Dia 2",
+      "descricao": "🌊 O mundo é o mesmo, mas agora você distingue a água que afoga da água que limpa.",
+      "fraseChave": "transicao"
     }
   ],
   "tooltips": {

@@ -1,103 +1,102 @@
 {
-  "nome": "Dia 7 — O Silêncio Final",
-  "fraseInspiradora": "Às vezes, a escolha mais difícil é admitir que nunca houve uma.",
+  "nome": "Dia 7 — O Silêncio da Pedra",
+  "fraseInspiradora": "⛰️ O silêncio também fala. A pausa é criação.",
+  "descricao": "Nada acontece. Ou acontece demais, mas em silêncio. É o sétimo dia: não há tarefa, só eco.",
   "blocos": [
     {
-      "id": "inicio",
-      "titulo": "Despertar ou desistir?",
-      "descricao": "Você acorda, mas não tem certeza se ainda está jogando ou se já virou o jogo. As paredes são de veludo. Há um botão que diz 'Recomeçar'. Mas ele está atrás de uma redoma. De vidro. Sem rachaduras.",
+      "id": "rotina1",
+      "tipo": "historia",
+      "titulo": "Entrada em Silêncio",
+      "descricao": "Você chega sem pressa. Não há começo nem fim, só uma pausa que já existia antes de você. O chão lembra os primeiros passos do Dia 1, mas agora não há peso, só sombra.",
       "opcoes": [
-        {
-          "texto": "Apertar o botão com a testa.",
-          "proximo": "labirinto",
-          "buildImpact": "anomalia",
-          "dica": "Nada como o bom e velho improviso craniano.",
-          "fraseChave": "O caos é uma estratégia como qualquer outra."
-        },
-        {
-          "texto": "Esperar. Talvez algo aconteça.",
-          "proximo": "labirinto",
-          "buildImpact": "profano",
-          "dica": "Inércia: o mais confortável dos grilhões.",
-          "fraseChave": "A espera é o vício dos indecisos."
-        },
-        {
-          "texto": "Meditar e aceitar o momento.",
-          "proximo": "labirinto",
-          "buildImpact": "virtuoso",
-          "dica": "Você é melhor do que isso (será?).",
-          "fraseChave": "A paz começa quando a expectativa morre."
-        }
+        { "texto": "Entrar", "proximo": "d7_h0", "buildImpact": "virtuoso" }
       ]
     },
     {
-      "id": "labirinto",
-      "titulo": "O labirinto das últimas perguntas",
-      "descricao": "Você está em um labirinto. As paredes sussurram suas escolhas passadas. Uma delas grita 'VOCÊ MATOU O CACHORRO DA VIZINHA'. Você nunca teve vizinha. Ou cachorro.",
+      "id": "d7_h0",
+      "tipo": "historia",
+      "titulo": "O Banco Vazio",
+      "descricao": "Na praça, um banco está vazio. Parece esperar por você. O vento não sopra. Você sente que, se sentar, nada começará... e nada terminará. Um eco distante lembra o riso e as lágrimas do Dia 2.",
       "opcoes": [
-        {
-          "texto": "Confessar mesmo assim.",
-          "proximo": "espelho",
-          "buildImpact": "virtuoso",
-          "dica": "Arrependimento pré-pago.",
-          "fraseChave": "Quem se culpa, assume o controle do julgamento."
-        },
-        {
-          "texto": "Correr e gritar: 'MENTIRA!'",
-          "proximo": "espelho",
-          "buildImpact": "anomalia",
-          "dica": "Gritar resolve tudo. Quase sempre. Nunca.",
-          "fraseChave": "Se ninguém acredita, é verdade por padrão."
-        },
-        {
-          "texto": "Dar uma risadinha e seguir reto.",
-          "proximo": "espelho",
-          "buildImpact": "profano",
-          "dica": "O cinismo é a elegância dos fracos.",
-          "fraseChave": "Quando tudo é piada, nada te prende."
-        }
+        { "texto": "Sentar e apenas respirar", "proximo": "d7_e0", "buildImpact": "virtuoso", "fraseChave": "pausa" },
+        { "texto": "Passar reto, como quem teme parar", "proximo": "d7_e0", "buildImpact": "profano", "fraseChave": "vazio" },
+        { "texto": "Ficar de pé diante do banco, sem decidir", "proximo": "d7_e0", "buildImpact": "anomalia", "fraseChave": "entrelinha" }
       ]
     },
     {
-      "id": "espelho",
-      "titulo": "O espelho e a porta",
-      "descricao": "Há um espelho. Seu reflexo não te imita. Ele sorri antes de você. E aponta para uma porta onde está escrito: 'Última chance (ou não)'.",
+      "id": "d7_e0",
+      "tipo": "evento",
+      "titulo": "Sombras Sem Eco",
+      "descricao": "Três sombras atravessam a rua. Nenhum som acompanha seus passos. Elas parecem se mover mais devagar que o mundo. Uma delas se parece com alguém que você conheceu — ou apenas lembra.",
       "opcoes": [
-        {
-          "texto": "Pedir desculpas ao reflexo.",
-          "proximo": "fim",
-          "buildImpact": "virtuoso",
-          "dica": "Nunca é tarde para pedir perdão... a si mesmo?",
-          "fraseChave": "A humildade é a única chave que abre portas fechadas por dentro."
-        },
-        {
-          "texto": "Ignorar e atravessar a porta.",
-          "proximo": "fim",
-          "buildImpact": "profano",
-          "dica": "Passar reto é um estilo de vida.",
-          "fraseChave": "Ignorar o espelho não te impede de ser visto."
-        },
-        {
-          "texto": "Quebrar o espelho com a testa (de novo).",
-          "proximo": "fim",
-          "buildImpact": "anomalia",
-          "dica": "Quem nunca recorreu à violência simbólica que atire a primeira pedra mental.",
-          "fraseChave": "Toda revolução começa com um corte na testa."
-        }
+        { "texto": "Seguir atrás delas em silêncio", "proximo": "d7_h1", "buildImpact": "virtuoso", "fraseChave": "pausa" },
+        { "texto": "Fechar os olhos e esperar que passem", "proximo": "d7_h1", "buildImpact": "profano", "fraseChave": "vazio" },
+        { "texto": "👁‍🗨 ᚖ A͠c͞e͟n̶a͘r͘ p͠a͞r̷a ͠a͟s̕ s̵o̡m͢b͘r̕ąs͢", "proximo": "d7_h1", "buildImpact": "anomalia", "fraseChave": "entrelinha" }
       ]
     },
     {
-      "id": "fim",
+      "id": "d7_h1",
+      "tipo": "historia",
+      "titulo": "O Mural Rachado",
+      "descricao": "Na escola, um mural mostra frases apagadas por rachaduras na parede. Uma delas ainda se lê: 'O silêncio escreve mais fundo que o grito.' As rachaduras lembram as divisões do Dia 3.",
+      "opcoes": [
+        { "texto": "Tocar a rachadura", "proximo": "d7_r1", "buildImpact": "virtuoso", "fraseChave": "pausa" },
+        { "texto": "Virar as costas sem ler", "proximo": "d7_r1", "buildImpact": "profano", "fraseChave": "vazio" },
+        { "texto": "Completar a frase com o dedo", "proximo": "d7_r1", "buildImpact": "anomalia", "fraseChave": "entrelinha" }
+      ]
+    },
+    {
+      "id": "d7_r1",
+      "tipo": "rotina",
+      "titulo": "O Relógio Sem Ponteiros",
+      "descricao": "Na parede da escola, um relógio sem ponteiros e sem números. Só um círculo branco. Você olha e sente que está dentro dele. O tempo não anda, mas pulsa como a Pedra do começo.",
+      "opcoes": [
+        { "texto": "Aceitar o tempo como círculo", "proximo": "d7_e2", "buildImpact": "virtuoso", "fraseChave": "pausa" },
+        { "texto": "Negar e virar o rosto", "proximo": "d7_e2", "buildImpact": "profano", "fraseChave": "vazio" },
+        { "texto": "⌛ Des̷e͝n̷h͘a͜r p̴o̢n̷t͝e͠ir͡o͠s n͢o ͘a͡r", "proximo": "d7_e2", "buildImpact": "anomalia", "fraseChave": "entrelinha" }
+      ]
+    },
+    {
+      "id": "d7_e2",
+      "tipo": "evento",
+      "titulo": "O Sopro Retido",
+      "descricao": "Você percebe que está prendendo a respiração. Ao soltar, nada quebra; o silêncio apenas muda de textura. É como se o Dia 4 ainda brilhasse nas margens do ar.",
+      "opcoes": [
+        { "texto": "Exalar devagar, aceitando o silêncio", "proximo": "d7_fim_virtuoso", "buildImpact": "virtuoso", "fraseChave": "pausa" },
+        { "texto": "Tossir para forçar um fim", "proximo": "d7_fim_profano", "buildImpact": "profano", "fraseChave": "vazio" },
+        { "texto": "Prender de novo, como ritual", "proximo": "d7_fim_anomalia", "buildImpact": "anomalia", "fraseChave": "entrelinha" }
+      ]
+    },
+    {
+      "id": "d7_fim_virtuoso",
       "tipo": "fim",
-      "titulo": "FIM?",
-      "descricao": "Você saiu. Ou ficou. A verdade é que ninguém tem certeza se o jogo terminou ou só você parou de jogar. Uma voz surge: 'Você foi... interessante. Quase ninguém chega aqui com tanta convicção e tão pouca noção.'",
-      "opcoes": [
-        {
-          "texto": "Recomeçar como se nada tivesse acontecido.",
-          "proximo": "inicio",
-          "fraseChave": "Ciclos não terminam. Eles fingem recomeçar."
-        }
-      ]
+      "titulo": "Epílogo do Silêncio — Virtuoso",
+      "descricao": "🌿 O silêncio repousa dentro de você como um jardim secreto. Ao sair, percebe que até o mundo respira contigo. O ciclo parece ter encontrado paz.",
+      "fraseChave": "pausa"
+    },
+    {
+      "id": "d7_fim_profano",
+      "tipo": "fim",
+      "titulo": "Epílogo do Silêncio — Profano",
+      "descricao": "🔥 Você quebrou o silêncio, mas ele permanece rachado em você. O eco te acompanha, lembrando que até o vazio cobra. O ciclo termina, mas com peso.",
+      "fraseChave": "vazio"
+    },
+    {
+      "id": "d7_fim_anomalia",
+      "tipo": "fim",
+      "titulo": "Epílogo do Silêncio — Anomalia",
+      "descricao": "⚡ O silêncio não se acomoda: distorce, pisca, rasga. Você percebe que não descansou — transformou-se. O ciclo fecha em glitch, não em paz.",
+      "fraseChave": "entrelinha"
     }
-  ]
+  ],
+  "tooltips": {
+    "virtuoso": { "texto": "🌿 O descanso também é criação.", "cor": "#6ef2b1", "aura": "verde-dourado" },
+    "profano": { "texto": "💤 Fugir do silêncio é fugir de si.", "cor": "#f85b5b", "aura": "vermelho-escuro" },
+    "anomalia": { "texto": "🌑 Pausar errado também é pausa.", "cor": "#a87ef8", "aura": "violeta-glitch" }
+  },
+  "frasesFinais": {
+    "virtuoso": "No sétimo dia, até o vazio se torna sagrado.",
+    "profano": "Você correu do silêncio, mas ele ainda te alcança.",
+    "anomalia": "Seu silêncio é torto, mas é seu — e basta."
+  }
 }

@@ -22,7 +22,7 @@
     margin-top: clamp(16px, 3.5vw, 32px);
     color: rgba(236,236,244,0.82);
     font-size: clamp(.85rem, 1.8vw, .95rem);
-    overflow: hidden; /* mantém orbes/linha dentro do footer */
+    overflow: hidden;              /* mantém orbes/linha dentro do footer */
     min-height: 64px;              /* evita CLS */
     content-visibility: auto;      /* pausa custo fora de viewport */
     contain-intrinsic-size: 120px; /* reserva espaço aproximado */
@@ -50,7 +50,7 @@
     mix-blend-mode: screen;
     opacity:.35;
     animation: orbs-float 12s ease-in-out infinite alternate;
-    will-change: transform, opacity; /* melhora suavidade em mobile */
+    /* removido will-change: evita custo ocioso/memória alta */
 }
 
 /* fallback para browsers sem color-mix */
@@ -84,11 +84,21 @@
 .footer-jogo .creditos{
     letter-spacing:.02em;
     color: rgba(236,236,244,0.88);
-    text-wrap: balance;
+
+    /* FALLBACK universal de quebra (sem text-wrap inválido) */
+    overflow-wrap: anywhere;
+    word-break: normal;
+    hyphens: auto;
 }
-@supports not (text-wrap: balance){
-    .footer-jogo .creditos{ text-wrap: pretty; }
+/* Balance onde houver suporte */
+@supports (text-wrap: balance) {
+    .footer-jogo .creditos { text-wrap: balance; }
 }
+/* (Opcional) Pretty só onde suportado (Chromium) */
+@supports (text-wrap: pretty) {
+    .footer-jogo .creditos { text-wrap: pretty; }
+}
+
 .footer-jogo .creditos:focus-visible{
     outline: 1px dashed var(--footer-glow);
     outline-offset: 3px;
@@ -196,12 +206,11 @@
 @media (prefers-reduced-motion: reduce){
     .footer-jogo, .footer-jogo * { animation: none !important; transition: none !important; }
 }
+
+/* Mais contraste → reduza transparência/vidro (substitui prefers-reduced-transparency) */
 @media (prefers-contrast: more){
-    .footer-jogo { border-top-color: #fff; }
+    .footer-jogo { border-top-color: #fff; background: #0e1012; backdrop-filter:none; -webkit-backdrop-filter:none; }
     .footer-jogo .redes-sociais a { box-shadow: 0 0 0 2px #fff inset; }
-}
-@media (prefers-reduced-transparency: reduce){
-    .footer-jogo { backdrop-filter:none; -webkit-backdrop-filter:none; background:#0e1012; }
 }
 
 /* High Contrast Mode (Windows) */
@@ -209,6 +218,12 @@
     .footer-jogo { border-top: 1px solid ButtonText; }
     .footer-jogo::before, .footer-jogo::after { display:none; }
     .footer-jogo .redes-sociais a:focus-visible{ outline: 2px solid Highlight; box-shadow: none; }
+}
+
+/* Toggle manual (opcional) para reduzir transparência */
+html[data-reduced-transparency="true"] .footer-jogo {
+    background:#0e1012;
+    backdrop-filter:none; -webkit-backdrop-filter:none;
 }
 
 /* ===============================

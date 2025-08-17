@@ -3,61 +3,61 @@
     {
       "id": "zangado_barbeiro",
       "nome": "Zangado, o Barbeiro Revoltado",
-      "descricao": "Diz que 'só corta cabelo de gente com diploma' e vive reclamando da juventude enquanto passa máquina 2 no ódio.",
+      "descricao": "Corta cabelo como quem trava guerra. Reclama da juventude enquanto passa a máquina 2 com sarcasmo.",
       "build": "anomalia",
       "tipo": "sombra",
       "falas": [
-        "Isso aí que você chama de atitude? No meu tempo, isso levava tapa na orelha.",
-        "Você vai sair feio igual sua decisão. Senta aí, que eu corto sua dignidade junto.",
-        "Pra que pensar tanto, meu parceiro? A vida já decidiu por você!"
+        "Isso que você chama de atitude? No meu tempo era tapa na orelha.",
+        "Senta aí que eu aparo seu cabelo e sua dignidade junto.",
+        "Você pensa demais... a vida já escolheu por você."
       ]
     },
     {
       "id": "tia_sonia",
       "nome": "Tia Sônia da Lanchonete",
-      "descricao": "Serve coxinha gelada e conselhos quentes. Te trata como se fosse da família... e isso inclui puxão de orelha.",
+      "descricao": "Serve coxinha gelada e conselhos quentes. Te trata como família, e isso inclui puxão de orelha.",
       "build": "virtuoso",
       "tipo": "mentor",
       "falas": [
         "Come alguma coisa, meu filho. De cabeça vazia só sai besteira.",
-        "Olha, errar a gente erra... mas repetir é que dá indigestão.",
+        "Errar, a gente erra... mas repetir é que dá indigestão.",
         "Vai com calma. O mundo não vai fugir — só as promoções."
       ]
     },
     {
       "id": "mestre_dalmo",
       "nome": "Mestre Dalmo, o Vendedor de Relógio",
-      "descricao": "Está sempre te oferecendo um relógio 'importado da Suiça de Osasco'. Fala em parábolas e preços mágicos.",
+      "descricao": "Sempre aparece com um relógio 'suíço de Osasco'. Fala em parábolas e preços mágicos.",
       "build": "profano",
       "tipo": "sombra",
       "falas": [
-        "O tempo não espera ninguém... mas eu te faço esse por R$12,50.",
-        "Cada escolha é como um ponteiro: pode girar em círculo ou marcar mudança.",
-        "Não é falsificado, é uma homenagem paralela à originalidade capitalista!"
+        "O tempo não espera ninguém... mas esse eu te faço por R$12,50.",
+        "Cada escolha é como ponteiro: pode girar em círculo ou marcar mudança.",
+        "Não é falsificado, é só uma homenagem criativa ao capitalismo!"
       ]
     },
     {
       "id": "bruna_vaporeta",
       "nome": "Bruna Vaporeta, a Rainha do Vagão",
-      "descricao": "Faz stand-up improvisado no metrô e vive de aplausos, moedas e exposição gratuita nas redes.",
+      "descricao": "Transforma o metrô em palco, vive de aplausos e moedas, mistura drama e riso na mesma fala.",
       "build": "anomalia",
       "tipo": "neutra",
       "falas": [
-        "Alguém aqui já amou alguém que nem sabia da sua existência? Bem-vindo ao meu show!",
-        "Não é mendigagem, é arte com boleto!",
-        "Você acha que tá perdido? Eu faço isso todo dia e nem sei onde vou dormir hoje!"
+        "Alguém aqui já amou quem nem sabia da sua existência? Bem-vindo ao meu show.",
+        "Não é mendigagem, é arte com boleto.",
+        "Você se acha perdido? Eu vivo assim — e continuo de pé."
       ]
     },
     {
       "id": "padre_luizinho",
       "nome": "Padre Luizinho do Fusquinha",
-      "descricao": "Um religioso alternativo que evangeliza tocando rap cristão num fusca azul, mas vive estacionando em vaga de idoso.",
+      "descricao": "Um pregador alternativo que mistura fé, rap e buzina de fusca azul. Sempre entre sermão e contradição.",
       "build": "profano",
       "tipo": "mentor",
       "falas": [
-        "Jesus perdoa, mas o DETRAN não.",
-        "Você está acelerando demais, jovem. Reduz antes que a vida te freie.",
-        "Pecado é não revisar os freios antes da fé."
+        "Perdão é divino... mas o DETRAN não perdoa.",
+        "Você está acelerando demais, jovem. Reduz antes que a vida freie.",
+        "Pecado é confiar no freio sem revisar."
       ]
     }
   ]

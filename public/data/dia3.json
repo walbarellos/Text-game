@@ -1,16 +1,16 @@
 {
   "nome": "Dia 3 — Frestas",
-  "fraseInspiradora": "🌒 Ninguém é inteiro depois da primeira rachadura — é por ela que a luz entra.",
-  "descricao": "Você não venceu o mundo. Mas sobreviveu a si mesmo. E isso já é obra divina.",
+  "fraseInspiradora": "🌒 Ninguém permanece inteiro depois da primeira rachadura — é por ela que a luz encontra caminho.",
+  "descricao": "Você não venceu o mundo. Mas sobreviveu a si mesmo. E isso já é obra rara.",
   "blocos": [
     {
       "id": "h0",
       "tipo": "historia",
       "titulo": "O Limite da Água",
-      "descricao": "Uma provocação barata no corredor ferve seu sangue. Você sente o gosto do velho impulso na boca.",
+      "descricao": "Uma provocação barata no corredor ferve seu sangue. O gosto antigo do impulso volta à boca.",
       "opcoes": [
-        { "texto": "Responder na mesma moeda (duelo verbal)", "proximo": "h1", "buildImpact": "profano",  "fraseChave": "humor" },
-        { "texto": "Fingir que não ouviu e rezar para não viralizar", "proximo": "h1", "buildImpact": "virtuoso", "fraseChave": "transicao" },
+        { "texto": "Responder na mesma moeda", "proximo": "h1", "buildImpact": "profano", "fraseChave": "humor" },
+        { "texto": "Fingir que não ouviu e esperar o silêncio passar", "proximo": "h1", "buildImpact": "virtuoso", "fraseChave": "transicao" },
         { "texto": "Respirar fundo e sair como CEO do próprio trauma", "proximo": "h1", "buildImpact": "anomalia", "fraseChave": "pedra" }
       ]
     },
@@ -18,7 +18,7 @@
       "id": "h1",
       "tipo": "historia",
       "titulo": "Labareda no Pulso",
-      "descricao": "O corpo quer reagir. A mão fecha, abre. A memória acende uma brasa antiga.",
+      "descricao": "O corpo quer reagir. A mão fecha, abre. A memória reacende uma brasa que nunca apagou.",
       "opcoes": [
         { "texto": "Sair para o pátio", "proximo": "h2", "buildImpact": "virtuoso" }
       ]
@@ -27,7 +27,7 @@
       "id": "h2",
       "tipo": "historia",
       "titulo": "Teto Invisível",
-      "descricao": "Você olha para cima e suspeita que o teto seja uma ideia. Os olhos de alguém encaram você por um segundo longo demais.",
+      "descricao": "Você olha para cima e suspeita que o teto seja apenas uma ideia. Um par de olhos cruza o seu por tempo demais.",
       "opcoes": [
         { "texto": "Sair para o pátio", "proximo": "h3", "buildImpact": "profano" }
       ]
@@ -36,7 +36,7 @@
       "id": "h3",
       "tipo": "historia",
       "titulo": "Marcha Sem Tropa",
-      "descricao": "Seu passo não combina com o do resto. Você sente que está fora do compasso — por escolha.",
+      "descricao": "Seu passo não combina com o do resto. Fora de compasso, mas por escolha própria.",
       "opcoes": [
         { "texto": "Seguir para o pátio", "proximo": "r4", "buildImpact": "anomalia" }
       ]
@@ -45,10 +45,10 @@
       "id": "r4",
       "tipo": "rotina",
       "titulo": "Pátio Fragmentado",
-      "descricao": "Um pedregulho escuro num canto parece vibrar. A escola gira devagar como um carrossel cansado.",
+      "descricao": "Um pedregulho escuro no canto parece vibrar. A escola gira devagar, como carrossel cansado.",
       "opcoes": [
         { "texto": "Prometer nunca repetir esse ciclo", "proximo": "h5", "buildImpact": "virtuoso", "fraseChave": "transicao" },
-        { "texto": "Culpar a si mesmo em silêncio e fingir que está tudo bem", "proximo": "h5", "buildImpact": "profano", "fraseChave": "inercia" },
+        { "texto": "Culpar-se em silêncio e fingir que está tudo bem", "proximo": "h5", "buildImpact": "profano", "fraseChave": "inercia" },
         { "texto": "Fechar os olhos e imaginar outro final", "proximo": "h5", "buildImpact": "anomalia", "fraseChave": "pedra" }
       ]
     },
@@ -68,10 +68,10 @@
       "id": "e6",
       "tipo": "evento",
       "titulo": "A Pedra se Parte",
-      "descricao": "Você toca a Pedra. Ela racha. Não dói. Um clarão pequeno atravessa o amigo imaginário chamado medo.",
+      "descricao": "Você toca a Pedra. Ela racha. Não dói. Um clarão pequeno atravessa o velho amigo chamado medo.",
       "opcoes": [
         { "texto": "Guardar o fragmento como amuleto", "proximo": "r7", "buildImpact": "anomalia", "fraseChave": "pedra" },
-        { "texto": "Enterrar a pedra e todos os sentimentos junto", "proximo": "r7", "buildImpact": "profano", "fraseChave": "inercia" },
+        { "texto": "Enterrar a pedra junto com os sentimentos", "proximo": "r7", "buildImpact": "profano", "fraseChave": "inercia" },
         { "texto": "Deixar no bebedouro com um bilhete: 'Pra quem precisa mais que eu'", "proximo": "r7", "buildImpact": "virtuoso", "fraseChave": "transicao" }
       ]
     },
@@ -79,7 +79,7 @@
       "id": "r7",
       "tipo": "rotina",
       "titulo": "Dois Lados do Mesmo Bolso",
-      "descricao": "Você anota qualquer coisa só para existir no papel. O teto devolve um silêncio respirável.",
+      "descricao": "Você anota qualquer coisa só para existir no papel. O teto devolve um silêncio que, enfim, respira.",
       "opcoes": [
         { "texto": "Escrever: 'Sobrevivi. De novo.'", "proximo": "fim3", "buildImpact": "virtuoso", "fraseChave": "sono" },
         { "texto": "Olhar o teto e ensaiar um sorriso honesto", "proximo": "fim3", "buildImpact": "profano", "fraseChave": "humor" },
@@ -90,15 +90,15 @@
       "id": "fim3",
       "tipo": "fim",
       "titulo": "Fim do Dia 3",
-      "descricao": "🕯️ O terceiro dia termina. Você não venceu o mundo, mas sobreviveu a si mesmo. E isso já é obra divina.",
-      "fraseChave": "frestas",
+      "descricao": "🕯️ O terceiro dia termina. Você não venceu o mundo, mas sobreviveu a si mesmo. E isso já é obra rara.",
+      "fraseChave": "transicao",
       "pressagio": "O inesperado aguarda no escuro.",
-      "reflexao": "Você recusou as regras. Talvez tenha visto algo que ninguém viu."
+      "reflexao": "Você recusou as regras. Talvez tenha visto algo que ninguém mais viu."
     }
   ],
   "frasesFinais": {
     "virtuoso": "Mesmo ferido, você escolhe não ferir.",
     "profano": "Negar o chamado também é um tipo de resposta.",
-    "anomalia": "Quem sente demais, às vezes quebra para não ser moldado."
+    "anomalia": "Quem sente demais, às vezes se quebra para não ser moldado."
   }
 }

@@ -1,51 +1,58 @@
 [
   {
     "id": "dia1",
-    "nome": "Yom Rishon",
+    "nome": "Dia 1 — O Caos e a Pedra",
     "titulo": "O Caos e a Pedra",
     "descricao": "O primeiro movimento: da escuridão surge uma centelha. O caos pulsa vivo. Tudo começa com a Pedra.",
     "arquivo": "dia1.json"
   },
   {
     "id": "dia2",
-    "nome": "Yom Sheni",
+    "nome": "Dia 2 — A Separação das Águas",
     "titulo": "A Separação das Águas",
     "descricao": "A consciência percebe os extremos. Céu e terra. Lágrimas e riso. Tudo começa a se separar.",
     "arquivo": "dia2.json"
   },
   {
     "id": "dia3",
-    "nome": "Yom Shelishi",
+    "nome": "Dia 3 — A Margem e a Luz Interna",
     "titulo": "A Margem e a Luz Interna",
     "descricao": "Limites são traçados. Um novo 'eu' emerge das divisões. A pedra se parte, mas revela algo vivo.",
     "arquivo": "dia3.json"
   },
   {
     "id": "dia4",
-    "nome": "Yom Revi'i",
+    "nome": "Dia 4 — Os Luminares do Juízo",
     "titulo": "Os Luminares do Juízo",
     "descricao": "Luzes são colocadas para marcar dias, decisões, destinos. É tempo de julgar, com humor ou rigor.",
     "arquivo": "dia4.json"
   },
   {
     "id": "dia5",
-    "nome": "Yom Chamishi",
+    "nome": "Dia 5 — As Criaturas do Absurdo",
     "titulo": "As Criaturas do Absurdo",
     "descricao": "Peixes, aves e memes da alma. O mundo ganha formas mais livres — e cômicas. A imaginação explode.",
     "arquivo": "dia5.json"
   },
   {
     "id": "dia6",
-    "nome": "Yom Shishi",
+    "nome": "Dia 6 — O Espelho e a Rebelião",
     "titulo": "O Espelho e a Rebelião",
     "descricao": "O homem surge. Com ele, a dúvida. O sim e o não colidem. A escolha se torna carne.",
     "arquivo": "dia6.json"
   },
   {
     "id": "dia7",
-    "nome": "Yom Shevi'i",
+    "nome": "Dia 7 — O Silêncio da Pedra",
     "titulo": "O Silêncio da Pedra",
     "descricao": "A pausa final. Não há escolhas, apenas reflexão. O silêncio da Pedra é mais eloquente que mil palavras.",
     "arquivo": "dia7.json"
+  },
+  {
+    "id": "dia8",
+    "nome": "Dia 8 — Fragmentos de Ecos",
+    "titulo": "Fragmentos de Ecos",
+    "descricao": "Os ecos dos dias anteriores se somam. Aparecem variações, fendas e possibilidades que antes não existiam.",
+    "arquivo": "dia8.json"
   }
 ]
