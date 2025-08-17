@@ -1,37 +1,58 @@
-let npcData = {}; // Variável global para armazenar NPCs
+// 📁 src/core/npc.js
+
+let npcData = {}; // cache em memória
+
+/** Utilitário simples para escapar HTML em texto dinâmico */
+function escapeHTML(s) {
+  return String(s ?? '')
+  .replaceAll('&','&amp;')
+  .replaceAll('<','&lt;')
+  .replaceAll('>','&gt;')
+  .replaceAll('"','&quot;')
+  .replaceAll("'", '&#39;');
+}
 
 /**
- * Carrega os dados de NPCs do JSON externo.
+ * Carrega os dados de NPCs do JSON externo (eventoNPC.json).
+ * Shape esperado:
+ * [
+ *   { id, nome, falas: { virtuoso, profano, anomalia } }
+ * ]
  */
-async function carregarNPCs() {
+export async function carregarNPCs() {
   try {
-    const resposta = await fetch("/data/eventoNPC.json");
+    const resposta = await fetch('/data/eventoNPC.json', { cache: 'no-store' });
+    if (!resposta.ok) throw new Error(`HTTP ${resposta.status}`);
     const dataBruta = await resposta.json();
 
-    npcData = {};
-    dataBruta.forEach((npc) => {
-      npcData[npc.id] = {
-        nome: npc.nome,
-        ...npc.falas
+    const map = {};
+    (Array.isArray(dataBruta) ? dataBruta : []).forEach((npc) => {
+      map[npc.id] = {
+        id: npc.id,
+        nome: npc.nome || npc.id,
+        falas: npc.falas || {}
       };
     });
+    npcData = map;
   } catch (erro) {
-    console.error("Erro ao carregar NPCs:", erro);
+    console.error('Erro ao carregar NPCs:', erro);
     npcData = {};
   }
 }
 
-/**
- * Tabela opcional de impacto na build por tipo de resposta.
- * Se não quiser aplicar impacto agora, ignore este objeto.
- */
+// 🔎 helper para outros módulos pegarem o nome pelo id
+export function getNPCNome(id) {
+  return npcData?.[id]?.nome || null;
+}
+
+/** Tabela opcional de impacto na build por tipo de resposta. */
 const impactoPorResposta = {
   virtuoso: { virtuoso: +1, profano: 0, anomalia: 0 },
-  "firmeza-respeitosa": { virtuoso: +1, profano: 0, anomalia: 0 },
-  "cético-educado": { virtuoso: 0, profano: 0, anomalia: +1 },
-  "humor-leve": { virtuoso: 0, profano: 0, anomalia: +1 },
-  "silencio-atento": { virtuoso: +1, profano: 0, anomalia: 0 },
-  "pedir-detalhe": { virtuoso: +1, profano: 0, anomalia: 0 },
+  'firmeza-respeitosa': { virtuoso: +1, profano: 0, anomalia: 0 },
+  'cético-educado': { virtuoso: 0, profano: 0, anomalia: +1 },
+  'humor-leve': { virtuoso: 0, profano: 0, anomalia: +1 },
+  'silencio-atento': { virtuoso: +1, profano: 0, anomalia: 0 },
+  'pedir-detalhe': { virtuoso: +1, profano: 0, anomalia: 0 },
   profano: { virtuoso: 0, profano: +1, anomalia: 0 },
   anomalia: { virtuoso: 0, profano: 0, anomalia: +1 }
 };
@@ -44,128 +65,162 @@ const impactoPorResposta = {
  * buildSugestao: rótulo de “caminho” básico (para compatibilidade)
  */
 const OPCOES_PADRAO = [
-  { label: "Responder com empatia", key: "1", tone: "virtuoso", buildSugestao: "virtuoso" },
-{ label: "Falar com firmeza respeitosa", key: "2", tone: "firmeza-respeitosa", buildSugestao: "virtuoso" },
-{ label: "Dialogar de forma cética (educado)", key: "3", tone: "cético-educado", buildSugestao: "anomalia" },
-{ label: "Humor leve para aliviar", key: "4", tone: "humor-leve", buildSugestao: "anomalia" },
-{ label: "Pedir detalhe técnico", key: "5", tone: "pedir-detalhe", buildSugestao: "virtuoso" },
-{ label: "Silêncio atento", key: "6", tone: "silencio-atento", buildSugestao: "virtuoso" },
-{ label: "Ignorar o comentário", key: "7", tone: "profano", buildSugestao: "profano" },
-{ label: "Responder de forma estranha", key: "8", tone: "anomalia", buildSugestao: "anomalia" }
+  { label: 'Responder com empatia',            key: '1', tone: 'virtuoso',           buildSugestao: 'virtuoso' },
+{ label: 'Falar com firmeza respeitosa',     key: '2', tone: 'firmeza-respeitosa', buildSugestao: 'virtuoso' },
+{ label: 'Dialogar de forma cética (educado)', key: '3', tone: 'cético-educado',   buildSugestao: 'anomalia' },
+{ label: 'Humor leve para aliviar',          key: '4', tone: 'humor-leve',         buildSugestao: 'anomalia' },
+{ label: 'Pedir detalhe técnico',            key: '5', tone: 'pedir-detalhe',      buildSugestao: 'virtuoso' },
+{ label: 'Silêncio atento',                  key: '6', tone: 'silencio-atento',    buildSugestao: 'virtuoso' },
+{ label: 'Ignorar o comentário',             key: '7', tone: 'profano',            buildSugestao: 'profano' },
+{ label: 'Responder de forma estranha',      key: '8', tone: 'anomalia',           buildSugestao: 'anomalia' }
 ];
 
+/** Decide fala por caminho; possui fallbacks para nunca retornar undefined */
+function pickLine(npc, caminho) {
+  const f = npc?.falas;
+  const key = String(caminho || '').toLowerCase();
+  if (f && typeof f === 'object' && !Array.isArray(f)) {
+    return f[key] || f.virtuoso || f.profano || f.anomalia || '…';
+  }
+  return '…';
+}
+
 /**
- * Cria HTML seguro com “aura” nos botões e diferenciação visual de diálogo de NPC.
+ * Cria HTML do diálogo com sanitização básica e “aura” nos botões.
  */
 function renderNPCDialog({ container, nomeNPC, falaNPC, opcoes }) {
   container.innerHTML = `
-  <section class="npc-dialogo" aria-live="polite" aria-label="Diálogo com ${nomeNPC}">
+  <section class="npc-dialogo" aria-live="polite" aria-label="Diálogo com ${escapeHTML(nomeNPC)}">
   <div class="npc-cabecalho">
   <div class="npc-avatar" aria-hidden="true"></div>
-  <strong class="npc-nome" role="heading" aria-level="2">${nomeNPC}</strong>
+  <strong class="npc-nome" role="heading" aria-level="2">${escapeHTML(nomeNPC)}</strong>
   <span class="npc-badge" title="Diálogo de NPC">NPC</span>
   </div>
   <div class="npc-balao" role="textbox">
-  <p class="npc-texto">“${falaNPC}”</p>
+  <p class="npc-texto">“${escapeHTML(falaNPC)}”</p>
   </div>
   <div class="npc-instrucoes" id="npc-instrucoes">
   Use as teclas <kbd>1</kbd>–<kbd>${opcoes.length}</kbd> ou clique em uma opção.
   </div>
   <div class="npc-respostas" role="group" aria-labelledby="npc-instrucoes">
-  ${opcoes
-    .map(
-      (opt, i) => `
-      <button
-      class="btn-resposta aura"
-      data-tone="${opt.tone}"
-      data-build="${opt.buildSugestao}"
-      data-key="${opt.key || String(i + 1)}"
-      aria-label="${opt.label} (tecla ${opt.key || String(i + 1)})"
-      >
-      <span class="btn-key">${opt.key || String(i + 1)}</span>
-      <span class="btn-label">${opt.label}</span>
-      <span class="aura-ring" aria-hidden="true"></span>
-      </button>
-      `
-    )
-    .join("")}
+  ${opcoes.map((opt, i) => `
+    <button
+    class="btn-resposta aura"
+    data-tone="${escapeHTML(opt.tone)}"
+    data-build="${escapeHTML(opt.buildSugestao)}"
+    data-key="${escapeHTML(opt.key || String(i + 1))}"
+    aria-label="${escapeHTML(opt.label)} (tecla ${escapeHTML(opt.key || String(i + 1))})"
+    >
+    <span class="btn-key">${escapeHTML(opt.key || String(i + 1))}</span>
+    <span class="btn-label">${escapeHTML(opt.label)}</span>
+    <span class="aura-ring" aria-hidden="true"></span>
+    </button>
+    `).join('')}
     </div>
     </section>
     `;
 
     // Foco no primeiro botão para acessibilidade
-    const primeiro = container.querySelector(".btn-resposta");
+    const primeiro = container.querySelector('.btn-resposta');
     if (primeiro) primeiro.focus();
 }
 
 /**
  * Exibe a fala do NPC e permite ao jogador responder.
- * @param {string} idNPC - ID do NPC
- * @param {string} build - Build atual (virtuoso | profano | anomalia)
- * @param {Array} opcoesExtras - (opcional) sobrescrever/adicionar opções
+ * Compatibilidade:
+ *  - 3º parâmetro pode ser Array (opcoesExtras) ou Function (onDone callback legado)
+ * Retorna Promise<{ idNPC, nome, caminho, fala }>
  */
-export async function dispararNPC(idNPC, build, opcoesExtras = null) {
-  if (!Object.keys(npcData).length) {
-    await carregarNPCs();
-  }
+export async function dispararNPC(idNPC, build, opcoesExtrasOrOnDone = null) {
+  // Detecta assinatura: (id, build, opcoes) ou (id, build, onDone)
+  let onDone = null;
+  let opcoesExtras = null;
+  if (typeof opcoesExtrasOrOnDone === 'function') onDone = opcoesExtrasOrOnDone;
+  else if (Array.isArray(opcoesExtrasOrOnDone)) opcoesExtras = opcoesExtrasOrOnDone;
 
-  const npc = npcData?.[idNPC];
-  if (!npc) {
-    console.warn(`NPC com id '${idNPC}' não encontrado em npcData:`, npcData);
-    return;
-  }
+  try {
+    if (!Object.keys(npcData).length) {
+      await carregarNPCs();
+    }
 
-  // Fala prioritária pela build, fallback para profano, depois reticências
-  const fala = npc[build] || npc["profano"] || "...";
+    const npc = npcData?.[idNPC];
+    if (!npc) {
+      console.warn(`NPC com id '${idNPC}' não encontrado em npcData:`, npcData);
+      // resolve algo seguro
+      const detail = { idNPC, nome: idNPC || 'NPC', caminho: build || '—', fala: '…' };
+      window.dispatchEvent(new CustomEvent('npc:FALADA', { detail }));
+      if (onDone) onDone();
+      return detail;
+    }
 
-  const container = document.getElementById("evento");
-  if (!container) return;
+    const caminho = String(build || 'profano').toLowerCase();
+    const fala = pickLine(npc, caminho);
+    const nome = npc.nome || idNPC;
 
-  // Monte as opções (permite sobrescrever via parâmetro)
-  const opcoes = Array.isArray(opcoesExtras) && opcoesExtras.length
-  ? opcoesExtras
-  : OPCOES_PADRAO;
+    const container = document.getElementById('evento');
+    if (!container) {
+      const detail = { idNPC, nome, caminho, fala };
+      window.dispatchEvent(new CustomEvent('npc:FALADA', { detail }));
+      if (onDone) onDone();
+      return detail;
+    }
 
-  renderNPCDialog({
-    container,
-    nomeNPC: npc.nome,
-    falaNPC: fala,
-    opcoes
-  });
+    // Monte as opções
+    const opcoes = Array.isArray(opcoesExtras) && opcoesExtras.length
+    ? opcoesExtras
+    : OPCOES_PADRAO;
 
-  // Clique único por botão (evita duplo dispatch)
-  container.querySelectorAll(".btn-resposta").forEach((btn) => {
-    btn.addEventListener(
-      "click",
-      () => {
+    // Renderiza diálogo
+    renderNPCDialog({
+      container,
+      nomeNPC: nome,
+      falaNPC: fala,
+      opcoes
+    });
+
+    // Emite evento de que a fala ocorreu (renderer pode registrar no relatório)
+    const spokenDetail = { idNPC, nome, caminho, fala };
+    window.dispatchEvent(new CustomEvent('npc:FALADA', { detail: spokenDetail }));
+
+    // Compat: chama callback legado imediatamente após exibir o diálogo
+    if (onDone) onDone();
+
+    // Wire-up: clique único por botão
+    container.querySelectorAll('.btn-resposta').forEach((btn) => {
+      btn.addEventListener('click', () => {
         const tone = btn.dataset.tone;
         const buildSugestao = btn.dataset.build;
 
-        document.dispatchEvent(
-          new CustomEvent("respostaNPC", {
-            detail: {
-              idNPC,
-              tone,
-              build: buildSugestao,
-              impacto: impactoPorResposta[tone] || null
-            }
-          })
-        );
-      },
-      { once: true }
-    );
-  });
+        document.dispatchEvent(new CustomEvent('respostaNPC', {
+          detail: {
+            idNPC,
+            nome,             // << inclui nome no detail
+            fala,             // << inclui fala exibida
+            tone,
+            build: buildSugestao,
+            impacto: impactoPorResposta[tone] || null
+          }
+        }));
+      }, { once: true });
+    });
 
-  // Teclas de atalho 1–9
-  const keyHandler = (ev) => {
-    // evita conflito quando o jogador está digitando em input
-    if (["INPUT", "TEXTAREA"].includes(document.activeElement.tagName)) return;
+    // Atalhos 1–9 (evita conflito com campos de texto)
+    const keyHandler = (ev) => {
+      const active = document.activeElement?.tagName;
+      if (active === 'INPUT' || active === 'TEXTAREA') return;
+      const k = ev.key;
+      const alvo = container.querySelector(`.btn-resposta[data-key="${k}"]`);
+      if (alvo) alvo.click();
+    };
+      document.addEventListener('keydown', keyHandler, { once: true });
 
-    const k = ev.key;
-    const alvo = container.querySelector(`.btn-resposta[data-key="${k}"]`);
-    if (alvo) {
-      alvo.click();
-    }
-  };
-  document.addEventListener("keydown", keyHandler, { once: true });
+      // Retorna payload útil para quem quiser await
+      return spokenDetail;
+  } catch (erro) {
+    console.error('dispararNPC falhou:', erro);
+    const detail = { idNPC, nome: idNPC || 'NPC', caminho: build || '—', fala: '…' };
+    window.dispatchEvent(new CustomEvent('npc:FALADA', { detail }));
+    if (onDone) onDone();
+    return detail;
+  }
 }

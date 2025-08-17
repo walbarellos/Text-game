@@ -1,0 +1,235 @@
+/* ===============================
+ *  FOOTER — responsivo + efeitos + a11y + fallbacks
+ * =============================== */
+
+/* Vars base do footer (override por build mais abaixo) */
+.footer-jogo{ --footer-glow:#7aa7ff; --footer-accent:#d2deff; }
+
+/* integra com a build atual */
+.build-virtuoso .footer-jogo{ --footer-glow:#6ad18b; --footer-accent:#d5f7e1; }
+.build-profano  .footer-jogo{ --footer-glow:#f06a6a; --footer-accent:#ffd1d1; }
+.build-anomalia .footer-jogo{ --footer-glow:#7aa7ff; --footer-accent:#d2deff; }
+
+.footer-jogo{
+    position: relative;
+    z-index: 1;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    background: linear-gradient(180deg, rgba(10,12,14,0.45), rgba(10,12,14,0.18));
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    padding: calc(clamp(12px, 2.2vw, 18px) + env(safe-area-inset-top)) 0
+    calc(clamp(12px, 2.2vw, 18px) + env(safe-area-inset-bottom)) 0;
+    margin-top: clamp(16px, 3.5vw, 32px);
+    color: rgba(236,236,244,0.82);
+    font-size: clamp(.85rem, 1.8vw, .95rem);
+    overflow: hidden; /* mantém orbes/linha dentro do footer */
+    min-height: 64px;              /* evita CLS */
+    content-visibility: auto;      /* pausa custo fora de viewport */
+    contain-intrinsic-size: 120px; /* reserva espaço aproximado */
+}
+
+/* linha de energia animada no topo */
+.footer-jogo::before{
+    content:"";
+    position:absolute; left:-20%; right:-20%; top:-1px; height:2px;
+    background: linear-gradient(90deg, transparent, var(--footer-glow), transparent);
+    filter: drop-shadow(0 0 8px var(--footer-glow));
+    animation: footer-scan 6s linear infinite, footer-pulse 8s ease-in-out infinite;
+    opacity:.85;
+    pointer-events: none; /* nunca bloqueia clique */
+}
+
+/* orbes suaves ao fundo (otimizados) */
+.footer-jogo::after{
+    content:"";
+    position:absolute; inset:0;
+    background:
+    radial-gradient(240px 56px at 20% 30%, color-mix(in oklab, var(--footer-glow) 22%, transparent), transparent 70%),
+    radial-gradient(200px 54px at 80% 70%, color-mix(in oklab, var(--footer-accent) 16%, transparent), transparent 70%);
+    pointer-events:none;
+    mix-blend-mode: screen;
+    opacity:.35;
+    animation: orbs-float 12s ease-in-out infinite alternate;
+    will-change: transform, opacity; /* melhora suavidade em mobile */
+}
+
+/* fallback para browsers sem color-mix */
+@supports not (background: color-mix(in oklab, red, blue)) {
+    .footer-jogo::after{
+        background:
+        radial-gradient(240px 56px at 20% 30%, rgba(122,167,255,.22), transparent 70%),
+        radial-gradient(200px 54px at 80% 70%, rgba(191,224,255,.16), transparent 70%);
+    }
+}
+
+@keyframes footer-scan { 0% { transform: translateX(-10%);} 100% { transform: translateX(10%);} }
+@keyframes footer-pulse { 0%,100% { opacity:.85;} 50% { opacity:.42;} }
+@keyframes orbs-float { 0% { transform: translateY(0)} 100% { transform: translateY(-6px)} }
+
+.footer-inner{
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 0 clamp(12px, 2.5vw, 20px);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap: 12px;
+    flex-wrap: wrap; /* responsivo */
+}
+
+/* ===============================
+ * texto/assinatura — nome refinado
+ * =============================== */
+
+.footer-jogo .creditos{
+    letter-spacing:.02em;
+    color: rgba(236,236,244,0.88);
+    text-wrap: balance;
+}
+@supports not (text-wrap: balance){
+    .footer-jogo .creditos{ text-wrap: pretty; }
+}
+.footer-jogo .creditos:focus-visible{
+    outline: 1px dashed var(--footer-glow);
+    outline-offset: 3px;
+}
+
+/* Nome com gradiente + vidro + pulse cromático + sublinhado no hover */
+.footer-jogo .creditos strong{
+    display:inline-block;
+    position:relative;
+    font-weight:600;
+    letter-spacing:.03em;
+
+    /* gradiente base do nome */
+    background: linear-gradient(90deg, var(--footer-accent), #fff 40%, var(--footer-accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* brilho suave que herdará da build */
+    text-shadow: 0 0 10px color-mix(in oklab, var(--footer-glow) 40%, transparent);
+
+    /* pulse cromático lento (sutil) */
+    animation: hue-shift 12s ease-in-out infinite;
+}
+
+/* efeito vidro que “varre” o nome */
+.footer-jogo .creditos strong::after{
+    content:"";
+    position:absolute; inset:0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.7) 50%, transparent 70%);
+    transform: translateX(-120%);
+    animation: glass-swipe 6s ease-in-out infinite;
+    pointer-events:none;
+}
+
+/* sublinhado energético no hover */
+.footer-jogo .creditos strong::before{
+    content:"";
+    position:absolute; left:0; bottom:-2px; height:2px; width:100%;
+    background: linear-gradient(90deg, transparent, var(--footer-glow), transparent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .35s ease;
+}
+.footer-jogo .creditos strong:hover::before{
+    transform: scaleX(1);
+}
+
+/* animações */
+@keyframes glass-swipe{
+    0%,70% { transform: translateX(-120%); opacity:0; }
+    80%    { transform: translateX(0%);    opacity:.8; }
+    100%   { transform: translateX(120%);  opacity:0; }
+}
+@keyframes hue-shift{
+    0%   { filter:hue-rotate(0deg); }
+    50%  { filter:hue-rotate(15deg); }
+    100% { filter:hue-rotate(0deg); }
+}
+
+/* ícones sociais */
+.footer-jogo .redes-sociais{
+    display:inline-flex; gap:10px; flex-wrap:wrap;
+}
+.footer-jogo .redes-sociais a{
+    width:34px; height:34px;
+    min-width:44px; min-height:44px;           /* alvo confortável */
+    display:inline-flex; align-items:center; justify-content:center;
+    border-radius:50%;
+    opacity:.85;
+    transform: translateZ(0);                   /* evita blur no Chrome */
+    transition: transform .18s ease, opacity .18s ease, box-shadow .22s ease, background-color .22s ease, color .22s ease;
+    outline:none;
+    touch-action: manipulation;                 /* reduz delay no mobile */
+    color:#fff;
+}
+.footer-jogo .redes-sociais svg{
+    width:22px; height:22px; fill: currentColor; /* herda cor */
+    filter: drop-shadow(0 1px 0 rgba(0,0,0,.35));
+}
+.footer-jogo .redes-sociais a:hover{
+    opacity:1;
+    transform: translateY(-1px) scale(1.06);
+    box-shadow: 0 0 18px color-mix(in oklab, var(--footer-glow) 35%, transparent);
+    background: radial-gradient(24px 24px at 50% 50%, color-mix(in oklab, var(--footer-glow) 20%, transparent), transparent 65%);
+    color: var(--footer-glow);
+}
+.footer-jogo .redes-sociais a:focus-visible{
+    box-shadow: 0 0 0 3px #c0c8ff;
+    background: rgba(192,200,255,0.10);
+}
+
+/* layout mobile/tablet */
+@media (max-width: 720px){
+    .footer-inner{ justify-content: center; text-align: center; gap: 8px 16px; }
+}
+
+/* breakpoint extra para telas muito estreitas */
+@media (max-width: 360px){
+    .footer-jogo .creditos{ font-size:.75rem; }
+    .footer-jogo .redes-sociais a{ width:28px; height:28px; min-width:36px; min-height:36px; }
+    .footer-jogo .redes-sociais svg{ width:18px; height:18px; }
+}
+
+/* Preferências do usuário (WCAG) */
+@media (prefers-reduced-motion: reduce){
+    .footer-jogo, .footer-jogo * { animation: none !important; transition: none !important; }
+}
+@media (prefers-contrast: more){
+    .footer-jogo { border-top-color: #fff; }
+    .footer-jogo .redes-sociais a { box-shadow: 0 0 0 2px #fff inset; }
+}
+@media (prefers-reduced-transparency: reduce){
+    .footer-jogo { backdrop-filter:none; -webkit-backdrop-filter:none; background:#0e1012; }
+}
+
+/* High Contrast Mode (Windows) */
+@media (forced-colors: active){
+    .footer-jogo { border-top: 1px solid ButtonText; }
+    .footer-jogo::before, .footer-jogo::after { display:none; }
+    .footer-jogo .redes-sociais a:focus-visible{ outline: 2px solid Highlight; box-shadow: none; }
+}
+
+/* ===============================
+ *  HUD build dot — estável (sem blend)
+ * =============================== */
+#hud-build{
+position:relative; isolation:isolate; padding-left:1.75rem;
+height:30px; border-radius:999px;
+}
+#hud-build .dot{
+position:absolute; left:10px; top:50%; transform:translateY(-50%);
+width:.62rem; height:.62rem; border-radius:50%;
+background-color: currentColor;  /* cor vem da build */
+box-shadow: 0 0 6px currentColor, 0 0 14px rgba(255,255,255,.28);
+pointer-events:none;
+}
+#hud-build .label{ position:relative; z-index:1; line-height:1; }
+.build-virtuoso #hud-build{ color:#6ad18b; }
+.build-profano  #hud-build{ color:#f06a6a; }
+.build-anomalia #hud-build{ color:#7aa7ff; }
+#hud-build:hover{
+filter:saturate(1.05);
+box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05) inset;
+}

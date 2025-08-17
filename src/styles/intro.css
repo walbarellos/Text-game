@@ -1,9 +1,10 @@
-/* 🎯 PATCH RESPONSIVO RITUAL V1
- * Corrige layout quebrado ao adicionar footer, título desalinhado,
- * e melhora responsividade para celulares e tablets.
+/* 🎯 INTRO — RESPONSIVO + A11y
+ *   - Sem animar `display` (não é animável)
+ *   - Usa apenas opacity/visibility/pointer-events
+ *   - Layout clamp e tipografia consistente
  */
 
-/* 🔧 Centraliza o SVG decorativo abaixo do título */
+/* SVG decorativo sob o título (intro também usa quando presente) */
 .titulo-ritual svg {
     width: 100% !important;
     height: 100px !important;
@@ -13,7 +14,7 @@
     z-index: 0;
 }
 
-/* 🔧 Garante que o h1 não quebre ou estoure em telas pequenas */
+/* Título: não estoura em telas pequenas */
 .titulo-animado {
     font-size: clamp(1.6rem, 6vw, 3.2rem);
     text-align: center;
@@ -22,74 +23,7 @@
     margin: 0 auto;
 }
 
-/* 🔧 HUD responsivo para alinhar corretamente nos cantos */
-.hud {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-/* 🔧 HUD elementos se adaptam sem quebrar layout */
-.hud-dia,
-.hud-build {
-    font-size: clamp(0.8rem, 2.5vw, 1.2rem);
-    padding: 0.4rem 0.8rem;
-}
-
-/* 🔧 Container de evento com responsividade reforçada */
-.evento-container {
-    padding: 1rem;
-    max-width: 95vw;
-    margin: 0 auto;
-    box-sizing: border-box;
-}
-
-/* 🔧 Footer fixo centralizado */
-.footer-jogo {
-    width: 100%;
-    text-align: center;
-    padding: 1rem 0.5rem;
-    margin-top: 2rem;
-    font-size: 0.85rem;
-    line-height: 1.4;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(to top, #111 0%, transparent 100%);
-    border-top: 1px solid #333;
-    box-sizing: border-box;
-}
-
-.footer-jogo .creditos {
-    font-family: 'Share Tech Mono', monospace;
-    margin-bottom: 0.5rem;
-}
-
-.footer-jogo .redes-sociais a {
-    display: inline-block;
-    margin: 0 0.4rem;
-    transition: transform 0.3s ease;
-}
-
-.footer-jogo .redes-sociais a:hover svg {
-    transform: scale(1.2);
-    fill: #6ef2b1;
-}
-
-.footer-jogo svg {
-    width: 24px;
-    height: 24px;
-    fill: #fff;
-    vertical-align: middle;
-}
-
-/* 🔥 INTRO AJUSTADA RESPONSIVA */
+/* ===== INTRO CINEMATOGRÁFICA ===== */
 #intro-cinematica {
 position: fixed;
 top: 10vh;
@@ -98,63 +32,55 @@ transform: translateX(-50%);
 width: clamp(280px, 90vw, 600px);
 max-height: 60vh;
 padding: 2rem 1.5rem;
-background: black;
-color: white;
+background: #000;
+color: #fff;
 font-family: 'Share Tech Mono', monospace;
 font-size: clamp(1rem, 2.5vw, 1.4rem);
 text-align: center;
 z-index: 9999;
 border-radius: 1rem;
 box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-opacity: 1;
-transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
-pointer-events: auto;
+
+/* estado base = oculto */
+opacity: 0;
+visibility: hidden;
+pointer-events: none;
+transition: opacity 0.6s ease, visibility 0.6s ease;
 overflow: hidden;
 }
 
-/* ✅ Nova classe: mostra a intro visivelmente */
+/* Mostra intro */
 #intro-cinematica.mostrar {
 opacity: 1;
 visibility: visible;
 pointer-events: auto;
-display: block;
 }
 
-/* ✅ Classe de ocultar com animação + display none */
+/* Oculta intro suavemente */
 #intro-cinematica.ocultar {
 opacity: 0;
 visibility: hidden;
 pointer-events: none;
-animation: fadeOutAndHide 0.9s forwards;
 }
 
-/* ✅ Transição para sumir de vez do fluxo visual */
-@keyframes fadeOutAndHide {
-    0% {
-        display: block;
-    }
-    99% {
-        opacity: 0;
-    }
-    100% {
-        display: none;
-    }
-}
-
-/* 🔘 Botão de pular intro */
+/* Botão "Pular" */
 #pular-intro {
 margin-top: 1.5rem;
 background: #6ef2b1;
-color: black;
-font-weight: bold;
+color: #000;
+font-weight: 700;
 padding: 0.5rem 1.2rem;
 font-size: clamp(0.8rem, 1.5vw, 1rem);
 border: none;
 border-radius: 6px;
 cursor: pointer;
-transition: background 0.3s ease;
+transition: background 0.25s ease, transform 0.12s ease;
 }
+#pular-intro:hover { background: #4cd69d; transform: translateY(-1px); }
+#pular-intro:focus-visible { outline: 3px solid #c0c8ff; }
 
-#pular-intro:hover {
-background: #4cd69d;
+/* Reduz animação para quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+    #intro-cinematica { transition: none !important; }
+    #pular-intro { transition: none !important; }
 }

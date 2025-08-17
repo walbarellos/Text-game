@@ -72,8 +72,11 @@ async function iniciarJogo() {
       return;
     }
 
+    resetarBuild(); // limpa o acumulador moral ANTES de carregar/mostrar
     await carregarDia(estado.diaAtual);
-    resetarBuild(); // limpa o acumulador moral ao iniciar o dia
+    // garantir HUD coerente após o reset
+    atualizarHUD(estado.nomeDia, buildDominante());
+
   } catch (err) {
     console.error('💥 Falha ao iniciar o jogo:', err);
   }
@@ -182,35 +185,89 @@ document.addEventListener('opcaoSelecionada', (e) => {
   atualizarHUD(estado.nomeDia, estado.build);
   atualizarGlowTitulo(estado.build);
 
-  if (proximoEvento.npc) {
-    // diálogo antes de seguir
-    dispararNPC(proximoEvento.npc, estado.build, () => {
-      renderizarEvento(proximoEvento, eventoContainer);
-    });
-  } else {
-    renderizarEvento(proximoEvento, eventoContainer);
-  }
+  // Deixe o renderer decidir se há NPC e disparar o diálogo.
+  renderizarEvento(proximoEvento, eventoContainer);
+
 });
 
 /* ---------------------------------------
  *   Resposta de NPC (seu sistema de NPC aciona este evento)
  * ----------------------------------------*/
-document.addEventListener('respostaNPC', (event) => {
-  const build = event?.detail?.build;
-  if (build) registrarEscolha(build);
-  registrarInteracaoNPC?.();
+// Mapeia tones → build (mesmo mapa do NPC)
 
-  // próximo = primeira opção do evento atual (convencional)
-  const proximoId = estado.eventoAtual?.opcoes?.[0]?.proximo;
+const TONE2BUILD = {
+  'virtuoso': 'virtuoso',
+  'firmeza-respeitosa': 'virtuoso',
+  'cético-educado': 'anomalia',
+  'humor-leve': 'anomalia',
+  'pedir-detalhe': 'virtuoso',
+  'silencio-atento': 'virtuoso',
+  'profano': 'profano',
+  'anomalia': 'anomalia'
+};
+
+document.addEventListener('respostaNPC', (event) => {
+  const det = event?.detail || {};
+  const buildEscolha = det.build || TONE2BUILD[det.tone] || null;
+  const impacto = det.impacto || null;
+
+  // 1) Aplica moral de forma atômica (se você tiver registrarEscolhaComImpacto)
+  try {
+    if (typeof registrarEscolhaComImpacto === 'function') {
+      registrarEscolhaComImpacto(buildEscolha || buildDominante(), impacto || undefined);
+    } else {
+      if (buildEscolha) registrarEscolha(buildEscolha);
+      // se não tiver a helper, aplica impacto manualmente (se você tiver aplicarImpacto):
+      if (impacto && typeof aplicarImpacto === 'function') aplicarImpacto(impacto);
+    }
+  } catch (e) {
+    // fallback silencioso
+    if (buildEscolha) registrarEscolha(buildEscolha);
+  }
+
+  // 2) Registra a interação completa (nome/fala/tone/impacto)
+  if (typeof registrarInteracaoNPC === 'function') {
+    registrarInteracaoNPC({
+      idNPC: det.idNPC,
+      nome: det.nome,         // virá do npc.js atualizado; se não vier, renderer resolve por id
+      fala: det.fala,         // idem
+      caminho: buildEscolha || det.build || det.caminho || buildDominante(),
+                          tone: det.tone || null,
+                          impacto: impacto || null
+    });
+  }
+
+  // 3) Recalcula estado visual pós-escolha
+  estado.build = buildDominante();
+  atualizarHUD(estado.nomeDia, estado.build);
+  atualizarGlowTitulo(estado.build);
+
+  // 4) Decide o próximo bloco de forma JUSTA
+  const eventoAtual = estado.eventoAtual;
+  if (!eventoAtual?.opcoes?.length) return; // nada a seguir
+
+  // preferir opção cujo buildImpact combine com a escolha (ou com mapeamento de tone)
+  const prefer = buildEscolha || TONE2BUILD[det.tone] || null;
+
+  let proximoId = null;
+  if (prefer) {
+    const match = eventoAtual.opcoes.find(o => o.buildImpact === prefer);
+    if (match) proximoId = match.proximo || null;
+  }
+
+  // fallback: se alguma opção aponta para fim, usa; caso contrário, a primeira
+  if (!proximoId) {
+    const fim = eventoAtual.opcoes.find(o => o.proximo && o.proximo.toLowerCase().includes('fim'));
+    proximoId = fim?.proximo || eventoAtual.opcoes[0]?.proximo || null;
+  }
   if (!proximoId) return;
 
+  // 5) Avança
   const proximoEvento = estado.eventos.find((e) => e.id === proximoId);
   if (!proximoEvento) return;
 
   estado.eventoAtual = proximoEvento;
   salvarProgresso(estado);
-  atualizarHUD(estado.nomeDia, buildDominante());
-  atualizarGlowTitulo(buildDominante());
   renderizarEvento(proximoEvento, eventoContainer);
 });
 

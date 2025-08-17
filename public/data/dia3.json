@@ -1,221 +1,101 @@
 {
-  "nome": "Dia 3",
-  "fraseInspiradora": "🌒 Você não venceu o mundo, mas sobreviveu a si mesmo.",
-  "descricao": "No terceiro dia, surge a separação. O que antes era um só caos começa a dividir-se em margens, bordas, limites. A consciência aprende a dizer: isso sou eu, isso não sou eu. E às vezes, o que sobra do 'eu' não cabe num tweet.",
+  "nome": "Dia 3 — Frestas",
+  "fraseInspiradora": "🌒 Ninguém é inteiro depois da primeira rachadura — é por ela que a luz entra.",
+  "descricao": "Você não venceu o mundo. Mas sobreviveu a si mesmo. E isso já é obra divina.",
   "blocos": [
     {
-      "id": "historia1",
+      "id": "h0",
       "tipo": "historia",
       "titulo": "O Limite da Água",
-      "descricao": "Você está em sala de aula. O professor fala sobre equações que só um robô emocional entenderia. Um colega zoa sua roupa. Riso em efeito dominó. Você pensa: ‘Será que o problema é a camiseta… ou meu gene de existir?’ Uma voz interna, com sotaque britânico e tédio cósmico, sussurra: 'A melhor guerra é vencida antes de ser notada.'",
+      "descricao": "Uma provocação barata no corredor ferve seu sangue. Você sente o gosto do velho impulso na boca.",
       "opcoes": [
-        {
-          "texto": "Responder na mesma moeda (duelo verbal)",
-          "proximo": "npc1_bloco",
-          "buildImpact": "profano",
-          "dica": "Seja fogo, mesmo que queime você.",
-          "efeitoTexto": "esmaecer",
-          "fraseChave": "choque"
-        },
-        {
-          "texto": "Fingir que não ouviu e rezar pra não viralizar",
-          "proximo": "npc2_bloco",
-          "buildImpact": "anomalia",
-          "dica": "Ignorar é sobreviver com juros.",
-          "efeitoTexto": "tremer",
-          "fraseChave": "camada"
-        },
-        {
-          "texto": "Respirar fundo. Levantar e sair da sala como se fosse CEO do próprio trauma",
-          "proximo": "npc3_bloco",
-          "buildImpact": "virtuoso",
-          "dica": "Sua dignidade é a resposta silenciosa.",
-          "efeitoTexto": "brilhar",
-          "fraseChave": "limite"
-        }
+        { "texto": "Responder na mesma moeda (duelo verbal)", "proximo": "h1", "buildImpact": "profano",  "fraseChave": "humor" },
+        { "texto": "Fingir que não ouviu e rezar para não viralizar", "proximo": "h1", "buildImpact": "virtuoso", "fraseChave": "transicao" },
+        { "texto": "Respirar fundo e sair como CEO do próprio trauma", "proximo": "h1", "buildImpact": "anomalia", "fraseChave": "pedra" }
       ]
     },
     {
-      "id": "npc1_bloco",
+      "id": "h1",
       "tipo": "historia",
       "titulo": "Labareda no Pulso",
-      "descricao": "O professor te olha. A classe congela. A resposta veio como lava fina: ‘Você não conhece nem o seu estilo, imagina o meu.’ Silêncio. Alguns riem. Outros se calam. Você queima por dentro, mas não tremeu.",
+      "descricao": "O corpo quer reagir. A mão fecha, abre. A memória acende uma brasa antiga.",
       "opcoes": [
-        { "texto": "Sair pro pátio", "proximo": "rotina1", "buildImpact": "profano" }
+        { "texto": "Sair para o pátio", "proximo": "h2", "buildImpact": "virtuoso" }
       ]
     },
     {
-      "id": "npc2_bloco",
+      "id": "h2",
       "tipo": "historia",
       "titulo": "Teto Invisível",
-      "descricao": "A voz interior pergunta: 'Você ainda quer ser aceito por quem ri de você?' O silêncio vira couraça. Você sobreviveu a mais um dia sem viralizar.",
+      "descricao": "Você olha para cima e suspeita que o teto seja uma ideia. Os olhos de alguém encaram você por um segundo longo demais.",
       "opcoes": [
-        { "texto": "Sair pro pátio", "proximo": "rotina1", "buildImpact": "anomalia" }
+        { "texto": "Sair para o pátio", "proximo": "h3", "buildImpact": "profano" }
       ]
     },
     {
-      "id": "npc3_bloco",
+      "id": "h3",
       "tipo": "historia",
       "titulo": "Marcha Sem Tropa",
-      "descricao": "Você sai da sala. Cada passo ecoa como se fosse desfile de dignidade. Um aluno murmura: ‘Respeita quem sangra calado.’",
-      "npc": "npc5",
-
+      "descricao": "Seu passo não combina com o do resto. Você sente que está fora do compasso — por escolha.",
       "opcoes": [
-        { "texto": "Seguir pro pátio", "proximo": "rotina1", "buildImpact": "virtuoso" }
+        { "texto": "Seguir para o pátio", "proximo": "r4", "buildImpact": "anomalia" }
       ]
     },
     {
-      "id": "rotina1",
+      "id": "r4",
       "tipo": "rotina",
       "titulo": "Pátio Fragmentado",
-      "descricao": "O pátio virou um reality show sem prêmio. Grupos se formam por afinidade traumática. Você é uma ilha cercada por memes e nicotina. Uma garota te encara como se você fosse spoiler de um livro que ela odeia, mas quer terminar.",
+      "descricao": "Um pedregulho escuro num canto parece vibrar. A escola gira devagar como um carrossel cansado.",
       "opcoes": [
-        {
-          "texto": "Tentar conversar com ela usando linguagem humana",
-          "proximo": "historia2",
-          "buildImpact": "virtuoso",
-          "dica": "A ponte mais difícil é a primeira palavra.",
-          "efeitoTexto": "brilhar",
-          "fraseChave": "contato"
-        },
-        {
-          "texto": "Olhar pro céu como se estivesse esperando sinal de vida inteligente",
-          "proximo": "historia2",
-          "buildImpact": "anomalia",
-          "dica": "Seu sarcasmo é seu satélite.",
-          "efeitoTexto": "tremer",
-          "fraseChave": "refugio"
-        },
-        {
-          "texto": "Entrar no grupo errado só pra não estar só",
-          "proximo": "historia2",
-          "buildImpact": "profano",
-          "dica": "Melhor mal acompanhado do que esquecido.",
-          "efeitoTexto": "esmaecer",
-          "fraseChave": "negociacao"
-        }
+        { "texto": "Prometer nunca repetir esse ciclo", "proximo": "h5", "buildImpact": "virtuoso", "fraseChave": "transicao" },
+        { "texto": "Culpar a si mesmo em silêncio e fingir que está tudo bem", "proximo": "h5", "buildImpact": "profano", "fraseChave": "inercia" },
+        { "texto": "Fechar os olhos e imaginar outro final", "proximo": "h5", "buildImpact": "anomalia", "fraseChave": "pedra" }
       ]
     },
     {
-      "id": "historia2",
+      "id": "h5",
+      "npc": "npc3",
       "tipo": "historia",
-      "titulo": "Divisão",
-      "descricao": "Lembrança: a mala na calçada. O grito que virou eco. Você achava que amor era pra sempre... até virar guarda compartilhada e horário de visita. A separação não foi física. Foi uma linha invisível entre quem você era e quem nunca mais poderia ser.",
+      "titulo": "Rima Torta no Concreto",
+      "descricao": "Jubileu do Céu Cinza aparece, rindo sem som. Ele aponta para sua sombra e pisca.",
       "opcoes": [
-        {
-          "texto": "Prometer nunca repetir esse ciclo",
-          "proximo": "evento1",
-          "buildImpact": "virtuoso",
-          "dica": "Ruptura não precisa ser herança.",
-          "efeitoTexto": "brilhar",
-          "fraseChave": "ciclo"
-        },
-        {
-          "texto": "Culpar a si mesmo em silêncio e fingir que está tudo bem",
-          "proximo": "evento1",
-          "buildImpact": "profano",
-          "dica": "Você acredita que é culpa sua.",
-          "efeitoTexto": "esmaecer",
-          "fraseChave": "eco"
-        },
-        {
-          "texto": "Fechar os olhos e imaginar outro final",
-          "proximo": "evento1",
-          "buildImpact": "anomalia",
-          "dica": "A fuga mental também é protesto.",
-          "efeitoTexto": "tremer",
-          "fraseChave": "vazio"
-        }
+        { "texto": "Ignorar o poeta e encarar a sombra", "proximo": "e6", "buildImpact": "profano" },
+        { "texto": "Escutar o não-dito do poeta", "proximo": "e6", "buildImpact": "virtuoso" },
+        { "texto": "Responder com uma rima ruim de propósito", "proximo": "e6", "buildImpact": "anomalia" }
       ]
     },
     {
-      "id": "evento1",
+      "id": "e6",
       "tipo": "evento",
       "titulo": "A Pedra se Parte",
-      "descricao": "Você encontra a Pedra no fundo da mochila. Ela rachou. De dentro: luz pulsante. A pedra sussurra: ‘Separar não é o fim. É abrir espaço pra se olhar sem espelho.’ A rachadura brilha como se dissesse: ‘Você ainda está inteiro. Só com outra forma.’",
+      "descricao": "Você toca a Pedra. Ela racha. Não dói. Um clarão pequeno atravessa o amigo imaginário chamado medo.",
       "opcoes": [
-        {
-          "texto": "Guardar o fragmento como amuleto",
-          "proximo": "rotina2",
-          "buildImpact": "virtuoso",
-          "dica": "O que brilha em você já esteve quebrado.",
-          "efeitoTexto": "brilhar",
-          "fraseChave": "renascimento"
-        },
-        {
-          "texto": "Enterrar a pedra e todos os sentimentos junto",
-          "proximo": "rotina2",
-          "buildImpact": "profano",
-          "dica": "O esquecimento também é ritual.",
-          "efeitoTexto": "esmaecer",
-          "fraseChave": "desapego"
-        },
-        {
-          "texto": "Deixá-la no bebedouro com bilhete: 'Pra quem precisa mais que eu'",
-          "proximo": "rotina2",
-          "buildImpact": "anomalia",
-          "dica": "Às vezes, compartilhar é libertar.",
-          "efeitoTexto": "tremer",
-          "fraseChave": "oferta"
-        }
+        { "texto": "Guardar o fragmento como amuleto", "proximo": "r7", "buildImpact": "anomalia", "fraseChave": "pedra" },
+        { "texto": "Enterrar a pedra e todos os sentimentos junto", "proximo": "r7", "buildImpact": "profano", "fraseChave": "inercia" },
+        { "texto": "Deixar no bebedouro com um bilhete: 'Pra quem precisa mais que eu'", "proximo": "r7", "buildImpact": "virtuoso", "fraseChave": "transicao" }
       ]
     },
     {
-      "id": "rotina2",
+      "id": "r7",
       "tipo": "rotina",
       "titulo": "Dois Lados do Mesmo Bolso",
-      "descricao": "No bolso: um fragmento. No coração: o resto. Você caminha, e cada passo parece costurar uma cicatriz invisível. A pedra pulsa. O dia termina como quem fecha uma ferida com linha de pensamento. Sua última escolha é íntima. Como um sussurro pra si mesmo.",
+      "descricao": "Você anota qualquer coisa só para existir no papel. O teto devolve um silêncio respirável.",
       "opcoes": [
-        {
-          "texto": "Escrever no caderno: 'Sobrevivi. De novo.'",
-          "proximo": "fim1",
-          "buildImpact": "virtuoso",
-          "dica": "Registrar é validar sua existência.",
-          "efeitoTexto": "brilhar",
-          "fraseChave": "diario"
-        },
-        {
-          "texto": "Olhar o teto e ensaiar um sorriso honesto",
-          "proximo": "fim1",
-          "buildImpact": "anomalia",
-          "dica": "Sorrisos falsos são ensaio de verdade.",
-          "efeitoTexto": "tremer",
-          "fraseChave": "tentativa"
-        },
-        {
-          "texto": "Deitar e escutar o próprio silêncio",
-          "proximo": "fim1",
-          "buildImpact": "profano",
-          "dica": "Silêncio também é resposta.",
-          "efeitoTexto": "esmaecer",
-          "fraseChave": "desligamento"
-        }
+        { "texto": "Escrever: 'Sobrevivi. De novo.'", "proximo": "fim3", "buildImpact": "virtuoso", "fraseChave": "sono" },
+        { "texto": "Olhar o teto e ensaiar um sorriso honesto", "proximo": "fim3", "buildImpact": "profano", "fraseChave": "humor" },
+        { "texto": "Deitar e escutar o próprio silêncio", "proximo": "fim3", "buildImpact": "anomalia", "fraseChave": "pedra" }
       ]
     },
     {
-      "id": "fim1",
+      "id": "fim3",
       "tipo": "fim",
       "titulo": "Fim do Dia 3",
-      "descricao": "🌒 O terceiro dia termina. Você não venceu o mundo, mas sobreviveu a si mesmo. E isso, convenhamos, já é obra divina. Como diria a pedra: 'Ninguém é inteiro depois da primeira rachadura. Mas dá pra brilhar pelas frestas.'"
+      "descricao": "🕯️ O terceiro dia termina. Você não venceu o mundo, mas sobreviveu a si mesmo. E isso já é obra divina.",
+      "fraseChave": "frestas",
+      "pressagio": "O inesperado aguarda no escuro.",
+      "reflexao": "Você recusou as regras. Talvez tenha visto algo que ninguém viu."
     }
   ],
-  "tooltips": {
-    "virtuoso": {
-      "texto": "🕊️ Seu espírito se eleva. Você é um farol.",
-      "cor": "#6ef2b1",
-      "aura": "verde-dourado"
-    },
-    "profano": {
-      "texto": "🔥 Algo em você arde contra si mesmo.",
-      "cor": "#f85b5b",
-      "aura": "vermelho-escuro"
-    },
-    "anomalia": {
-      "texto": "⚡ Você não se encaixa. E isso muda tudo.",
-      "cor": "#a87ef8",
-      "aura": "violeta-glitch"
-    }
-  },
   "frasesFinais": {
     "virtuoso": "Mesmo ferido, você escolhe não ferir.",
     "profano": "Negar o chamado também é um tipo de resposta.",
