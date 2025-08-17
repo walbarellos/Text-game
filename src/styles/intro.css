@@ -113,3 +113,51 @@ pointer-events: none;
 
 /* (Opcional) Travar scroll da página sob a intro */
 html.intro-lock, body.intro-lock { overflow: hidden; }
+
+/* ===== TÍTULO: efeito "typing" com caret ===== */
+
+/* Base necessária pro efeito */
+.titulo-ritual .titulo-animado {
+    display: inline-block;      /* permite "cortar" texto */
+    white-space: nowrap;        /* não quebra linha durante typing */
+    overflow: hidden;           /* esconde a parte não "digitada" */
+    border-right: 2px solid currentColor; /* caret */
+    line-height: 1.1;
+}
+
+/* Efeito typing usando clip-path (melhor que width) */
+@keyframes typing {
+    from { clip-path: inset(0 100% 0 0); }
+    to   { clip-path: inset(0 0    0 0); }
+}
+
+/* Caret piscando */
+@keyframes blink-caret {
+    0%, 49%, 100% { border-right-color: transparent; }
+    50%           { border-right-color: currentColor; }
+}
+
+/* Fallback para engines sem clip-path animável (mais amplo) */
+@supports not (clip-path: inset(0 0 0 0)) {
+    .titulo-ritual .titulo-animado { clip-path: none; width: 0; }
+    @keyframes typing {
+        from { width: 0; }
+        to   { width: 100%; }
+    }
+}
+
+/* Acessibilidade: reduzir movimento */
+@media (prefers-reduced-motion: reduce) {
+    .titulo-ritual .titulo-animado {
+        animation: none !important;
+        border-right: 0;
+    }
+}
+
+/* Mobile: mantendo seu comportamento atual (overlay opcional)
+ *   — estes ajustes NÃO desativam o typing, apenas o posicionamento overlay */
+@media (max-width: 768px) {
+    .titulo-ritual .titulo-animado {
+        /* continua com typing; só não flutua por cima */
+    }
+}

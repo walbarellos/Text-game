@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="description" content="Jogo ritualístico simbólico sobre escolhas e moralidade." />
   <meta name="theme-color" content="#0b0d0e" />
-  <title>What Is Life ☉</title>
+  <title>7 Lives ☉</title>
 
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
@@ -37,7 +37,7 @@
 
   <div class="main-wrapper">
     <div class="titulo-ritual" aria-label="Título do Jogo">
-      <h1 class="titulo-animado">What Is Life ☉</h1>
+      <h1 class="titulo-animado">7 Lives ☉</h1>
     </div>
 
     <div id="wrapper-jogo" class="container">
@@ -71,7 +71,7 @@
 
     <footer class="footer-jogo">
       <div class="footer-inner">
-        <div class="creditos">Desenvolvido por <strong>Willian Albarello</strong> – ☉ What Is Life</div>
+        <div class="creditos">Desenvolvido por <strong>Willian Albarello</strong> ☉ 7 Lives ☉</div>
         <nav class="redes-sociais" aria-label="Redes sociais">
           <a href="https://qoto.org/@wepiphany" target="_blank" rel="me noopener noreferrer" aria-label="Mastodon">
             <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.43 9.19c-.26-2.65-2.61-4.73-5.47-5.08-1.24-.16-3.65-.24-5.9-.22-2.25-.02-4.66.06-5.9.22-2.86.35-5.21 2.43-5.47 5.08C-.08 13.05-.19 18.7 1.7 20.68 3.37 22.42 6.52 23.18 8.66 23.46c1.27.18 2.46.24 3.63.22 1.17.02 2.36-.04 3.63-.22 2.14-.28 5.3-1.04 6.96-2.78 1.89-1.98 1.78-7.63 1.55-11.49zM17.65 13.8c0 2.47-2.28 2.47-2.28 2.47h-.46v-2.2c0-.94-.43-1.42-1.29-1.42-.98 0-1.46.66-1.46 1.85v1.78h-.46c-.48 0-2.29-.01-2.29-2.47V10.4h1.25v3.08c0 1.09.7 1.09.7 1.09h.24v-2.21c0-.94.64-1.89 2.03-1.89 1.38 0 1.75.95 1.75 1.89v2.21h.24s.7 0 .7-1.09V10.4h1.25v3.4z"/></svg>
@@ -109,7 +109,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const titulo = document.querySelector('.titulo-animado');
       if (titulo) {
-        const texto = titulo.textContent || 'What Is Life ☉';
+        const texto = titulo.textContent || '7 Lives ☉';
         const steps = texto.length;
         titulo.style.animation = `typing 3.5s steps(${steps}, end) forwards, blink-caret .75s step-end infinite`;
         setTimeout(() => { titulo.classList.add('glow'); }, 3600);
