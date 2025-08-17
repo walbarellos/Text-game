@@ -229,3 +229,40 @@ html.intro-lock, body.intro-lock{ overflow: hidden; }
 /* ===== Helpers (se precisar “forçar” exibição sem transições) ===== */
 #intro-cinematica.is-visible{ opacity: 1; visibility: visible; pointer-events: auto; }
 #intro-cinematica.is-hidden{ opacity: 0; visibility: hidden; pointer-events: none; }
+
+
+/* ===== Banner da intro (imagem da capa) ===== */
+#intro-banner.intro-banner{
+width: clamp(280px, 70vw, 860px);
+max-height: min(58vh, 70svh);
+object-fit: contain;            /* não corta a arte */
+border-radius: 14px;
+box-shadow: 0 22px 60px rgba(0,0,0,.55), 0 0 0 1px rgba(255,255,255,.06) inset;
+opacity: 0;
+transform: translateY(8px) scale(.995);
+transition: opacity .6s ease, transform .6s ease, box-shadow .6s ease;
+}
+
+/* entra quando o overlay aparece */
+#intro-cinematica.mostrar .intro-banner{
+opacity: 1;
+transform: translateY(0) scale(1);
+}
+
+/* leve foco/hover (mouse/teclado) */
+#intro-banner.intro-banner:focus-visible{
+outline: none;
+box-shadow:
+0 0 0 3px rgba(192,200,255,.6),
+0 0 0 5px rgba(192,200,255,.22),
+0 22px 60px rgba(0,0,0,.55),
+0 0 0 1px rgba(255,255,255,.06) inset;
+}
+
+/* mobile: um pouco menor para sobrar espaço pro texto e botão */
+@media (max-width: 520px){
+    #intro-banner.intro-banner{
+    width: clamp(260px, 90vw, 520px);
+    max-height: min(46vh, 52svh);
+    }
+}
