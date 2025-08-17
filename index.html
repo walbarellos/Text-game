@@ -34,11 +34,14 @@
   <canvas id="background-canvas" aria-hidden="true"
           style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;"></canvas>
 
-    <div id="intro-cinematica" class="intro-cinematica" role="dialog" aria-modal="true" aria-label="Introdução">
-      <img id="intro-banner" class="intro-banner" src="/assets/intro-hero.jpg" alt="7 Lives — sigilo de triângulo, quadrado e círculo">
-      <div id="intro-texto" class="intro-texto" aria-live="polite"></div>
+  <div id="intro-cinematica" role="dialog" aria-modal="true" aria-label="Introdução">
+    <div class="intro-stack">
+      <img id="intro-banner" class="intro-banner" src="/assets/intro-hero.jpg"
+          alt="7 Lives — sigilo de triângulo, quadrado e círculo">
+      <div id="intro-texto" aria-live="polite"></div>
       <button id="pular-intro" class="pular-intro" type="button">Pular</button>
     </div>
+  </div>
 
 
   <div class="main-wrapper">

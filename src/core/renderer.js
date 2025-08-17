@@ -16,10 +16,11 @@
   * Substitui o conteúdo do destino com melhor performance
   */
   function renderSafeHTML(destino, html) {
-    const wrapper = document.createElement('div');
-    wrapper.innerHTML = html;
-    destino.replaceChildren(wrapper);
-  }
+        const tpl = document.createElement('template');
+        tpl.innerHTML = String(html || '').trim();
+        destino.replaceChildren(tpl.content);
+       }
+
 
   function escapeHTML(s) {
     return String(s ?? '')
@@ -125,7 +126,7 @@
       ${resumoNPC}
       </div>
 
-      <button id="btn-proximo-dia" class="ritual-final-btn" aria-label="Avançar para o próximo dia">
+      <button id="btn-proximo-dia" class="ritual-final-btn" type="button" aria-label="Avançar para o próximo dia">
       ▶️ Avançar para o próximo dia
       </button>
       </section>
@@ -161,10 +162,10 @@
           };
           return `
           <div class="opcao-bloco">
-          <button
+          <button type="button"
           class="btn-opcao efeito-${escapeHTML(opcao.efeitoTexto || 'nenhum')}"
           title="${escapeHTML(opcao.dica || '')}"
-          aria-label="${escapeHTML(opcao.texto)}"
+          aria-label="${escapeHTML(opcao.texto || 'Opção')}"
           data-id='${encodeURIComponent(JSON.stringify(dados))}'>
           ${escapeHTML(opcao.texto)}
           </button>
