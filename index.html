@@ -9,101 +9,63 @@
   <title>7 Lives ☉</title>
 
   <!-- Favicon / Preloads -->
-  <link rel="icon" type="image/png" href="/assets/favicon.png" />
-  <link rel="preload" as="image" href="/assets/intro-hero.jpg" />
+  <link rel="icon" type="image/png" href="./favicon.png" />
+  <link rel="preload" as="image" href="./assets/intro-hero.jpg" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet" />
 
+  <!-- OVERRIDES SIMPLES E FORTES (não brigam com seu CSS existente) -->
   <style>
-    :root{
-      --base-w: 1280;
-      --base-h: 720;
-      --content-max: 1100px; /* largura máxima da área jogável */
-    }
+    :root{ --ratio-w:16; --ratio-h:9; --content-max:1100px; }
 
-    /* Reset e cores */
-    html { background:#0b0d0e; color:#e8ecef; }
-    html, body { width:100%; height:100%; margin:0; overflow:hidden; }
-    body { font-family:'Share Tech Mono', monospace; background:#000; }
+    html, body { height:100%; margin:0; background:#000; color:#e8ecef; overflow:hidden; }
+    body { font-family:'Share Tech Mono', monospace; }
 
-    body.preload * { transition:none !important; }
-    body.preload .titulo-ritual { height:56px; display:flex; align-items:center; justify-content:center; }
-
-    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
-    .skip-link:focus{left:8px;top:8px;width:auto;height:auto;padding:.5rem 1rem;background:#000;color:#fff;border-radius:6px;z-index:9999}
-
-    /* Fundo ocupa viewport inteira */
+    /* fundo seguro na viewport */
     #background-canvas{
       position:fixed; inset:0; width:100dvw; height:100dvh;
       z-index:-1; display:block; pointer-events:none;
     }
 
-    /* Envelope de encaixe */
-    #fit{ position:fixed; inset:0; width:100dvw; height:100dvh; overflow:hidden; }
-
-    /* STAGE centralizado absolutamente, sem zoom */
-    #stage{
-      position:absolute; left:50%; top:50%;
-      width:var(--base-w)px; height:var(--base-h)px;
-      transform:translate(-50%,-50%);
-      display:grid; grid-template-rows:auto 1fr auto;
-      overflow:hidden; background:transparent;
+    /* ROOT do jogo: centralizado e com proporção fixa (sem transform/zoom) */
+    .game-root{
+      position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      width:100dvw; height:100dvh; overflow:hidden;
+    }
+    .game-stage{
+      width:min(100dvw, calc(100dvh * (var(--ratio-w)/var(--ratio-h))));
+      height:min(100dvh, calc(100dvw * (var(--ratio-h)/var(--ratio-w))));
+      aspect-ratio: calc(var(--ratio-w) / var(--ratio-h));
+      display:flex; flex-direction:column;
+      /* neutraliza regras antigas que bagunçavam o fluxo */
+      position:relative !important; left:auto !important; top:auto !important; transform:none !important;
     }
 
-    /* A camada principal preenche o stage */
-    .main-wrapper{
-      width:100%; height:100%;
-      display:grid; grid-template-rows:auto 1fr auto;
-    }
-
-    /* Cabeçalho e rodapé sempre com largura total do stage e conteúdo centralizado */
-    .titulo-ritual,
-    .footer-jogo .footer-inner,
-    #hud{
-      width:100%;
-      display:flex;
-      justify-content:center; /* centraliza os elementos internos */
-      gap:16px;
-    }
-
-    /* Container jogável ocupa 100% e centraliza a coluna de conteúdo */
+    /* cabeçalho, conteúdo e footer ocupam colunas, sem posição absoluta */
+    .titulo-ritual{ width:100%; display:flex; justify-content:center; }
     #wrapper-jogo.container{
-      width:100%; height:100%;
-      margin:0; padding:0; border:0; background:transparent;
-      display:flex;
-      flex-direction:column;
-      align-items:center;  /* <- centro horizontal */
-      justify-content:flex-start;
-      box-shadow:none; backdrop-filter:none;
+      flex:1 1 auto; width:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-start;
+      margin:0 !important; padding:0 !important; border:0 !important; background:transparent !important;
     }
+    #hud{ width:100%; display:flex; justify-content:center; gap:16px; position:relative !important; }
+    #evento{ width:min(100%, var(--content-max)); margin:0 auto !important; box-sizing:border-box; }
+    .footer-jogo{ width:100%; }
+    .footer-jogo .footer-inner{ width:100%; display:flex; justify-content:center; }
 
-    /* A coluna principal (#evento) fica limitada e centralizada */
-    #evento{
-      width: min(100%, var(--content-max));
-      margin: 0 auto !important;   /* <- garante centro */
-    }
-
-    /* Canvas de efeitos ocupa o container por baixo do conteúdo */
-    #etereal-fog{
-      position:absolute; inset:0; width:100%; height:100%;
-      z-index:0; pointer-events:none;
-    }
-
+    /* camadas de efeito não interferem no layout */
+    #etereal-fog{ position:absolute; inset:0; width:100%; height:100%; z-index:0; pointer-events:none; }
     .hud, #evento{ position:relative; z-index:1; }
 
-    /* Não permitir que elementos internos estourem horizontalmente */
-    .evento-container{ max-width:100%; }
-    canvas{ max-width:100%; max-height:100%; }
-
-    /* Evita “deriva” por largura maior que o stage */
-    .main-wrapper, #wrapper-jogo, #evento { box-sizing:border-box; }
+    /* acessibilidade: pular conteúdo */
+    .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
+    .skip-link:focus{left:8px;top:8px;width:auto;height:auto;padding:.5rem 1rem;background:#000;color:#fff;border-radius:6px;z-index:9999}
   </style>
 </head>
 
-<body class="jogo-corpo theme-grimoire preload">
+<body class="jogo-corpo theme-grimoire">
   <a href="#evento" class="skip-link">Ir para o conteúdo principal</a>
 
   <!-- Fundo -->
@@ -112,71 +74,69 @@
   <!-- Intro -->
   <div id="intro-cinematica" role="dialog" aria-modal="true" aria-label="Introdução">
     <div class="intro-stack">
-      <img id="intro-banner" class="intro-banner" src="/assets/intro-hero.jpg"
+      <img id="intro-banner" class="intro-banner" src="./assets/intro-hero.jpg"
            alt="7 Lives — sigilo de triângulo, quadrado e círculo" />
       <div id="intro-texto" aria-live="polite"></div>
       <button id="pular-intro" class="pular-intro" type="button">Pular</button>
     </div>
   </div>
 
-  <!-- Encaixe central -->
-  <div id="fit">
-    <div id="stage">
-      <div class="main-wrapper">
-        <div class="titulo-ritual" aria-label="Título do Jogo">
-          <h1 class="titulo-animado">7 Lives ☉</h1>
-        </div>
-
-        <div id="wrapper-jogo" class="container">
-          <canvas id="etereal-fog" aria-hidden="true"></canvas>
-
-          <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
-            <div id="hud-dia" class="hud-dia" aria-live="polite"
-                 data-frase="⚡ A melhor guerra é vencida antes de ser notada.">Dia 1</div>
-
-            <span id="hud-build"
-                  class="hud-badge badge build virtuoso"
-                  tabindex="0"
-                  role="status"
-                  aria-live="polite"
-                  aria-label="Build atual: Virtuoso"
-                  data-tooltip="Seu espírito se eleva. Você é um farol.">
-              <span class="dot" aria-hidden="true"></span>
-              <span class="label">Virtuoso</span>
-            </span>
-          </header>
-
-          <div id="tooltip-ritual" class="tooltip-ritual" aria-hidden="true"></div>
-
-          <main id="evento"
-                class="evento-container evento-ritual"
-                role="main"
-                aria-live="polite"
-                aria-label="Narrativa interativa do jogo">
-          </main>
-        </div>
-
-        <footer class="footer-jogo">
-          <div class="footer-inner">
-            <div class="creditos">Desenvolvido por <strong>Willian Albarello</strong> ☉ 7 Lives ☉</div>
-            <nav class="redes-sociais" aria-label="Redes sociais">
-              <a href="https://qoto.org/@wepiphany" target="_blank" rel="me noopener noreferrer" aria-label="Mastodon">
-                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.43 9.19c-.26-2.65-2.61-4.73-5.47-5.08-1.24-.16-3.65-.24-5.9-.22-2.25-.02-4.66.06-5.9.22-2.86.35-5.21 2.43-5.47 5.08C-.08 13.05-.19 18.7 1.7 20.68 3.37 22.42 6.52 23.18 8.66 23.46c1.27.18 2.46.24 3.63.22 1.17.02 2.36-.04 3.63-.22 2.14-.28 5.3-1.04 6.96-2.78 1.89-1.98 1.78-7.63 1.55-11.49zM17.65 13.8c0 2.47-2.28 2.47-2.28 2.47h-.46v-2.2c0-.94-.43-1.42-1.29-1.42-.98 0-1.46.66-1.46 1.85v1.78h-.46c-.48 0-2.29-.01-2.29-2.47V10.4h1.25v3.08c0 1.09.7 1.09.7 1.09h.24v-2.21c0-.94.64-1.89 2.03-1.89 1.38 0 1.75.95 1.75 1.89v2.21h.24s.7 0 .7-1.09V10.4h1.25v3.4z"/></svg>
-              </a>
-              <a href="https://github.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0.297C5.373 0.297 0 5.67 0 12.297c0 5.285 3.438 9.773 8.207 11.387.6.113.793-.26.793-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.612-4.042-1.612-.546-1.386-1.333-1.755-1.333-1.755-1.09-.745.083-.73.083-.73 1.204.084 1.837 1.237 1.837 1.237 1.07 1.833 2.807 1.303 3.492.997.108-.775.42-1.303.763-1.602-2.665-.304-5.466-1.333-5.466-5.932 0-1.31.468-2.38 1.235-3.22-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.495 11.495 0 0 1 3.003-.404 11.49 11.49 0 0 1 3.003.404c2.29-1.552 3.296-1.23 3.296-1.23.653 1.653.242 2.873.119 3.176.77.84 1.234 1.91 1.234 3.22 0 4.61-2.805 5.625-5.476 5.922.43.37.814 1.102.814 2.222 0 1.605-.015 2.897-.015 3.292 0 .32.192.694.8.576C20.565 22.067 24 17.578 24 12.297 24 5.67 18.627.297 12 .297z"/></svg>
-              </a>
-              <a href="https://instagram.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 3a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5zm5.25-.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/></svg>
-              </a>
-            </nav>
-          </div>
-        </footer>
+  <!-- ROOT + STAGE -->
+  <div class="game-root">
+    <div class="game-stage">
+      <div class="titulo-ritual" aria-label="Título do Jogo">
+        <h1 class="titulo-animado">7 Lives ☉</h1>
       </div>
+
+      <div id="wrapper-jogo" class="container">
+        <canvas id="etereal-fog" aria-hidden="true"></canvas>
+
+        <header id="hud" class="hud" role="banner" aria-label="Interface superior do jogo">
+          <div id="hud-dia" class="hud-dia" aria-live="polite"
+               data-frase="⚡ A melhor guerra é vencida antes de ser notada.">Dia 1</div>
+
+          <span id="hud-build"
+                class="hud-badge badge build virtuoso"
+                tabindex="0"
+                role="status"
+                aria-live="polite"
+                aria-label="Build atual: Virtuoso"
+                data-tooltip="Seu espírito se eleva. Você é um farol.">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="label">Virtuoso</span>
+          </span>
+        </header>
+
+        <div id="tooltip-ritual" class="tooltip-ritual" aria-hidden="true"></div>
+
+        <main id="evento"
+              class="evento-container evento-ritual"
+              role="main"
+              aria-live="polite"
+              aria-label="Narrativa interativa do jogo">
+        </main>
+      </div>
+
+      <footer class="footer-jogo">
+        <div class="footer-inner">
+          <div class="creditos">Desenvolvido por <strong>Willian Albarello</strong> ☉ 7 Lives ☉</div>
+          <nav class="redes-sociais" aria-label="Redes sociais">
+            <a href="https://qoto.org/@wepiphany" target="_blank" rel="me noopener noreferrer" aria-label="Mastodon">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.43 9.19c-.26-2.65-2.61-4.73-5.47-5.08-1.24-.16-3.65-.24-5.9-.22-2.25-.02-4.66.06-5.9.22-2.86.35-5.21 2.43-5.47 5.08C-.08 13.05-.19 18.7 1.7 20.68 3.37 22.42 6.52 23.18 8.66 23.46c1.27.18 2.46.24 3.63.22 1.17.02 2.36-.04 3.63-.22 2.14-.28 5.3-1.04 6.96-2.78 1.89-1.98 1.78-7.63 1.55-11.49zM17.65 13.8c0 2.47-2.28 2.47-2.28 2.47h-.46v-2.2c0-.94-.43-1.42-1.29-1.42-.98 0-1.46.66-1.46 1.85v1.78h-.46c-.48 0-2.29-.01-2.29-2.47V10.4h1.25v3.08c0 1.09.7 1.09.7 1.09h.24v-2.21c0-.94.64-1.89 2.03-1.89 1.38 0 1.75.95 1.75 1.89v2.21h.24s.7 0 .7-1.09V10.4h1.25v3.4z"/></svg>
+            </a>
+            <a href="https://github.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 0.297C5.373 0.297 0 5.67 0 12.297c0 5.285 3.438 9.773 8.207 11.387.6.113.793-.26.793-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.612-4.042-1.612-.546-1.386-1.333-1.755-1.333-1.755-1.09-.745.083-.73.083-.73 1.204.084 1.837 1.237 1.837 1.237 1.07 1.833 2.807 1.303 3.492.997.108-.775.42-1.303.763-1.602-2.665-.304-5.466-1.333-5.466-5.932 0-1.31.468-2.38 1.235-3.22-.124-.303-.535-1.523.117-3.176 0 0 1.008-.322 3.3 1.23a11.495 11.495 0 0 1 3.003-.404 11.49 11.49 0 0 1 3.003.404c2.29-1.552 3.296-1.23 3.296-1.23.653 1.653.242 2.873.119 3.176.77.84 1.234 1.91 1.234 3.22 0 4.61-2.805 5.625-5.476 5.922.43.37.814 1.102.814 2.222 0 1.605-.015 2.897-.015 3.292 0 .32.192.694.8.576C20.565 22.067 24 17.578 24 12.297 24 5.67 18.627.297 12 .297z"/></svg>
+            </a>
+            <a href="https://instagram.com/walbarellos" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M7.75 2h8.5A5.75 5.75 0 0 1 22 7.75v8.5A5.75 5.75 0 0 1 16.25 22h-8.5A5.75 5.75 0 0 1 2 16.25v-8.5A5.75 5.75 0 0 1 7.75 2zm0 1.5A4.25 4.25 0 0 0 3.5 7.75v8.5A4.25 4.25 0 0 0 7.75 20.5h8.5A4.25 4.25 0 0 0 20.5 16.25v-8.5A4.25 4.25 0 0 0 16.25 3.5h-8.5zm4.25 3a5.25 5.25 0 1 1 0 10.5a5.25 5.25 0 0 1 0-10.5zm0 1.5a3.75 3.75 0 1 0 0 7.5a3.75 3.75 0 0 0 0-7.5zm5.25-.25a.75.75 0 1 1 0 1.5a.75.75 0 0 1 0-1.5z"/></svg>
+            </a>
+          </nav>
+        </div>
+      </footer>
     </div>
   </div>
 
-  <!-- Efeito de recompensa -->
+  <!-- Ações/recompensa -->
   <div class="action-reward" id="action-reward" aria-hidden="true">
     <div class="ar-wrap">
       <div class="ar-ring"></div>
@@ -191,10 +151,10 @@
   <noscript><div style="padding:16px;color:#fff;background:#b00020">Este jogo requer JavaScript habilitado.</div></noscript>
 
   <!-- Scripts reais -->
-  <script type="module" src="/src/ui/fundo-geom.js"></script>
-  <script type="module" src="/src/main.js"></script>
+  <script type="module" src="./src/ui/fundo-geom.js"></script>
+  <script type="module" src="./src/main.js"></script>
 
-  <!-- Título/HUD utilidades -->
+  <!-- utilidades (mantidas) -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {
       const titulo = document.querySelector('.titulo-animado');
@@ -270,93 +230,6 @@
       if (kind) applyBuildToUI(kind);
     }
     window.setBuild = setBuild; window.setAlignment = setBuild; window.setMoralidade = setBuild;
-  </script>
-
-  <!-- Ajuste responsivo do stage (sem zoom) -->
-  <script>
-  (function(){
-    const BW = Number(getComputedStyle(document.documentElement).getPropertyValue('--base-w')) || 1280;
-    const BH = Number(getComputedStyle(document.documentElement).getPropertyValue('--base-h')) || 720;
-    const stage = document.getElementById('stage');
-
-    function fit(){
-      const vw = window.innerWidth;
-      const vh = window.innerHeight;
-      const ratio = BW / BH;
-
-      let w = vw;
-      let h = Math.round(w / ratio);
-      if (h > vh) { h = vh; w = Math.round(h * ratio); }
-
-      stage.style.width  = w + 'px';
-      stage.style.height = h + 'px';
-      // mantemos centralizado por translate(-50%, -50%)
-    }
-
-    window.addEventListener('resize', fit);
-    window.addEventListener('orientationchange', fit);
-    window.addEventListener('load', () => {
-      document.body.classList.remove('preload');
-      fit();
-    });
-    fit();
-  })();
-  </script>
-
-  <!-- Intro acessível -->
-  <script>
-  (() => {
-    const overlay = document.getElementById('intro-cinematica');
-    const panel   = document.getElementById('intro-texto');
-    const closeBtn = document.getElementById('pular-intro');
-    const mainWrapper = document.querySelector('.main-wrapper');
-    if (!overlay || !panel || !closeBtn) return;
-
-    const FOCUS_SELECTOR = [
-      'a[href]','area[href]','button:not([disabled])','input:not([disabled]):not([type="hidden"])',
-      'select:not([disabled])','textarea:not([disabled])','[tabindex]:not([tabindex^="-"])'
-    ].join(',');
-
-    let lastActive = null, sessionToken = 0;
-
-    function setBackdropInert(enabled){
-      if (!mainWrapper) return;
-      try{ enabled ? (mainWrapper.setAttribute('inert',''), mainWrapper.setAttribute('aria-hidden','true'))
-                   : (mainWrapper.removeAttribute('inert'), mainWrapper.removeAttribute('aria-hidden')); }
-      catch{}
-    }
-    function trapFocus(e){
-      if (e.key !== 'Tab') return;
-      const items = Array.from(overlay.querySelectorAll(FOCUS_SELECTOR)).filter(el => el.offsetParent !== null);
-      if (!items.length) { e.preventDefault(); return; }
-      const first = items[0], last = items[items.length-1];
-      if (e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
-    }
-    function onKeydown(e){ if (e.key === 'Escape') closeIntro(); else trapFocus(e); }
-
-    function openIntro(lines=[]){
-      sessionToken++; const token = sessionToken;
-      lastActive = document.activeElement;
-      setBackdropInert(true);
-      overlay.classList.remove('ocultar'); overlay.classList.add('mostrar');
-      overlay.setAttribute('role','dialog'); overlay.setAttribute('aria-modal','true'); overlay.setAttribute('aria-label','Introdução');
-      panel.setAttribute('aria-live','polite');
-      panel.innerHTML = '';
-      (async()=>{ for (const line of lines){ if (token!==sessionToken) return;
-        const p=document.createElement('p'); p.textContent=line; panel.appendChild(p); await new Promise(r=>setTimeout(r,1200)); }
-        closeBtn.focus(); })();
-      document.addEventListener('keydown', onKeydown);
-      closeBtn.addEventListener('click', closeIntro, { once:true });
-      setTimeout(()=>{ (overlay.querySelector(FOCUS_SELECTOR) || closeBtn)?.focus(); }, 0);
-    }
-    function closeIntro(){
-      sessionToken++; overlay.classList.remove('mostrar'); overlay.classList.add('ocultar');
-      document.removeEventListener('keydown', onKeydown); setBackdropInert(false);
-      setTimeout(()=> lastActive?.focus?.(), 0);
-    }
-    window.openIntro = openIntro; window.closeIntro = closeIntro;
-  })();
   </script>
 </body>
 </html>

@@ -58,6 +58,22 @@ let estado = {
 const eventoContainer = document.getElementById('evento');
 
 /* ---------------------------------------
+ *   Helpers de dados (URLs seguras no dev e no build)
+ * ----------------------------------------*/
+const dataUrl = (name) =>
+import.meta.env.DEV
+? `/data/${name}`
+: new URL(`../data/${name}`, import.meta.url);
+
+async function loadJson(name) {
+  const url = dataUrl(name);
+  console.log('[loadJson]', typeof url.toString === 'function' ? url.toString() : url);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`${name} falhou: ${res.status} ${res.statusText}`);
+  return res.json();
+}
+
+/* ---------------------------------------
  *   Boot
  * ----------------------------------------*/
 async function iniciarJogo() {
@@ -69,52 +85,52 @@ async function iniciarJogo() {
       console.log('📁 Progresso carregado:', progressoSalvo);
     }
 
-    // 🔒 Normalizações leves (sem reset destrutivo)
-    // - diaAtual mínimo = 1
+    // 🔒 Normalizações leves
     if (!Number.isFinite(estado.diaAtual) || estado.diaAtual < 1) {
       estado.diaAtual = 1;
     }
-    // - se a âncora traz um "fim*" de outro dia, ignore no boot do novo dia
-    // - ignore âncoras que indiquem final de bloco: "fim", "fim1", "d2_fim", "x-fim" etc.
+    // âncoras tipo "fim", "fim2", "d2_fim" etc. não valem como ponto de partida
     if (typeof estado.eventoAtualId === 'string' && /(^|[_\W-])fim\d*$/i.test(estado.eventoAtualId)) {
       estado.eventoAtualId = null;
       try { salvarProgresso({ diaAtual: estado.diaAtual, eventoAtualId: null }); } catch {}
     }
 
-
     // 🔑 Preserve a build do save para exibir coerente no novo dia
     const buildInicial = typeof estado.build === 'string' ? estado.build : 'profano';
 
-    // Carrega o dia atual (dinâmico; se não existir, o próprio carregamento tratará)
+    // Carrega o dia atual (se não existir, o próprio carregamento trata)
     await carregarDia(estado.diaAtual);
 
-    // Aplica HUD/título com a build salva (sem recalcular dominante agora)
+    // HUD/título com a build salva (sem recalcular agora)
     estado.build = buildInicial;
     atualizarHUD(estado.nomeDia, estado.build);
     atualizarGlowTitulo(estado.build);
 
-    // Zera apenas o acumulador diário (não mexe no rótulo atual da build)
+    // Zera apenas o acumulador diário
     try { resetarBuild(); } catch {}
 
   } catch (err) {
     console.error('💥 Falha ao iniciar o jogo:', err);
   }
 }
+
 /* ---------------------------------------
  *   Carregar e preparar o dia
  * ----------------------------------------*/
 async function carregarDia(numeroDia) {
   try {
-    const url = `/data/dia${numeroDia}.json`;
-    const resposta = await fetch(url);
+    console.log('[carregarDia] numeroDia =', numeroDia);
 
+    const url = dataUrl(`dia${numeroDia}.json`);
+    console.log('[carregarDia] URL =', typeof url.toString === 'function' ? url.toString() : url);
+
+    const resposta = await fetch(url);
     if (!resposta.ok) {
       // 👉 Dia inexistente: encerramento elegante com Créditos
       throw new Error(`Dia ${numeroDia} indisponível (${resposta.status} ${resposta.statusText}).`);
     }
 
-    const textoBruto = await resposta.text();
-    const dadosDia = JSON.parse(textoBruto);
+    const dadosDia = await resposta.json();
 
     // Eventos do dia
     const blocos = Array.isArray(dadosDia.blocos) ? dadosDia.blocos : [];
@@ -176,7 +192,7 @@ async function carregarDia(numeroDia) {
         stats: {} // opcional: passe métricas agregadas aqui
       });
     } catch (e2) {
-      // Fallback visual se, por algum motivo, os créditos não puderem ser exibidos
+      // Fallback visual
       eventoContainer.innerHTML = `
       <div class="erro">
       <p>⚠️ Dia não encontrado ou JSON inválido.</p>
@@ -206,9 +222,7 @@ function atualizarGlowTitulo(build) {
  *   Avanço de dia
  * ----------------------------------------*/
 document.addEventListener('avancarDia', () => {
-  try {
-    resetarInteracoesNPC?.();
-  } catch {}
+  try { resetarInteracoesNPC?.(); } catch {}
   avancarDia(estado);
 });
 
@@ -227,9 +241,7 @@ document.addEventListener('opcaoSelecionada', (e) => {
   try {
     playChoiceReward(estado.build);
     pulseBuildBadge();
-  } catch (err) {
-    // silencioso: caso CSS/JS do reward não exista
-  }
+  } catch {}
 
   // 3) encontra próximo evento
   let proximoEvento = estado.eventos.find((ev) => ev.id === dados.proximo);
@@ -252,14 +264,11 @@ document.addEventListener('opcaoSelecionada', (e) => {
 
   // Deixe o renderer decidir se há NPC e disparar o diálogo.
   renderizarEvento(proximoEvento, eventoContainer);
-
 });
 
 /* ---------------------------------------
  *   Resposta de NPC (seu sistema de NPC aciona este evento)
  * ----------------------------------------*/
-// Mapeia tones → build (mesmo mapa do NPC)
-
 const TONE2BUILD = {
   'virtuoso': 'virtuoso',
   'firmeza-respeitosa': 'virtuoso',
@@ -276,26 +285,24 @@ document.addEventListener('respostaNPC', (event) => {
   const buildEscolha = det.build || TONE2BUILD[det.tone] || null;
   const impacto = det.impacto || null;
 
-  // 1) Aplica moral de forma atômica (se você tiver registrarEscolhaComImpacto)
+  // 1) Aplica moral de forma atômica (se existir API estendida)
   try {
     if (typeof registrarEscolhaComImpacto === 'function') {
       registrarEscolhaComImpacto(buildEscolha || buildDominante(), impacto || undefined);
     } else {
       if (buildEscolha) registrarEscolha(buildEscolha);
-      // se não tiver a helper, aplica impacto manualmente (se você tiver aplicarImpacto):
       if (impacto && typeof aplicarImpacto === 'function') aplicarImpacto(impacto);
     }
-  } catch (e) {
-    // fallback silencioso
+  } catch {
     if (buildEscolha) registrarEscolha(buildEscolha);
   }
 
-  // 2) Registra a interação completa (nome/fala/tone/impacto)
+  // 2) Registra a interação completa
   if (typeof registrarInteracaoNPC === 'function') {
     registrarInteracaoNPC({
       idNPC: det.idNPC,
-      nome: det.nome,         // virá do npc.js atualizado; se não vier, renderer resolve por id
-      fala: det.fala,         // idem
+      nome: det.nome,
+      fala: det.fala,
       caminho: buildEscolha || det.build || det.caminho || buildDominante(),
                           tone: det.tone || null,
                           impacto: impacto || null
@@ -307,11 +314,10 @@ document.addEventListener('respostaNPC', (event) => {
   atualizarHUD(estado.nomeDia, estado.build);
   atualizarGlowTitulo(estado.build);
 
-  // 4) Decide o próximo bloco de forma JUSTA
+  // 4) Decide o próximo bloco
   const eventoAtual = estado.eventoAtual;
-  if (!eventoAtual?.opcoes?.length) return; // nada a seguir
+  if (!eventoAtual?.opcoes?.length) return;
 
-  // preferir opção cujo buildImpact combine com a escolha (ou com mapeamento de tone)
   const prefer = buildEscolha || TONE2BUILD[det.tone] || null;
 
   let proximoId = null;
@@ -320,14 +326,12 @@ document.addEventListener('respostaNPC', (event) => {
     if (match) proximoId = match.proximo || null;
   }
 
-  // fallback: se alguma opção aponta para fim, usa; caso contrário, a primeira
   if (!proximoId) {
     const fim = eventoAtual.opcoes.find(o => o.proximo && o.proximo.toLowerCase().includes('fim'));
     proximoId = fim?.proximo || eventoAtual.opcoes[0]?.proximo || null;
   }
   if (!proximoId) return;
 
-  // 5) Avança
   const proximoEvento = estado.eventos.find((e) => e.id === proximoId);
   if (!proximoEvento) return;
 
@@ -411,4 +415,3 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 30);
   }
 });
-
