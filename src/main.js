@@ -21,6 +21,8 @@ import './styles/patch-responsivo-ritual-v1.css';
 
 // 🔧 Hotfix deve ser sempre o ÚLTIMO para prevalecer
 import './styles/hotfix.css';
+import './styles/embed-fix.css';
+
 
 // 🔧 Núcleo
 import { renderizarEvento } from './core/renderer.js';
