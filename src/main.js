@@ -60,13 +60,13 @@ const eventoContainer = document.getElementById('evento');
 /* ---------------------------------------
  *   Helpers de dados (URLs seguras no dev e no build)
  * ----------------------------------------*/
-// ⇣ Fixado na raiz pública para Vite/Vercel servirem /public/data como /data
-const dataUrl = (name) => `/data/${name}`;
+// ⇣ Caminho RELATIVO (funciona em Vercel e itch.io)
+const dataUrl = (name) => new URL(`./data/${name}`, document.baseURI).toString();
 
 async function loadJson(name) {
   const url = dataUrl(name);
-  console.log('[loadJson]', typeof url.toString === 'function' ? url.toString() : url);
-  const res = await fetch(url);
+  console.log('[loadJson]', url);
+  const res = await fetch(url, { cache: 'no-store' });
   if (!res.ok) throw new Error(`${name} falhou: ${res.status} ${res.statusText}`);
   return res.json();
 }
@@ -120,9 +120,9 @@ async function carregarDia(numeroDia) {
     console.log('[carregarDia] numeroDia =', numeroDia);
 
     const url = dataUrl(`dia${numeroDia}.json`);
-    console.log('[carregarDia] URL =', typeof url.toString === 'function' ? url.toString() : url);
+    console.log('[carregarDia] URL =', url);
 
-    const resposta = await fetch(url);
+    const resposta = await fetch(url, { cache: 'no-store' });
     if (!resposta.ok) {
       // 👉 Dia inexistente
       throw new Error(`Dia ${numeroDia} indisponível (${resposta.status} ${resposta.statusText}).`);
@@ -230,10 +230,10 @@ function atualizarGlowTitulo(build) {
  * ----------------------------------------*/
 async function proximoDiaDisponivel(diaAtual) {
   try {
-    const r = await fetch('/data/dias.json', { cache: 'no-store' });
+    const r = await fetch(new URL('./data/dias.json', document.baseURI), { cache: 'no-store' });
     if (!r.ok) return null;
     const dias = await r.json();
-    const max = Array.isArray(dias) ? dias.length : 8; // fallback
+    const max = Array.isArray(dias) ? dias.length : 8;
     const candidato = Number(diaAtual) + 1;
     return candidato <= max ? candidato : null;
   } catch {
