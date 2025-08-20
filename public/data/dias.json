@@ -54,5 +54,12 @@
     "titulo": "Fragmentos de Ecos",
     "descricao": "Os ecos dos dias anteriores se somam. Aparecem variações, fendas e possibilidades que antes não existiam.",
     "arquivo": "dia8.json"
+  },
+  {
+    "id": "dia9",
+    "nome": "Dia 9 — A Cidade Invertida",
+    "titulo": "A Cidade Invertida",
+    "descricao": "As ruas se dobram e uma porta sem paredes decide o rumo — ou você decide por ela.",
+    "arquivo": "dia9.json"
   }
 ]

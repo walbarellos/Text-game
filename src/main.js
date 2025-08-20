@@ -60,10 +60,8 @@ const eventoContainer = document.getElementById('evento');
 /* ---------------------------------------
  *   Helpers de dados (URLs seguras no dev e no build)
  * ----------------------------------------*/
-const dataUrl = (name) =>
-import.meta.env.DEV
-? `/data/${name}`
-: new URL(`../data/${name}`, import.meta.url);
+// ⇣ Fixado na raiz pública para Vite/Vercel servirem /public/data como /data
+const dataUrl = (name) => `/data/${name}`;
 
 async function loadJson(name) {
   const url = dataUrl(name);
@@ -126,7 +124,7 @@ async function carregarDia(numeroDia) {
 
     const resposta = await fetch(url);
     if (!resposta.ok) {
-      // 👉 Dia inexistente: encerramento elegante com Créditos
+      // 👉 Dia inexistente
       throw new Error(`Dia ${numeroDia} indisponível (${resposta.status} ${resposta.statusText}).`);
     }
 
@@ -137,7 +135,7 @@ async function carregarDia(numeroDia) {
     estado.eventos = blocos;
     estado.nomeDia = dadosDia.nome || `Dia ${numeroDia}`;
 
-    // Se o JSON está vazio/sem blocos, trate como final (Créditos)
+    // Se o JSON está vazio/sem blocos, trate como inválido
     if (blocos.length === 0) {
       throw new Error(`Dia ${numeroDia} sem blocos válidos.`);
     }
@@ -153,7 +151,7 @@ async function carregarDia(numeroDia) {
     : (blocos[0] || null);
 
     if (!blocoInicial) {
-      // Sem bloco inicial resolvível → final (Créditos)
+      // Sem bloco inicial resolvível
       throw new Error(`Dia ${numeroDia} sem bloco inicial resolvível.`);
     }
 
@@ -185,7 +183,17 @@ async function carregarDia(numeroDia) {
   } catch (erro) {
     console.error('❌ Erro ao carregar o dia:', erro);
 
-    // 👉 Encerramento elegante com Créditos, respeitando a build atual
+    // 👉 Dia 1: NÃO enviar aos créditos; mostrar diagnóstico
+    if (numeroDia === 1) {
+      eventoContainer.innerHTML = `
+      <section class="erro fatal">
+      <h3>Dia 1 indisponível ou inválido</h3>
+      <p>Verifique se <code>public/data/dia1.json</code> está no deploy e acessível em <code>/data/dia1.json</code>.</p>
+      </section>`;
+      return;
+    }
+
+    // Demais dias: encerramento elegante com Créditos, respeitando a build atual
     try {
       mostrarCreditos({
         build: estado.build || 'misto',
@@ -195,10 +203,9 @@ async function carregarDia(numeroDia) {
       // Fallback visual
       eventoContainer.innerHTML = `
       <div class="erro">
-      <p>⚠️ Dia não encontrado ou JSON inválido.</p>
-      <p>Se você pretendia jogar o Dia ${numeroDia}, verifique se o arquivo <code>data/dia${numeroDia}.json</code> existe e está válido.</p>
-      </div>
-      `;
+      <p>⚠️ Dia ${numeroDia} não encontrado ou JSON inválido.</p>
+      <p>Confirme a existência de <code>/data/dia${numeroDia}.json</code>.</p>
+      </div>`;
     }
   }
 }
@@ -219,11 +226,30 @@ function atualizarGlowTitulo(build) {
 }
 
 /* ---------------------------------------
- *   Avanço de dia
+ *   Avanço de dia (com trava por catálogo de dias)
  * ----------------------------------------*/
-document.addEventListener('avancarDia', () => {
+async function proximoDiaDisponivel(diaAtual) {
+  try {
+    const r = await fetch('/data/dias.json', { cache: 'no-store' });
+    if (!r.ok) return null;
+    const dias = await r.json();
+    const max = Array.isArray(dias) ? dias.length : 8; // fallback
+    const candidato = Number(diaAtual) + 1;
+    return candidato <= max ? candidato : null;
+  } catch {
+    return null;
+  }
+}
+
+document.addEventListener('avancarDia', async () => {
   try { resetarInteracoesNPC?.(); } catch {}
-  avancarDia(estado);
+  const prox = await proximoDiaDisponivel(estado.diaAtual);
+  if (!prox) {
+    try { mostrarCreditos({ build: estado.build || 'misto' }); } catch {}
+    return;
+  }
+  salvarProgresso({ diaAtual: prox, eventoAtualId: null });
+  try { window.location.reload(); } catch {}
 });
 
 /* ---------------------------------------
@@ -251,7 +277,8 @@ document.addEventListener('opcaoSelecionada', (e) => {
     proximoEvento = estado.eventos.find((ev) => ev.tipo === 'fim');
     if (!proximoEvento) {
       console.warn('⚠️ Evento de destino e de fim não encontrados.');
-      avancarDia(estado);
+      // avanço apenas se catálogo permitir (via listener separado)
+      document.dispatchEvent(new CustomEvent('avancarDia'));
       return;
     }
   }
@@ -365,9 +392,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const botaoPular = document.getElementById('pular-intro');
 
   const introExibida = localStorage.getItem('introExibida');
-  const progressoSalvo = JSON.parse(localStorage.getItem('progresso') || 'null');
-  const diaAtual = progressoSalvo?.diaAtual ?? 1;
-  const deveExibirIntro = !introExibida && diaAtual === 1;
+  // ⇣ Usa o MESMO storage do jogo para decidir o dia da intro
+  let diaAtualIntro = 1;
+  try { diaAtualIntro = (carregarDiaAtual()?.diaAtual) || 1; } catch {}
+  const deveExibirIntro = !introExibida && diaAtualIntro === 1;
 
   if (deveExibirIntro && intro && texto && botaoPular) {
     intro.classList.add('mostrar');
