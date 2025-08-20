@@ -2,6 +2,76 @@
  *  FOOTER — responsivo + efeitos + a11y + fallbacks
  * =============================== */
 
+/* overlay ocupando a tela inteira */
+#fx-bordas{
+position:fixed; inset:0; pointer-events:none; z-index:0; /* fica atrás do HUD */
+mix-blend-mode: screen;             /* mistura como luz */
+opacity:.85;                        /* intensidade global */
+animation: fogo-flicker 2.2s ease-in-out infinite;
+/* 4 chamas (cantos) + 4 chamas (meio das bordas) com degrade radial */
+background:
+radial-gradient(160px 120px at 0%   0%,   rgba(255,160,64,.35), rgba(255,120,40,.15) 40%, transparent 70%),
+radial-gradient(160px 120px at 100% 0%,   rgba(255,160,64,.35), rgba(255,120,40,.15) 40%, transparent 70%),
+radial-gradient(160px 120px at 0%   100%, rgba(255,160,64,.35), rgba(255,120,40,.15) 40%, transparent 70%),
+radial-gradient(160px 120px at 100% 100%, rgba(255,160,64,.35), rgba(255,120,40,.15) 40%, transparent 70%),
+radial-gradient(140px 100px at 50%  0%,   rgba(255,200,90,.28), rgba(255,140,40,.12) 45%, transparent 75%),
+radial-gradient(140px 100px at 0%   50%,  rgba(255,200,90,.28), rgba(255,140,40,.12) 45%, transparent 75%),
+radial-gradient(140px 100px at 100% 50%,  rgba(255,200,90,.28), rgba(255,140,40,.12) 45%, transparent 75%),
+radial-gradient(140px 100px at 50%  100%, rgba(255,200,90,.28), rgba(255,140,40,.12) 45%, transparent 75%);
+filter: blur(12px) saturate(1.15);
+}
+
+@keyframes fogo-flicker{
+    0%   { opacity:.82; filter:blur(10px) saturate(1.05) hue-rotate(0deg);   }
+    35%  { opacity:.93; filter:blur(13px) saturate(1.25) hue-rotate(6deg);   }
+    60%  { opacity:.86; filter:blur(11px) saturate(1.15) hue-rotate(-4deg);  }
+    100% { opacity:.82; filter:blur(10px) saturate(1.05) hue-rotate(0deg);   }
+}
+
+/* modo “mais leve” em telas muito pequenas */
+@media (max-width:480px){
+    #fx-bordas{ opacity:.7; filter: blur(9px) saturate(1.05); }
+}
+/* aplica a distorção só no overlay do fogo, para não deformar HUD/textos */
+#fx-bordas { filter: url(#heat-warp) blur(10px) saturate(1.1); }
+
+#fx-sparks{
+position:fixed; inset:0; pointer-events:none; z-index:1;
+mix-blend-mode: screen; opacity:.35;
+background:
+radial-gradient(2px 2px at 10% 95%, rgba(255,220,160,.9) 0, transparent 70%),
+radial-gradient(2px 2px at 25% 90%, rgba(255,190,120,.8) 0, transparent 70%),
+radial-gradient(2px 2px at 40% 97%, rgba(255,230,180,.9) 0, transparent 70%),
+radial-gradient(2px 2px at 60% 93%, rgba(255,210,140,.85) 0, transparent 70%),
+radial-gradient(2px 2px at 75% 96%, rgba(255,230,180,.9) 0, transparent 70%),
+radial-gradient(2px 2px at 90% 92%, rgba(255,190,120,.8) 0, transparent 70%);
+animation: sparks-float 4.5s ease-in-out infinite alternate;
+filter: blur(.4px);
+}
+
+@keyframes sparks-float{
+    0%   { transform: translateY(0px);   opacity:.28; }
+    100% { transform: translateY(-20px); opacity:.45; }
+}
+
+/* se preferir distorcer só o banner do logo/intro:
+ * #intro-banner { filter: url(#heat-warp); }
+ */
+
+
+/* BOTÃO INICIAR  */
+.tela-inicial{
+    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
+    background:#000; color:#e8ecef; z-index:9999;
+}
+.tela-inicial.oculta{ display:none; }
+.tela-inicial .wrap{ display:flex; flex-direction:column; gap:16px; align-items:center; }
+.tela-inicial .btn-prim,.tela-inicial .btn-sec{
+    padding:.75rem 1.25rem; border-radius:10px; border:1px solid #ffffff22; background:#111; color:#fff; cursor:pointer;
+}
+.tela-inicial .btn-prim:hover{ background:#151515; }
+
+
 /* Vars base do footer (override por build mais abaixo) */
 .footer-jogo{ --footer-glow:#7aa7ff; --footer-accent:#d2deff; }
 

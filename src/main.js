@@ -24,6 +24,7 @@ import './styles/hotfix.css';
 import './styles/embed-fix.css';
 
 
+
 // 🔧 Núcleo
 import { renderizarEvento } from './core/renderer.js';
 import { carregarDiaAtual, salvarProgresso, avancarDia } from './core/storage.js';
@@ -371,6 +372,36 @@ document.addEventListener('respostaNPC', (event) => {
  *   Intro + início
  * ----------------------------------------*/
 document.addEventListener('DOMContentLoaded', () => {
+  // --- Tela inicial com "Iniciar" / "Continuar"
+  const telaInicial = document.getElementById('tela-inicial');
+  const btnIniciar  = document.getElementById('btn-iniciar');
+  const btnContinuar = document.getElementById('btn-continuar');
+
+  // Se houver progresso salvo, mostra "Continuar"
+  const progressoExistente = JSON.parse(localStorage.getItem('progresso') || 'null');
+  if (progressoExistente && progressoExistente.diaAtual >= 1) {
+    btnContinuar?.removeAttribute('hidden');
+  }
+
+  function ocultarTelaInicial(){
+    telaInicial?.classList.add('oculta');
+  }
+
+  btnIniciar?.addEventListener('click', () => {
+    // Começar do zero: limpa intro e save (se quiser reset total, descomente a linha)
+    // localStorage.removeItem('progresso');
+    localStorage.removeItem('introExibida');
+    ocultarTelaInicial();
+
+    // Mostra a intro (se for Dia 1) ou começa direto
+    iniciarJogo();
+  });
+
+  btnContinuar?.addEventListener('click', () => {
+    ocultarTelaInicial();
+    // Não mexe na introExibida; apenas retoma do save
+    iniciarJogo();
+  });
   // Título: typing + glow dinâmico
   const titulo = document.querySelector('.titulo-animado');
   if (titulo && !titulo.classList.contains('glow')) {

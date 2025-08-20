@@ -19,7 +19,12 @@
 
   <!-- OVERRIDES SIMPLES E FORTES (não brigam com seu CSS existente) -->
   <style>
-    :root{ --ratio-w:16; --ratio-h:9; --content-max:1100px; }
+    :root{
+      --ratio-w:16; --ratio-h:9; --content-max:1100px;
+      --fx-fire: radial-gradient(120% 60% at 50% 100%, #0000 0 55%, #ff7a0022 65%, #ffb30018 78%, #0000 90%),
+                 radial-gradient(120% 60% at 50% 0%,   #0000 0 55%, #ff7a0022 65%, #ffb30018 78%, #0000 90%);
+      --fx-glow: drop-shadow(0 0 12px rgba(255,160,64,.16)) drop-shadow(0 0 24px rgba(255,120,32,.12));
+    }
 
     html, body { height:100%; margin:0; background:#000; color:#e8ecef; overflow:hidden; }
     body { font-family:'Share Tech Mono', monospace; }
@@ -30,17 +35,82 @@
       z-index:-1; display:block; pointer-events:none;
     }
 
+    /* ---- FX de bordas (fogo/sparks) ---- */
+    #fx-bordas,
+    #fx-sparks{
+      position:fixed; inset:0; pointer-events:none;
+      z-index:3; /* acima do canvas de fundo e abaixo do HUD/conteúdo */
+    }
+    /* Anéis/brasas nas bordas */
+    #fx-bordas::before,
+    #fx-bordas::after{
+      content:"";
+      position:absolute; inset:0;
+      background:
+        radial-gradient(120% 120% at 0% 100%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
+        radial-gradient(120% 120% at 100% 100%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
+        radial-gradient(120% 120% at 0% 0%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
+        radial-gradient(120% 120% at 100% 0%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
+        linear-gradient(180deg, #0000, #ff7a0012 10%, #0000 30%),
+        linear-gradient(0deg,   #0000, #ff7a0012 10%, #0000 30%);
+      filter: var(--fx-glow);
+      mix-blend-mode: screen;
+      animation: fx-breath 5.5s ease-in-out infinite;
+    }
+    #fx-bordas::after{
+      opacity:.6; animation-duration:7.5s;
+      background:
+        radial-gradient(130% 90% at 50% 0%,   #ffb30010 15%, #0000 55%),
+        radial-gradient(130% 90% at 50% 100%, #ff7a0010 15%, #0000 55%),
+        var(--fx-fire);
+    }
+
+    /* Faíscas discretas */
+    #fx-sparks::before,
+    #fx-sparks::after{
+      content:"";
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(2px 2px at 10% 15%, #ffd39a, #0000),
+        radial-gradient(2px 2px at 80% 12%, #ffc27a, #0000),
+        radial-gradient(1.5px 1.5px at 60% 8%, #fff0cc, #0000),
+        radial-gradient(1.8px 1.8px at 25% 90%, #ffd39a, #0000),
+        radial-gradient(1.6px 1.6px at 70% 85%, #ffc27a, #0000),
+        radial-gradient(1.4px 1.4px at 90% 60%, #fff0cc, #0000);
+      background-repeat:no-repeat;
+      opacity:.25;
+      animation: sparks 8s linear infinite;
+      mix-blend-mode: screen;
+      filter: var(--fx-glow);
+    }
+    #fx-sparks::after{
+      animation-duration: 11s;
+      opacity:.18;
+      transform: scale(1.02);
+    }
+
+    @keyframes fx-breath{
+      0%,100%{ opacity:.55; }
+      50%    { opacity:.85; }
+    }
+    @keyframes sparks{
+      0%   { transform: translateY(6px); }
+      100% { transform: translateY(-6px); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      #fx-bordas::before,#fx-bordas::after,#fx-sparks::before,#fx-sparks::after{ animation:none }
+    }
+
     /* ROOT do jogo: centralizado e com proporção fixa (sem transform/zoom) */
     .game-root{
       position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-      width:100dvw; height:100dvh; overflow:hidden;
+      width:100dvw; height:100dvh; overflow:hidden; z-index:2;
     }
     .game-stage{
       width:min(100dvw, calc(100dvh * (var(--ratio-w)/var(--ratio-h))));
       height:min(100dvh, calc(100dvw * (var(--ratio-h)/var(--ratio-w))));
       aspect-ratio: calc(var(--ratio-w) / var(--ratio-h));
       display:flex; flex-direction:column;
-      /* neutraliza regras antigas que bagunçavam o fluxo */
       position:relative !important; left:auto !important; top:auto !important; transform:none !important;
     }
 
@@ -62,14 +132,61 @@
     /* acessibilidade: pular conteúdo */
     .skip-link{position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;}
     .skip-link:focus{left:8px;top:8px;width:auto;height:auto;padding:.5rem 1rem;background:#000;color:#fff;border-radius:6px;z-index:9999}
+
+    /* ---- Tela inicial ---- */
+    .tela-inicial{
+      position:fixed; inset:0; z-index:4;
+      display:flex; align-items:center; justify-content:center;
+      background: radial-gradient(120% 100% at 50% 50%, #000 0%, #000 60%, #070707 100%);
+      color:#e8ecef; pointer-events:auto;
+    }
+    .tela-inicial.oculta{ display:none; }
+    .tela-inicial .wrap{
+      display:flex; flex-direction:column; gap:20px; align-items:center; text-align:center;
+      padding:24px; max-width:min(92vw, 720px);
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0));
+      border:1px solid #ffffff12; border-radius:16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.6);
+      backdrop-filter: blur(2px);
+    }
+    .tela-inicial .titulo{
+      margin:0; font-size:clamp(28px, 6vw, 44px); letter-spacing:.06em;
+      text-shadow: 0 0 12px rgba(255,255,255,.08);
+    }
+    .tela-inicial .btn-prim,
+    .tela-inicial .btn-sec{
+      padding:.85rem 1.25rem; border-radius:12px; cursor:pointer;
+      border:1px solid #ffffff22; background:#111; color:#fff;
+      transition: transform .08s ease, background .2s ease, box-shadow .2s ease;
+      box-shadow: 0 0 0 rgba(255,140,40,0);
+    }
+    .tela-inicial .btn-prim:hover{
+      background:#161616; transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(255,140,40,.18);
+    }
+    .tela-inicial .btn-sec{ opacity:.9; }
+    .tela-inicial .btn-sec:hover{ background:#121212; transform: translateY(-1px); }
   </style>
 </head>
 
 <body class="jogo-corpo theme-grimoire">
+  <!-- Tela inicial -->
+  <div id="tela-inicial" class="tela-inicial" role="dialog" aria-modal="true" aria-label="Tela inicial do jogo">
+    <div class="wrap">
+      <h1 class="titulo">7 Lives ☉</h1>
+      <button id="btn-iniciar" class="btn-prim" type="button">Iniciar</button>
+      <button id="btn-continuar" class="btn-sec" type="button" hidden>Continuar</button>
+    </div>
+  </div>
+
   <a href="#evento" class="skip-link">Ir para o conteúdo principal</a>
 
   <!-- Fundo -->
   <canvas id="background-canvas" aria-hidden="true"></canvas>
+
+  <!-- Overlay de borda "fogo" -->
+  <div id="fx-bordas" aria-hidden="true"></div>
+  <div id="fx-sparks" aria-hidden="true"></div>
 
   <!-- Intro -->
   <div id="intro-cinematica" role="dialog" aria-modal="true" aria-label="Introdução">
