@@ -1,15 +1,39 @@
 // 📁 src/core/npcSources.js
 let _cache = { evento: null, personagens: null };
 
+// 🔧 Sempre relativo ao index.html (funciona em itch.io, Vercel, etc.)
+const dataUrl = (name) => new URL(`./data/${name}`, document.baseURI).toString();
+
 async function loadJSON(url) {
   const res = await fetch(url, { cache: 'no-store' });
   if (!res.ok) throw new Error(`${url}: ${res.status}`);
   return res.json();
 }
 
+/**
+ * Carrega fontes de NPC (eventoNPC.json e personagens.json)
+ * - Caminhos RELATIVOS (sem barra inicial) para funcionar no itch.io
+ * - Fallbacks seguros em caso de erro (não trava o jogo)
+ */
 export async function ensureSources() {
-  if (!_cache.evento) _cache.evento = await loadJSON('/data/eventoNPC.json');
-  if (!_cache.personagens) _cache.personagens = await loadJSON('/data/personagens.json');
+  if (!_cache.evento) {
+    try {
+      _cache.evento = await loadJSON(dataUrl('eventoNPC.json')); // array
+    } catch (e) {
+      console.warn('⚠️ Falha ao carregar eventoNPC.json — seguindo sem falas de evento.', e);
+      _cache.evento = []; // fallback seguro
+    }
+  }
+
+  if (!_cache.personagens) {
+    try {
+      _cache.personagens = await loadJSON(dataUrl('personagens.json')); // array ou { personagens: [] }
+    } catch (e) {
+      console.warn('⚠️ Falha ao carregar personagens.json — seguindo sem falas de personagens.', e);
+      _cache.personagens = []; // fallback seguro
+    }
+  }
+
   return _cache;
 }
 
@@ -47,16 +71,15 @@ export function findNPCById(id, { evento, personagens }) {
 
   // eventoNPC.json é um array
   const fromEvento = Array.isArray(evento)
-    ? evento.find(x => x.id === id)
-    : null;
+  ? evento.find(x => x.id === id)
+  : null;
 
   if (fromEvento) return fromEvento;
 
-  // personagens.json tem shape { personagens: [] } ou []
+  // personagens.json pode ser [] OU { personagens: [] }
   let arr = [];
   if (Array.isArray(personagens)) arr = personagens;
   else if (personagens && Array.isArray(personagens.personagens)) arr = personagens.personagens;
 
   return arr.find(x => x.id === id) || null;
 }
-

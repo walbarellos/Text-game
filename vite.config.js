@@ -4,15 +4,18 @@ import { createHash } from 'crypto'
 import fs from 'fs/promises'
 import fg from 'fast-glob'
 
-function integrityPlugin() {
+function integrityPlugin({ dir = 'dist', assetsDir = 'assets' } = {}) {
   return {
     name: 'integrity-manifest',
     apply: 'build',
     async closeBundle() {
-      const dir = 'dist'
-      // Ajuste os padrões aqui se quiser incluir mais tipos:
-      const files = ['assets/*.js'] // ex.: ['assets/*.{js,css}']
-      const paths = (await fg(files, { cwd: dir })).map((p) => `${dir}/${p}`)
+      // Inclua aqui os tipos desejados no manifesto:
+      const patterns = [
+        `${assetsDir}/*.js`,
+        `${assetsDir}/*.css`,
+        // `${assetsDir}/*.{woff,woff2,ttf,otf,png,jpg,jpeg,webp,avif,svg}`
+      ]
+      const paths = (await fg(patterns, { cwd: dir })).map((p) => `${dir}/${p}`)
 
       const entries = {}
       for (const p of paths) {
@@ -31,29 +34,38 @@ function integrityPlugin() {
         JSON.stringify({ buildId, entries }, null, 2)
       )
       await fs.writeFile(`${dir}/build-id.txt`, buildId)
+
       console.log(`🔒 Manifesto de integridade criado (ID: ${buildId})`)
     },
   }
 }
 
+const isProd = process.env.NODE_ENV === 'production'
+
 export default defineConfig({
-  base: './', // ← ESSENCIAL para rodar em subpasta do itch.io
-  plugins: [integrityPlugin()],
+  base: './', // ESSENCIAL para itch.io (subpasta)
+plugins: [integrityPlugin()],
                             build: {
                               outDir: 'dist',
                               assetsDir: 'assets',
+                              emptyOutDir: true,
                               sourcemap: true,
                               minify: 'terser',
                               terserOptions: {
-                                compress: { drop_console: true, drop_debugger: true },
+                                compress: {
+                                  drop_console: isProd,   // mantém console fora do prod, útil p/ debug no dev
+                                  drop_debugger: isProd,
+                                },
                               },
                               rollupOptions: {
                                 output: {
-                                  entryFileNames: 'assets/[name]-[hash].js',
-                                  chunkFileNames: 'assets/[name]-[hash].js',
-                                  assetFileNames: 'assets/[name]-[hash][extname]',
+                                  // ⚠️ NÃO prefixe com 'assets/' aqui, pois o Vite já usa assetsDir
+                                  entryFileNames: '[name]-[hash].js',
+                                  chunkFileNames: '[name]-[hash].js',
+                                  assetFileNames: '[name]-[hash][extname]',
                                 },
                               },
+                              // target: 'es2018', // opcional (navegadores modernos)
                             },
                             define: {
                               __BUILD_ID__: JSON.stringify(Date.now().toString(36)),
