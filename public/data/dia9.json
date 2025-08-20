@@ -1,0 +1,80 @@
+{
+  "nome": "Dia 8 — O Eco Pós-Silêncio",
+  "fraseInspiradora": "♾️ O silêncio foi só o começo. O eco continua.",
+  "descricao": "Depois da pausa, o mundo retorna diferente. O que você fez — ou deixou de fazer — agora reverbera.",
+  "blocos": [
+    {
+      "id": "d8_intro",
+      "tipo": "historia",
+      "titulo": "A Fenda Aberta",
+      "descricao": "Você percebe uma rachadura no próprio espaço. Dela não sai som, mas memórias comprimidas em luz. As bordas parecem pulsar como uma pedra viva.",
+      "opcoes": [
+        { "texto": "Atravessar a fenda", "proximo": "d8_memoria", "buildImpact": "virtuoso" },
+        { "texto": "Observar sem entrar", "proximo": "d8_memoria", "buildImpact": "profano" },
+        { "texto": "Tocar a borda da fenda", "proximo": "d8_memoria", "buildImpact": "anomalia" }
+      ]
+    },
+    {
+      "id": "d8_memoria",
+      "tipo": "evento",
+      "titulo": "Fragmentos de Dias",
+      "descricao": "As sombras, o mural rachado, a praça, a pedra… tudo aparece em flashes. Personagens e escolhas passadas ecoam, como se nunca tivessem ido embora.",
+      "opcoes": [
+        { "texto": "Aceitar os fragmentos como parte de você", "proximo": "d8_fim_virtuoso", "buildImpact": "virtuoso" },
+        { "texto": "Rejeitar as lembranças e fechar a fenda", "proximo": "d8_fim_profano", "buildImpact": "profano" },
+        { "texto": "Tentar reordenar os fragmentos de outra forma", "proximo": "d8_fim_anomalia", "buildImpact": "anomalia" },
+        { "texto": "Deixar o eco decidir", "proximo": "d8_fim_autonomo", "buildImpact": "anomalia", "condicao": "inatividade10s", "secreto": true }
+      ]
+    },
+    {
+      "id": "d8_fim_virtuoso",
+      "tipo": "fim",
+      "titulo": "Eco Virtuoso",
+      "descricao": "🌿 O silêncio floresceu em continuidade. Seu caminho molda não só você, mas o mundo — que agora respira em uníssono.",
+      "fraseChave": "eco-virt"
+    },
+    {
+      "id": "d8_fim_profano",
+      "tipo": "fim",
+      "titulo": "Eco Profano",
+      "descricao": "🔥 Você recusou o eco, mas ele não te recusa. Os fragmentos se colam de forma áspera, e o mundo parece suportar sua recusa apenas por te carregar consigo.",
+      "fraseChave": "eco-prof"
+    },
+    {
+      "id": "d8_fim_anomalia",
+      "tipo": "fim",
+      "titulo": "Eco Anômalo",
+      "descricao": "⚡ O eco não é linha, nem círculo. Ele se parte em ruído, piscando além do que qualquer ordem suportaria.",
+      "fraseChave": "eco-anom"
+    },
+    {
+      "id": "d8_fim_autonomo",
+      "tipo": "fim",
+      "titulo": "Eco Autônomo",
+      "descricao": "♾️ Você não escolheu. O eco escolheu por você. As sombras dos NPCs retornam, cruzando seu caminho em silêncio, como se o jogo ainda não tivesse decidido acabar.",
+      "fraseChave": "eco-auto"
+    },
+    {
+      "id": "d8_epilogo_universal",
+      "tipo": "historia",
+      "titulo": "O Eco Respira",
+      "descricao": "⏳ O Eco ainda respira em ti… mas não é o fim.",
+      "opcoes": [
+        { "texto": "Continuar", "proximo": "menu_principal" }
+      ]
+    }
+  ],
+  "tooltips": {
+    "virtuoso": { "texto": "♾️ O silêncio se transforma em continuidade.", "cor": "#6ef2b1", "aura": "verde-dourado" },
+    "profano": { "texto": "♾️ Recusar o eco não te livra dele.", "cor": "#f85b5b", "aura": "vermelho-escuro" },
+    "anomalia": { "texto": "♾️ O eco é ruído. E o ruído também é verdade.", "cor": "#a87ef8", "aura": "violeta-glitch" },
+    "autonomo": { "texto": "♾️ Às vezes o eco escolhe por você.", "cor": "#cccccc", "aura": "cinza-etéreo" }
+  },
+  "frasesFinais": {
+    "virtuoso": "Depois do silêncio, o eco floresce em ti.",
+    "profano": "O eco te seguiu, mesmo quando você o negou.",
+    "anomalia": "Você não terminou o ciclo. Você o partiu — e esse é o seu fim.",
+    "autonomo": "O eco seguiu sozinho. Você foi apenas passageiro."
+  }
+}
+
