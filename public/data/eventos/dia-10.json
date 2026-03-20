@@ -1,0 +1,124 @@
+[
+  {
+    "id": "e_sebastiao_despedida",
+    "titulo": "O Último Encontro",
+    "tipo": "arco",
+    "requer": { "relacao_min": { "sebastiao": 6 } },
+    "texto": "Sebastião vai embora. Ele diz isso de forma simples, sem drama — como quem anuncia que vai tomar um café. 'Meu trabalho aqui acabou.' Você quer perguntar o que isso significa. Mas olha para o rosto dele e sabe que a resposta está em você, não nele.",
+    "paragrafos": [
+      "Sebastião vai embora.",
+      "Ele diz isso de forma simples, sem drama — como quem anuncia que vai tomar um café.",
+      "'Meu trabalho aqui acabou.'",
+      "Você quer perguntar o que isso significa.",
+      "Mas olha para o rosto dele e sabe que a resposta está em você, não nele."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Agradecer pelo que ele trouxe",
+        "resumo": "Ele apertou sua mão por três segundos. Foi suficiente.",
+        "consequencias": {
+          "flag": "despediu_sebastiao",
+          "relacao": { "sebastiao": 6 },
+          "karma": { "empatia": 10, "fe": 12 },
+          "virtude": 12
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Pedir que fique mais um dia",
+        "resumo": "Ele sorriu. 'Você não precisa mais de mim. Isso é bom.'",
+        "consequencias": {
+          "flag": "pediu_sebastiao_ficar",
+          "karma": { "empatia": 8, "coragem": 5 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Deixar ir sem cerimônia",
+        "resumo": "Do jeito que ele chegou. Certo.",
+        "consequencias": {
+          "flag": "despediu_sebastiao",
+          "karma": { "fe": 10, "astucia": 6 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_encontro_espelhos",
+    "titulo": "O Espelho de Frente",
+    "tipo": "confronto",
+    "requer": {},
+    "texto": "Você se vê. Não literalmente — mas num gesto, numa reação que você teve hoje que você não esperava ter. Foi rápido. Mas ficou. A versão de você que existia no Dia 1 não teria feito aquilo. Você não sabe se isso é crescimento ou perda.",
+    "paragrafos": [
+      "Você se vê.",
+      "Não literalmente — mas num gesto, numa reação que você teve hoje que você não esperava ter.",
+      "Foi rápido. Mas ficou.",
+      "A versão de você que existia no Dia 1 não teria feito aquilo.",
+      "Você não sabe se isso é crescimento ou perda."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Crescimento — me tornei mais inteiro",
+        "resumo": "Acreditar nisso é parte do processo.",
+        "consequencias": {
+          "karma": { "fe": 10, "coragem": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Perda — algo que era meu foi embora",
+        "resumo": "Honestidade dói. Mas é honesta.",
+        "consequencias": {
+          "karma": { "empatia": 10, "fe": 6 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "As duas coisas ao mesmo tempo",
+        "resumo": "A resposta mais verdadeira. E a mais difícil de carregar.",
+        "consequencias": {
+          "flag": "aceita_ambiguidade",
+          "karma": { "fe": 14, "empatia": 8, "astucia": 6 },
+          "virtude": 10
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_guardia_ultima",
+    "titulo": "A Última Frase",
+    "tipo": "espiritual",
+    "requer": { "flag": "completou_guardiao" },
+    "texto": "O templo está diferente hoje. Mais limpo do que possível. As cinzas foram varridas, as marcas de mãos na parede foram cuidadas com algo — óleo, talvez. A guardiã não está. Mas deixou uma nota no altar. Três palavras.",
+    "paragrafos": [
+      "O templo está diferente hoje. Mais limpo do que possível.",
+      "As cinzas foram varridas, as marcas de mãos na parede foram cuidadas com algo — óleo, talvez.",
+      "A guardiã não está.",
+      "Mas deixou uma nota no altar.",
+      "Três palavras."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ler as três palavras",
+        "resumo": "'Você já sabe.'",
+        "consequencias": {
+          "flag": "recebeu_mensagem_final_guardiao",
+          "karma": { "fe": 16 },
+          "virtude": 14
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Deixar no altar sem ler",
+        "resumo": "Algumas coisas ficam mais fortes fechadas.",
+        "consequencias": {
+          "flag": "respeitou_mensagem_guardiao",
+          "karma": { "fe": 12, "empatia": 8 }
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,165 @@
+{
+  "id": "q_sombra_do_passado",
+  "titulo": "A Sombra do Passado",
+  "tipo": "arco",
+  "descricao": "Uma figura do seu passado emerge das sombras. Ela conhece segredos que você preferia esquecer.",
+  "gatilho": {
+    "dia_min": 3,
+    "flag": "ajudou_mendigo",
+    "comentario": "Só aparece se ajudou o mendigo no Dia 1 — ele foi o ponto de contato"
+  },
+  "etapas": [
+    {
+      "id": "e1_reconhecimento",
+      "texto": "No terceiro dia, o mesmo mendigo te aguarda. Agora ele está limpo, veste roupas comuns. Ele sabe seu nome. Pergunta como você sabe coisas que não deveria.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Confrontar diretamente",
+          "resumo": "Você encarou a verdade de frente.",
+          "consequencias": {
+            "karma": { "coragem": 12, "empatia": -5 },
+            "proxima_etapa": "e2_confronto"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Fingir não saber do que ele fala",
+          "resumo": "Você recuou.",
+          "consequencias": {
+            "flag": "mentiu_para_mensageiro",
+            "karma": { "astucia": 8, "fe": -5 },
+            "proxima_etapa": "e2_evasao"
+          }
+        },
+        {
+          "id": "c3",
+          "texto": "Ouvir em silêncio",
+          "resumo": "Você deixou ele falar.",
+          "consequencias": {
+            "karma": { "empatia": 8, "fe": 5 },
+            "proxima_etapa": "e2_escuta"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_confronto",
+      "texto": "Ele revela que você carrega um fardo de uma vida anterior — um erro que ainda ecoa. Confrontá-lo foi corajoso, mas a verdade dói mais do que você esperava.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Aceitar a responsabilidade",
+          "resumo": "Você assumiu o passado.",
+          "consequencias": {
+            "flag": "aceitou_fardo",
+            "karma": { "coragem": 8, "fe": 10 },
+            "proxima_etapa": "e3_redenção"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Rejeitar a narrativa dele",
+          "resumo": "Você se recusou a aceitar.",
+          "consequencias": {
+            "flag": "rejeitou_fardo",
+            "karma": { "astucia": 5, "fe": -8 },
+            "proxima_etapa": "e3_negacao"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_evasao",
+      "texto": "Ele sorri — ele sabia que você mentiria. 'Tudo bem', ele diz. 'A mentira também conta a história.' Ele entrega um envelope e some.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Abrir o envelope",
+          "resumo": "Você cedeu à curiosidade.",
+          "consequencias": {
+            "flag": "abriu_envelope",
+            "item": "carta_sem_remetente",
+            "karma": { "astucia": 5, "coragem": 5 },
+            "proxima_etapa": "e3_carta"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Queimar o envelope sem ler",
+          "resumo": "Você escolheu a ignorância.",
+          "consequencias": {
+            "flag": "queimou_envelope",
+            "karma": { "fe": 8, "empatia": -3 },
+            "proxima_etapa": "e3_negacao"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_escuta",
+      "texto": "Ele conta tudo. Cada palavra cai como pedra n'água — círculos se expandindo para além do que você consegue ver. No final ele diz: 'Você já sabia. Só não queria saber que sabia.'",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "\"Você está certo.\"",
+          "resumo": "Você reconheceu a verdade.",
+          "consequencias": {
+            "flag": "reconheceu_verdade",
+            "karma": { "fe": 15, "empatia": 10 },
+            "proxima_etapa": "e3_redenção"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e3_redenção",
+      "texto": "Pela primeira vez em muito tempo, você sente o peso diminuir. Não desaparece — apenas se torna algo que você pode carregar de forma diferente.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Seguir em frente",
+          "resumo": "Você encontrou paz com o passado.",
+          "consequencias": {
+            "flag": "resolveu_passado",
+            "karma": { "fe": 8, "empatia": 5 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "e3_negacao",
+      "texto": "O passado não desaparece por ser ignorado. Ele muda de forma — se torna menor, mais denso, mais difícil de nomear.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Aceitar a dor assim",
+          "resumo": "Você carregou o peso adiante.",
+          "consequencias": {
+            "flag": "carregou_peso",
+            "karma": { "coragem": 5 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "e3_carta",
+      "texto": "A carta contém um único símbolo — o mesmo que você viu em sonhos que não se lembra de ter tido. No verso: uma data. A data de hoje.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Guardar a carta",
+          "resumo": "Você ficou com o mistério.",
+          "consequencias": {
+            "flag": "tem_carta_misteriosa",
+            "karma": { "fe": 10, "astucia": 5 }
+          }
+        }
+      ]
+    }
+  ],
+  "recompensa_final": {
+    "virtude": 15,
+    "flag": "completou_sombra_passado"
+  }
+}

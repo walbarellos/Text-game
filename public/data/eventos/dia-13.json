@@ -1,0 +1,38 @@
+[
+  {
+    "id": "e_decimo_terceiro",
+    "titulo": "O Décimo Terceiro Dia",
+    "tipo": "final",
+    "requer": {},
+    "especial": true,
+    "ultimo_dia": true,
+    "texto": "O décimo terceiro dia começa como todos os outros. O sol. A cidade. O ruído de fundo que nunca para. Mas há algo diferente no ar que você não consegue nomear — uma leveza que não é alegria e uma seriedade que não é medo. Como se o dia soubesse que é o último.",
+    "paragrafos": [
+      "O décimo terceiro dia começa como todos os outros.",
+      "O sol. A cidade. O ruído de fundo que nunca para.",
+      "Mas há algo diferente no ar que você não consegue nomear — uma leveza que não é alegria e uma seriedade que não é medo.",
+      "Como se o dia soubesse que é o último."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Começar pelo lugar mais importante para você",
+        "resumo": "Você foi. Ficou o tempo que precisava.",
+        "consequencias": {
+          "flag": "começo_consciente_dia13",
+          "karma": { "fe": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Deixar o dia se revelar sem planejar",
+        "resumo": "Ele revelou.",
+        "consequencias": {
+          "flag": "dia13_sem_plano",
+          "karma": { "fe": 10, "coragem": 6 }
+        }
+      }
+    ],
+    "apos_escolha": "calcular_final"
+  }
+]

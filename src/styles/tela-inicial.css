@@ -1,0 +1,269 @@
+/**
+ * src/styles/tela-inicial.css
+ *
+ * Redesign completo da tela inicial.
+ * COMO USAR: adicionar no index.html DEPOIS de todos os outros CSS.
+ *
+ * Requisito: a tag existente no HTML é:
+ *   <div id="tela-inicial" class="tela-inicial">
+ *     <div class="wrap">
+ *       <h1 class="titulo">7 Lives ☉</h1>
+ *       <button id="btn-iniciar" class="btn-prim">Iniciar</button>
+ *       <button id="btn-continuar" class="btn-sec" hidden>Continuar</button>
+ *     </div>
+ *   </div>
+ *
+ * O JS em tela-inicial.js injeta o sigil SVG acima do .wrap.
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   FULLSCREEN OVERLAY
+   ═══════════════════════════════════════════════════════════════ */
+
+.tela-inicial {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 50 !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: transparent !important;
+  overflow: hidden !important;
+}
+
+.tela-inicial.oculta {
+  display: none !important;
+}
+
+/* ── Fundo atmosférico: vignette + névoa ────────────────────── */
+.tela-inicial::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 45%,
+      rgba(40, 28, 6, 0.75) 0%,
+      rgba(12, 9, 2, 0.95)  55%,
+      rgba(4, 4, 5, 1)     100%),
+    radial-gradient(ellipse 120% 80% at 50% 100%,
+      rgba(201,162,39,0.04) 0%,
+      transparent 70%),
+    radial-gradient(ellipse 120% 40% at 50% 0%,
+      rgba(201,162,39,0.03) 0%,
+      transparent 60%);
+  animation: tela-breath 8s ease-in-out infinite alternate;
+}
+
+@keyframes tela-breath {
+  0%   { opacity: 0.85; }
+  100% { opacity: 1.0; }
+}
+
+/* ── Ruído de bordas: cantos escuros ────────────────────────── */
+.tela-inicial::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 55% 55% at 0%   0%,   rgba(0,0,0,0.7) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 55% at 100% 0%,   rgba(0,0,0,0.7) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 55% at 0%   100%, rgba(0,0,0,0.7) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 55% at 100% 100%, rgba(0,0,0,0.7) 0%, transparent 65%);
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CONTAINER CENTRAL
+   ═══════════════════════════════════════════════════════════════ */
+
+.tela-inicial .wrap {
+  position: relative;
+  z-index: 2;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0 !important;
+  padding: 0 24px !important;
+  max-width: 360px !important;
+  width: 100% !important;
+  /* SEM border, SEM background, SEM box-shadow */
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIGIL SVG (injetado pelo tela-inicial.js)
+   ═══════════════════════════════════════════════════════════════ */
+
+.tela-sigil-wrap {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 28px;
+  position: relative;
+}
+
+.tela-sigil-wrap svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 0 18px rgba(201,162,39,0.25))
+          drop-shadow(0 0 40px rgba(201,162,39,0.10));
+}
+
+/* ─ Anel exterior girando levemente ─ */
+.sigil-anel-ext {
+  transform-origin: center;
+  animation: sigil-giro 60s linear infinite;
+  transform-box: fill-box;
+}
+
+/* ─ Sigil principal pulsando ─ */
+.sigil-corpo {
+  transform-origin: center;
+  animation: sigil-pulso 5s ease-in-out infinite;
+  transform-box: fill-box;
+}
+
+@keyframes sigil-giro {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes sigil-pulso {
+  0%, 100% { opacity: 0.75; }
+  50%       { opacity: 1.00; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sigil-anel-ext { animation: none; }
+  .sigil-corpo    { animation: none; }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TÍTULO
+   ═══════════════════════════════════════════════════════════════ */
+
+.tela-inicial .titulo {
+  font-family: Georgia, 'Times New Roman', serif !important;
+  font-size: clamp(28px, 6vw, 38px) !important;
+  font-weight: 400 !important;
+  color: rgba(232, 220, 200, 0.92) !important;
+  letter-spacing: 0.08em !important;
+  text-align: center !important;
+  margin: 0 0 8px !important;
+  text-shadow: 0 0 30px rgba(201,162,39,0.15) !important;
+  /* Sem animation de typing — já existe no JS existente */
+}
+
+/* Subtítulo embaixo do título */
+.tela-subtitulo {
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(201, 162, 39, 0.45);
+  text-align: center;
+  text-transform: lowercase;
+  margin: 0 0 36px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTÕES
+   ═══════════════════════════════════════════════════════════════ */
+
+.tela-inicial .btn-prim {
+  background: transparent !important;
+  border: 1px solid rgba(201, 162, 39, 0.45) !important;
+  color: rgba(201, 162, 39, 0.88) !important;
+  padding: 12px 40px !important;
+  border-radius: 4px !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-size: 12px !important;
+  letter-spacing: 0.18em !important;
+  text-transform: lowercase !important;
+  cursor: pointer !important;
+  width: 200px !important;
+  text-align: center !important;
+  transition: all 0.25s ease !important;
+  margin-bottom: 12px !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+/* Shimmer no hover */
+.tela-inicial .btn-prim::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(201,162,39,0.08) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+}
+
+.tela-inicial .btn-prim:hover::after {
+  transform: translateX(100%);
+}
+
+.tela-inicial .btn-prim:hover {
+  border-color: rgba(201, 162, 39, 0.75) !important;
+  color: rgba(201, 162, 39, 1) !important;
+  background: rgba(201, 162, 39, 0.05) !important;
+  transform: translateY(-1px) !important;
+}
+
+.tela-inicial .btn-prim:active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+.tela-inicial .btn-sec {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: rgba(255, 255, 255, 0.3) !important;
+  padding: 10px 40px !important;
+  border-radius: 4px !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  font-size: 11px !important;
+  letter-spacing: 0.15em !important;
+  text-transform: lowercase !important;
+  cursor: pointer !important;
+  width: 200px !important;
+  text-align: center !important;
+  transition: all 0.25s ease !important;
+}
+
+.tela-inicial .btn-sec:hover {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+  color: rgba(255, 255, 255, 0.55) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LINHA DECORATIVA ENTRE TÍTULO E BOTÕES
+   ═══════════════════════════════════════════════════════════════ */
+
+.tela-divisor {
+  width: 40px;
+  height: 1px;
+  background: rgba(201, 162, 39, 0.2);
+  margin: 0 auto 28px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   CRÉDITO INFERIOR (já existe no HTML como .creditos)
+   ═══════════════════════════════════════════════════════════════ */
+
+.tela-credito {
+  position: absolute;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-family: 'Share Tech Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: rgba(201, 162, 39, 0.2);
+  z-index: 2;
+}

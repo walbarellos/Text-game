@@ -1,0 +1,128 @@
+[
+  {
+    "id": "e_dia_sem_urgencia",
+    "titulo": "O Dia Quieto",
+    "tipo": "contemplacao",
+    "requer": {},
+    "texto": "Nada urgente hoje. Isso é raro. Você passa a manhã sem que ninguém precise de você, sem que a cidade exija nada. Há um banco vazio na praça onde o homem ficava. O sol está bom. Você pode ficar. Ou pode fazer algo com esse tempo.",
+    "paragrafos": [
+      "Nada urgente hoje. Isso é raro.",
+      "Você passa a manhã sem que ninguém precise de você, sem que a cidade exija nada.",
+      "Há um banco vazio na praça onde o homem ficava.",
+      "O sol está bom.",
+      "Você pode ficar. Ou pode fazer algo com esse tempo."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ficar sentado sem fazer nada",
+        "resumo": "Uma hora. Duas. O mundo continuou sem você intervir.",
+        "consequencias": {
+          "karma": { "fe": 12, "empatia": 6 },
+          "virtude": 6
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Revisitar os lugares que importaram",
+        "resumo": "O templo. O mercado. A janela do segundo andar, fechada.",
+        "consequencias": {
+          "flag": "revisitou_lugares",
+          "karma": { "fe": 10, "empatia": 10 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Escrever o que vai levar daqui",
+        "resumo": "A lista ficou menor do que você esperava. Mais precisa.",
+        "consequencias": {
+          "flag": "escreveu_legado",
+          "karma": { "astucia": 8, "fe": 10 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_diario_ultima_entrada",
+    "titulo": "A Última Entrada",
+    "tipo": "misterio",
+    "requer": { "item": "diario_do_simbolo" },
+    "texto": "O diário que estava em branco foi se preenchendo. Não por você — você não escreveu nele desde aquela página. Mas as outras páginas têm palavras agora. Com a sua caligrafia. Descrevendo coisas que você viveu. Com detalhes que você não anotou em nenhum lugar.",
+    "paragrafos": [
+      "O diário que estava em branco foi se preenchendo.",
+      "Não por você — você não escreveu nele desde aquela página.",
+      "Mas as outras páginas têm palavras agora.",
+      "Com a sua caligrafia.",
+      "Descrevendo coisas que você viveu.",
+      "Com detalhes que você não anotou em nenhum lugar."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ler do começo ao fim",
+        "resumo": "Levou horas. Cada página era uma escolha que você reconhecia. E algumas que você não queria reconhecer.",
+        "consequencias": {
+          "flag": "leu_diario_completo",
+          "karma": { "fe": 14, "empatia": 10, "astucia": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Ler só o que você ainda não entendeu",
+        "resumo": "Três páginas. Cada uma um mistério diferente.",
+        "consequencias": {
+          "flag": "leu_partes_diario",
+          "karma": { "fe": 10, "astucia": 10 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Fechar e deixar para amanhã",
+        "resumo": "Amanhã é o décimo terceiro dia. Faz sentido.",
+        "consequencias": {
+          "karma": { "fe": 8 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_preparacao",
+    "titulo": "O Que Você Sabe Agora",
+    "tipo": "reflexao",
+    "requer": {},
+    "texto": "Doze dias. O que você sabe hoje que não sabia no primeiro? A pergunta parece simples. A resposta vai saindo em camadas — a primeira rasa, a segunda mais honesta, a terceira você guarda para si.",
+    "paragrafos": [
+      "Doze dias.",
+      "O que você sabe hoje que não sabia no primeiro?",
+      "A pergunta parece simples.",
+      "A resposta vai saindo em camadas — a primeira rasa, a segunda mais honesta, a terceira você guarda para si."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Que as escolhas têm peso cumulativo",
+        "resumo": "Cada pequena decisão foi tijolo.",
+        "consequencias": {
+          "karma": { "astucia": 8, "fe": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Que saber não é o mesmo que entender",
+        "resumo": "A diferença mais importante que existe.",
+        "consequencias": {
+          "karma": { "fe": 12, "empatia": 8 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Que você ainda não sabe o suficiente",
+        "resumo": "Honestidade rara. Coragem maior.",
+        "consequencias": {
+          "flag": "reconhece_limite",
+          "karma": { "coragem": 10, "fe": 12 }
+        }
+      }
+    ]
+  }
+]

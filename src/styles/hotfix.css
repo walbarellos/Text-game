@@ -19,13 +19,14 @@ radial-gradient(140px 100px at 0%   50%,  rgba(255,200,90,.28), rgba(255,140,40,
 radial-gradient(140px 100px at 100% 50%,  rgba(255,200,90,.28), rgba(255,140,40,.12) 45%, transparent 75%),
 radial-gradient(140px 100px at 50%  100%, rgba(255,200,90,.28), rgba(255,140,40,.12) 45%, transparent 75%);
 filter: blur(12px) saturate(1.15);
+will-change: opacity;
 }
 
 @keyframes fogo-flicker{
-    0%   { opacity:.82; filter:blur(10px) saturate(1.05) hue-rotate(0deg);   }
-    35%  { opacity:.93; filter:blur(13px) saturate(1.25) hue-rotate(6deg);   }
-    60%  { opacity:.86; filter:blur(11px) saturate(1.15) hue-rotate(-4deg);  }
-    100% { opacity:.82; filter:blur(10px) saturate(1.05) hue-rotate(0deg);   }
+    0%   { opacity:.82; }
+    35%  { opacity:.93; }
+    60%  { opacity:.86; }
+    100% { opacity:.82; }
 }
 
 /* modo “mais leve” em telas muito pequenas */
@@ -33,7 +34,7 @@ filter: blur(12px) saturate(1.15);
     #fx-bordas{ opacity:.7; filter: blur(9px) saturate(1.05); }
 }
 /* aplica a distorção só no overlay do fogo, para não deformar HUD/textos */
-#fx-bordas { filter: url(#heat-warp) blur(10px) saturate(1.1); }
+/* #fx-bordas { filter: url(#heat-warp) blur(10px) saturate(1.1); } -- REMOVIDO POR PERFORMANCE */
 
 #fx-sparks{
 position:fixed; inset:0; pointer-events:none; z-index:1;
@@ -85,8 +86,8 @@ filter: blur(.4px);
     z-index: 1;
     border-top: 1px solid rgba(255,255,255,0.08);
     background: linear-gradient(180deg, rgba(10,12,14,0.45), rgba(10,12,14,0.18));
-    backdrop-filter: blur(6px);
-    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
     padding: calc(clamp(12px, 2.2vw, 18px) + env(safe-area-inset-top)) 0
     calc(clamp(12px, 2.2vw, 18px) + env(safe-area-inset-bottom)) 0;
     margin-top: clamp(16px, 3.5vw, 32px);
@@ -368,7 +369,7 @@ box-shadow: 0 12px 30px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.05) inset;
     border: 1px solid #ffffff0f;
     border-radius: 16px;
     box-shadow: 0 10px 40px #00000066 inset, 0 8px 28px #00000066;
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(3px);
 }
 
 /* granulado discreto */

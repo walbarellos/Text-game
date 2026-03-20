@@ -1,0 +1,200 @@
+[
+  {
+    "id": "e_mulher_da_janela",
+    "titulo": "A Mulher da Janela",
+    "tipo": "misterio",
+    "imagem": "janela",
+    "requer": {},
+    "texto": "Ela está na janela do segundo andar todas as manhãs. Nunca desce. Observa a rua com a expressão de quem perdeu algo que não tem nome. Hoje ela te vê. E não desvia o olhar.",
+    "paragrafos": [
+      "Ela está na janela do segundo andar todas as manhãs. Nunca desce.",
+      "Observa a rua com a expressão de quem perdeu algo que não tem nome.",
+      "Hoje ela te vê. E não desvia o olhar."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Acenar",
+        "resumo": "Um gesto pequeno. Ela respondeu.",
+        "consequencias": {
+          "flag": "conheceu_clara",
+          "relacao": { "clara": 3 },
+          "karma": { "empatia": 7, "coragem": 4 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Subir e bater na porta",
+        "resumo": "Você foi além do gesto.",
+        "consequencias": {
+          "flag": "visitou_clara",
+          "relacao": { "clara": 8 },
+          "karma": { "coragem": 12, "empatia": 8 },
+          "virtude": 6
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Desviar o olhar",
+        "resumo": "O momento passou.",
+        "consequencias": {
+          "flag": "ignorou_clara",
+          "relacao": { "clara": -2 },
+          "karma": { "astucia": 3 },
+          "virtude": -2
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_carta_encontrada",
+    "titulo": "A Carta no Chão",
+    "tipo": "misterio",
+    "imagem": "carta",
+    "requer": {},
+    "texto": "Uma carta caiu de algum bolso, de alguma mão apressada. O envelope está aberto. Seu nome — o seu nome — está escrito no verso com caligrafia que você não reconhece. A carta parece ter sido escrita há anos.",
+    "paragrafos": [
+      "Uma carta caiu de algum bolso, de alguma mão apressada.",
+      "O envelope está aberto.",
+      "Seu nome — o seu nome — está escrito no verso com caligrafia que você não reconhece.",
+      "A carta parece ter sido escrita há anos."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ler a carta",
+        "resumo": "As palavras não fazem sentido ainda. Mas ficam.",
+        "consequencias": {
+          "flag": "leu_carta_misteriosa",
+          "item": "carta_sem_remetente",
+          "karma": { "fe": 10, "astucia": 5 },
+          "virtude": 4
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Tentar devolver — procurar o dono",
+        "resumo": "Você andou a praça inteira. Não encontrou ninguém.",
+        "consequencias": {
+          "flag": "tentou_devolver_carta",
+          "karma": { "empatia": 8, "coragem": 4 },
+          "virtude": 5
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Queimar sem ler",
+        "resumo": "Alguns segredos não são seus para conhecer.",
+        "consequencias": {
+          "flag": "queimou_carta",
+          "karma": { "fe": 6, "astucia": -3 },
+          "virtude": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_comerciante_desonesto",
+    "titulo": "O Peso Errado",
+    "tipo": "dilema",
+    "imagem": "mercado",
+    "requer": { "flag": "foi_mercado_dia1" },
+    "texto": "No mercado, você vê. A balança do comerciante tem um peso escondido embaixo do pano. Ele sorri enquanto cobra a mais de uma velha senhora que conta as moedas devagar, sem desconfiar de nada.",
+    "paragrafos": [
+      "No mercado, você vê.",
+      "A balança do comerciante tem um peso escondido embaixo do pano.",
+      "Ele sorri enquanto cobra a mais de uma velha senhora que conta as moedas devagar, sem desconfiar de nada."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Denunciar em voz alta",
+        "resumo": "Todo mundo ouviu. O comerciante empalideceu.",
+        "consequencias": {
+          "flag": "denunciou_comerciante",
+          "relacao": { "comerciante": -8, "aldeia": 5 },
+          "karma": { "coragem": 14, "empatia": 6 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Avisar a senhora em sussurro",
+        "resumo": "Ela entendeu. Agradeceu sem fazer escândalo.",
+        "consequencias": {
+          "flag": "protegeu_senhora",
+          "relacao": { "idosa": 6 },
+          "karma": { "empatia": 12, "astucia": 8 },
+          "virtude": 8
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Confrontar o comerciante a sós depois",
+        "resumo": "Ele negou. Mas parou.",
+        "consequencias": {
+          "flag": "confrontou_comerciante_sozinho",
+          "relacao": { "comerciante": -4 },
+          "karma": { "coragem": 8, "astucia": 10 },
+          "virtude": 6
+        }
+      },
+      {
+        "id": "c4",
+        "texto": "Não é assunto seu",
+        "resumo": "O mundo tem mil injustiças. Esta ficou.",
+        "consequencias": {
+          "flag": "ignorou_injustica",
+          "karma": { "astucia": 4 },
+          "virtude": -6
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_templo_silencio",
+    "titulo": "O Templo Silencioso",
+    "tipo": "espiritual",
+    "imagem": "templo",
+    "requer": { "flag": "foi_templo_dia1" },
+    "texto": "As paredes guardam mais do que pedra. Há marcas de mãos — centenas delas — gravadas na altura do peito. Cada mão um tamanho diferente. No centro, um altar com cinzas frescas. Alguém esteve aqui hoje.",
+    "paragrafos": [
+      "As paredes guardam mais do que pedra.",
+      "Há marcas de mãos — centenas delas — gravadas na altura do peito.",
+      "Cada mão um tamanho diferente.",
+      "No centro, um altar com cinzas frescas. Alguém esteve aqui hoje."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Deixar a marca da sua mão",
+        "resumo": "Você fez parte de algo maior.",
+        "consequencias": {
+          "flag": "marcou_templo",
+          "karma": { "fe": 14, "empatia": 6 },
+          "virtude": 7
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Investigar as cinzas",
+        "resumo": "Ainda quentes. Incenso de ervas que você não conhece.",
+        "consequencias": {
+          "flag": "investigou_templo",
+          "karma": { "astucia": 10, "fe": 5 },
+          "virtude": 3
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Sentar e ficar em silêncio",
+        "resumo": "Você ficou até o sol mudar de ângulo.",
+        "consequencias": {
+          "flag": "meditou_templo",
+          "karma": { "fe": 16, "coragem": 3 },
+          "virtude": 8
+        }
+      }
+    ]
+  }
+]

@@ -61,5 +61,33 @@
     "titulo": "A Cidade Invertida",
     "descricao": "As ruas se dobram e uma porta sem paredes decide o rumo — ou você decide por ela.",
     "arquivo": "dia9.json"
+  },
+  {
+    "id": "dia10",
+    "nome": "Dia 10 — A Convergência",
+    "titulo": "A Convergência",
+    "descricao": "Todos os fios começam a se unir em um único tecido. O que foi separado agora busca união.",
+    "arquivo": "dia10.json"
+  },
+  {
+    "id": "dia11",
+    "nome": "Dia 11 — O Que Permanece",
+    "titulo": "O Que Permanece",
+    "descricao": "Depois do fogo, restam as cinzas e o que não pode ser queimado. É tempo de ver o que é real.",
+    "arquivo": "dia11.json"
+  },
+  {
+    "id": "dia12",
+    "nome": "Dia 12 — O Silêncio Antes",
+    "titulo": "O Silêncio Antes",
+    "descricao": "A respiração suspensa antes do grande salto. Tudo está pronto, mas o movimento ainda não começou.",
+    "arquivo": "dia12.json"
+  },
+  {
+    "id": "dia13",
+    "nome": "Dia 13 — O Sétimo Dia",
+    "titulo": "O Sétimo Dia",
+    "descricao": "O ciclo se fecha. O descanso ou o recomeço. A Pedra volta ao seu lugar de origem.",
+    "arquivo": "dia13.json"
   }
 ]

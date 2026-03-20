@@ -1,0 +1,136 @@
+{
+  "id": "q_guardiao_do_templo",
+  "titulo": "O Guardião",
+  "tipo": "arco",
+  "descricao": "Alguém cuida do templo. Sempre cuidou. Você ainda não sabe quem.",
+  "gatilho": {
+    "flags": ["meditou_templo", "voltou_ao_templo"],
+    "dia_min": 4
+  },
+  "etapas": [
+    {
+      "id": "e1_sombra",
+      "texto": "No quarto dia, há alguém no templo quando você chega. Uma figura de costas, varrendo as cinzas do altar com movimentos lentos e deliberados. Ela não se vira. Mas diz, sem você ter feito nenhum barulho: 'Eu sabia que você voltaria.'",
+      "paragrafos": [
+        "No quarto dia, há alguém no templo quando você chega.",
+        "Uma figura de costas, varrendo as cinzas do altar com movimentos lentos e deliberados.",
+        "Ela não se vira.",
+        "Mas diz, sem você ter feito nenhum barulho: 'Eu sabia que você voltaria.'"
+      ],
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "\"Quem é você?\"",
+          "resumo": "Ela demorou para responder.",
+          "consequencias": {
+            "karma": { "coragem": 8, "fe": 5 },
+            "proxima_etapa": "e2_nome"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Sentar e esperar ela falar",
+          "resumo": "O silêncio durou quinze minutos. Valeu.",
+          "consequencias": {
+            "karma": { "fe": 12, "empatia": 8 },
+            "proxima_etapa": "e2_silencio"
+          }
+        },
+        {
+          "id": "c3",
+          "texto": "Ajudar a varrer sem dizer nada",
+          "resumo": "Ela riu baixinho. Deu outra vassoura.",
+          "consequencias": {
+            "flag": "ajudou_guardiao",
+            "karma": { "empatia": 10, "fe": 10 },
+            "proxima_etapa": "e2_varrer"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_nome",
+      "texto": "'Sou quem sempre esteve aqui', ela diz. 'Antes de você. Provavelmente depois.' Ela finalmente se vira. É uma mulher velha, olhos claros, mãos marcadas por anos de trabalho. 'E você — você ainda não sabe quem é, mas está chegando perto.'",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "\"O que você sabe sobre o símbolo?\"",
+          "resumo": "Ela apontou para a parede. Para a marca da sua mão.",
+          "consequencias": {
+            "flag": "conhece_guardiao",
+            "karma": { "fe": 10, "astucia": 6 },
+            "proxima_etapa": "e3_revelacao"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "\"Chegando perto do quê?\"",
+          "resumo": "'Do que você veio buscar', ela disse. 'Só você sabe o que é.'",
+          "consequencias": {
+            "karma": { "fe": 8, "empatia": 5 },
+            "proxima_etapa": "e3_revelacao"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_silencio",
+      "texto": "Quando ela finalmente fala, é uma única frase. 'O símbolo não é um mapa. É um espelho.' Depois, silêncio de novo. E você percebe que entendeu exatamente o que ela quis dizer.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Agradecer e ir embora",
+          "resumo": "Você levou isso para o resto dos dias.",
+          "consequencias": {
+            "flag": "recebeu_ensinamento",
+            "karma": { "fe": 16 },
+            "proxima_etapa": "e3_revelacao"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_varrer",
+      "texto": "Você varreu durante uma hora. Ela não falou. Mas antes de você ir embora, ela colocou uma coisa na sua mão — uma pedra pequena, lisa, quente como se tivesse estado guardada no bolso por anos. 'Para quando precisar de peso', ela disse.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Guardar a pedra",
+          "resumo": "Você a carregou por todos os dias restantes.",
+          "consequencias": {
+            "flag": "tem_pedra_guardiao",
+            "item": "pedra_do_guardiao",
+            "karma": { "fe": 14, "empatia": 8 },
+            "proxima_etapa": "e3_revelacao"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e3_revelacao",
+      "texto": "Antes de você sair, ela diz uma última coisa. Sem drama, sem cerimônia. Como quem lembra um fato esquecido. 'O símbolo tem três partes porque somos três coisas ao mesmo tempo: o que fomos, o que somos, e o que estamos tentando ser. O erro é achar que são diferentes.'",
+      "paragrafos": [
+        "Antes de você sair, ela diz uma última coisa.",
+        "Sem drama, sem cerimônia. Como quem lembra um fato esquecido.",
+        "'O símbolo tem três partes porque somos três coisas ao mesmo tempo: o que fomos, o que somos, e o que estamos tentando ser.",
+        "O erro é achar que são diferentes.'"
+      ],
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Guardar isso",
+          "resumo": "Você não esqueceu mais.",
+          "consequencias": {
+            "flag": "entendeu_simbolo",
+            "karma": { "fe": 12, "empatia": 6 }
+          }
+        }
+      ]
+    }
+  ],
+  "recompensa_final": {
+    "flag": "completou_guardiao",
+    "karma": { "fe": 10 },
+    "virtude": 18
+  }
+}

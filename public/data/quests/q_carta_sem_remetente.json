@@ -1,0 +1,124 @@
+{
+  "id": "q_carta_sem_remetente",
+  "titulo": "A Lista dos Sete",
+  "tipo": "arco",
+  "descricao": "A carta do mensageiro tem uma lista. Sete nomes. O seu é um deles. Os outros você vai reconhecer.",
+  "gatilho": {
+    "flag": "abriu_envelope_mensageiro",
+    "dia_min": 7
+  },
+  "etapas": [
+    {
+      "id": "e1_lista",
+      "texto": "A lista tem sete nomes. Você reconhece alguns. Sebastião está lá. Clara está lá. A guardiã do templo — sem nome, mas você sabe que é ela pela descrição. E o quarto nome é seu. Os outros três você nunca ouviu.",
+      "paragrafos": [
+        "A lista tem sete nomes.",
+        "Você reconhece alguns.",
+        "Sebastião está lá. Clara está lá.",
+        "A guardiã do templo — sem nome, mas você sabe que é ela pela descrição.",
+        "E o quarto nome é seu.",
+        "Os outros três você nunca ouviu."
+      ],
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Procurar o que une essas pessoas",
+          "resumo": "Você encontrou o fio. Eles todos passaram pelo símbolo.",
+          "consequencias": {
+            "flag": "entendeu_lista",
+            "karma": { "astucia": 12, "fe": 10 },
+            "proxima_etapa": "e2_padrao"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Procurar os três nomes desconhecidos",
+          "resumo": "Um mora na cidade. Um partiu. Um você não encontrou.",
+          "consequencias": {
+            "flag": "buscou_desconhecidos",
+            "karma": { "coragem": 10, "astucia": 8 },
+            "proxima_etapa": "e2_busca"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_padrao",
+      "texto": "O padrão é claro quando você vê. Cada pessoa na lista passou por uma versão dos mesmos sete dias que você está vivendo. Em tempos diferentes. Em lugares diferentes. O símbolo é um ritual que se repete — e você está no meio dele agora.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Isso me assusta",
+          "resumo": "Medo honesto. Não é fraqueza.",
+          "consequencias": {
+            "karma": { "coragem": 8, "fe": 10 },
+            "proxima_etapa": "e3_escolha"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Isso faz sentido de uma forma que não consigo explicar",
+          "resumo": "Algumas coisas só fazem sentido por dentro.",
+          "consequencias": {
+            "karma": { "fe": 16, "empatia": 8 },
+            "proxima_etapa": "e3_escolha"
+          }
+        },
+        {
+          "id": "c3",
+          "texto": "Isso me faz querer sair daqui",
+          "resumo": "A reação mais humana possível.",
+          "consequencias": {
+            "karma": { "astucia": 10, "coragem": 6 },
+            "proxima_etapa": "e3_escolha"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_busca",
+      "texto": "O homem que mora na cidade tem olhos que você reconhece de algum lugar. Ele olha para você como quem vê a si mesmo num espelho muito específico. Diz apenas: 'Você está no décimo dia. Eu estava no décimo quando vi o nome pela primeira vez.'",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "\"O que acontece depois?\"",
+          "resumo": "'Você descobre quem é sem a lista', ele disse.",
+          "consequencias": {
+            "flag": "conversou_lista_desconhecido",
+            "karma": { "fe": 12, "coragem": 8 },
+            "proxima_etapa": "e3_escolha"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e3_escolha",
+      "texto": "Você pode continuar sabendo que faz parte de um padrão maior. Ou pode queimar a lista e seguir como se não soubesse. Ambas as coisas mudam você. A diferença é qual versão de você emerge do décimo terceiro dia.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Continuar sabendo — parte de algo maior",
+          "resumo": "O peso virou âncora. Do bom tipo.",
+          "consequencias": {
+            "flag": "aceitou_papel_lista",
+            "karma": { "fe": 14, "empatia": 10 }
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Queimar a lista — só importa o que eu faço",
+          "resumo": "Você escolheu ser a origem, não a consequência.",
+          "consequencias": {
+            "flag": "recusou_papel_lista",
+            "karma": { "coragem": 16, "astucia": 10 }
+          }
+        }
+      ]
+    }
+  ],
+  "recompensa_final": {
+    "flag": "completou_carta_remetente",
+    "karma": { "fe": 8 },
+    "virtude": 16
+  }
+}

@@ -1,0 +1,188 @@
+[
+  {
+    "id": "e_sebastiao_retorna",
+    "titulo": "O Rosto Limpo",
+    "tipo": "arco",
+    "imagem": "encontro",
+    "requer": { "flag": "ajudou_mendigo" },
+    "texto": "Ele está limpo. Roupas simples mas cuidadas. Está onde você menos esperava — sentado num banco, do outro lado da praça, te esperando. Você não combinou isso. Mas ele sabia que você viria.",
+    "paragrafos": [
+      "Ele está limpo. Roupas simples mas cuidadas.",
+      "Está onde você menos esperava — sentado num banco, do outro lado da praça, te esperando.",
+      "Você não combinou isso. Mas ele sabia que você viria."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "\"Como você sabia?\"",
+        "resumo": "Ele sorriu. 'Pessoas que param sempre voltam.'",
+        "consequencias": {
+          "flag": "dialogou_sebastiao",
+          "relacao": { "sebastiao": 5 },
+          "karma": { "coragem": 8, "fe": 6 },
+          "proxima_quest": "q_sombra_do_passado"
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Sentar sem perguntar",
+        "resumo": "Às vezes a presença fala mais que qualquer palavra.",
+        "consequencias": {
+          "flag": "silencio_com_sebastiao",
+          "relacao": { "sebastiao": 7 },
+          "karma": { "empatia": 10, "fe": 8 },
+          "proxima_quest": "q_sombra_do_passado"
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Ficar à distância, observar",
+        "resumo": "Você não estava pronto ainda.",
+        "consequencias": {
+          "relacao": { "sebastiao": 1 },
+          "karma": { "astucia": 5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_sebastiao_ausente",
+    "titulo": "A Praça Vazia",
+    "tipo": "reflexao",
+    "imagem": "praca",
+    "requer": { "flag": "ignorou_mendigo" },
+    "texto": "O lugar onde ele ficava está vazio. Há uma marca no chão de pedra — o contorno de alguém que ficou parado no mesmo lugar por muito tempo. A praça segue seu ruído normal. Você é o único que notou.",
+    "paragrafos": [
+      "O lugar onde ele ficava está vazio.",
+      "Há uma marca no chão de pedra — o contorno de alguém que ficou parado no mesmo lugar por muito tempo.",
+      "A praça segue seu ruído normal.",
+      "Você é o único que notou."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Perguntar aos feirantes sobre ele",
+        "resumo": "Ninguém sabe o nome dele. Alguns nem lembram do rosto.",
+        "consequencias": {
+          "flag": "buscou_sebastiao",
+          "karma": { "empatia": 8, "coragem": 4 },
+          "virtude": 5
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Reconhecer a ausência e seguir",
+        "resumo": "Você carregou isso o dia todo.",
+        "consequencias": {
+          "flag": "sentiu_culpa_sebastiao",
+          "karma": { "empatia": 5, "fe": 3 },
+          "virtude": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_crianca_doente",
+    "titulo": "A Febre",
+    "tipo": "dilema",
+    "imagem": "crianca_doente",
+    "requer": {},
+    "texto": "Uma mãe está na porta da farmácia fechada. A criança no colo respira com dificuldade — febre alta, isso é visível. A farmácia não abre até amanhã. Você tem conhecimento de ervas. Não é muito, mas é algo.",
+    "paragrafos": [
+      "Uma mãe está na porta da farmácia fechada.",
+      "A criança no colo respira com dificuldade — febre alta, isso é visível.",
+      "A farmácia não abre até amanhã.",
+      "Você tem conhecimento de ervas. Não é muito, mas é algo."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Oferecer o que sabe sobre ervas",
+        "resumo": "Ela aceitou. A criança dormiu antes da meia-noite.",
+        "consequencias": {
+          "flag": "curou_crianca",
+          "relacao": { "mae_crianca": 8 },
+          "karma": { "empatia": 14, "coragem": 6 },
+          "virtude": 12
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Ir buscar o farmacêutico em casa",
+        "resumo": "Ele veio. Resmungou, mas veio.",
+        "consequencias": {
+          "flag": "buscou_farmaceutico",
+          "relacao": { "mae_crianca": 6 },
+          "karma": { "coragem": 10, "empatia": 8 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Acompanhar sem intervir — vigiar a noite",
+        "resumo": "Você ficou. A febre baixou sozinha de madrugada.",
+        "consequencias": {
+          "flag": "vigiou_noite",
+          "relacao": { "mae_crianca": 4 },
+          "karma": { "empatia": 10, "fe": 8 },
+          "virtude": 7
+        }
+      },
+      {
+        "id": "c4",
+        "texto": "Indicar outro caminho e seguir",
+        "resumo": "Você disse o que sabia. O resto não era com você.",
+        "consequencias": {
+          "karma": { "astucia": 5 },
+          "virtude": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_sonho_acordado",
+    "titulo": "A Visão",
+    "tipo": "espiritual",
+    "imagem": "visao",
+    "requer": { "flag": "meditou_templo" },
+    "texto": "Não é sonho — você está acordado. Mas por um segundo, apenas um, você vê o símbolo. Triângulo dentro do quadrado dentro do círculo. Brilha no ar na frente dos seus olhos e desaparece antes que você possa ter certeza de que viu. Seu coração bateu diferente nesse segundo.",
+    "paragrafos": [
+      "Não é sonho — você está acordado.",
+      "Mas por um segundo, apenas um, você vê o símbolo.",
+      "Triângulo dentro do quadrado dentro do círculo.",
+      "Brilha no ar na frente dos seus olhos e desaparece antes que você possa ter certeza de que viu.",
+      "Seu coração bateu diferente nesse segundo."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Anotar o que viu",
+        "resumo": "As palavras não dão conta do que os olhos viram.",
+        "consequencias": {
+          "flag": "anotou_visao",
+          "item": "caderno_de_visoes",
+          "karma": { "fe": 12, "astucia": 6 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Voltar ao templo imediatamente",
+        "resumo": "As cinzas ainda estavam lá. Frescas de novo.",
+        "consequencias": {
+          "flag": "voltou_ao_templo",
+          "karma": { "fe": 16, "coragem": 8 },
+          "proxima_quest": "q_guardiao_do_templo"
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Não dar atenção — continuar o dia",
+        "resumo": "Você tentou. Ficou na cabeça assim mesmo.",
+        "consequencias": {
+          "flag": "ignorou_visao",
+          "karma": { "astucia": 5, "fe": -4 }
+        }
+      }
+    ]
+  }
+]

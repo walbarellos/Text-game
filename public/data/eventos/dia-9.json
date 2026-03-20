@@ -1,0 +1,161 @@
+[
+  {
+    "id": "e_frutos_empatia",
+    "titulo": "O Que Volta",
+    "tipo": "recompensa",
+    "requer": { "karma_min": { "empatia": 55 } },
+    "texto": "A senhora do mercado te para na rua. Ela lembra. Das moedas contadas devagar, do dia em que alguém a viu ser lesada — e fez algo. Ela não diz obrigada. Ela diz que ficou pensando nisso por dias. Que mudou como ela trata os outros.",
+    "paragrafos": [
+      "A senhora do mercado te para na rua.",
+      "Ela lembra.",
+      "Das moedas contadas devagar, do dia em que alguém a viu ser lesada — e fez algo.",
+      "Ela não diz obrigada.",
+      "Ela diz que ficou pensando nisso por dias. Que mudou como ela trata os outros."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ouvir isso sem minimizar",
+        "resumo": "Você deixou as palavras dela serem reais.",
+        "consequencias": {
+          "relacao": { "idosa": 6 },
+          "karma": { "empatia": 8, "fe": 8 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "\"Qualquer um teria feito o mesmo.\"",
+        "resumo": "Ela abalou a cabeça. 'Não. Não teria.'",
+        "consequencias": {
+          "karma": { "empatia": 4 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_peso_astucia",
+    "titulo": "O Preço do Que Você Sabe",
+    "tipo": "dilema",
+    "requer": { "karma_min": { "astucia": 55 } },
+    "texto": "Com as informações que você acumulou, você poderia mudar o desfecho de pelo menos três situações na cidade. Mas informação usada de forma errada vira ferramenta de controle. Você sente a linha entre sabedoria e manipulação mais fina do que gostaria.",
+    "paragrafos": [
+      "Com as informações que você acumulou, você poderia mudar o desfecho de pelo menos três situações na cidade.",
+      "Mas informação usada de forma errada vira ferramenta de controle.",
+      "Você sente a linha entre sabedoria e manipulação mais fina do que gostaria."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Usar o que sabe para ajudar sem que saibam",
+        "resumo": "Resultado sem crédito. Mais limpo.",
+        "consequencias": {
+          "flag": "usou_info_anonimo",
+          "karma": { "astucia": 8, "empatia": 10 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Compartilhar as informações abertamente",
+        "resumo": "Mais arriscado. Mais honesto.",
+        "consequencias": {
+          "flag": "compartilhou_info",
+          "karma": { "coragem": 10, "astucia": 4 },
+          "virtude": 8
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Guardar por enquanto — não é a hora",
+        "resumo": "Paciência também é uma escolha.",
+        "consequencias": {
+          "flag": "guardou_info",
+          "karma": { "astucia": 10, "fe": 6 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_carta_respondida",
+    "titulo": "A Resposta",
+    "tipo": "misterio",
+    "requer": { "flag": "abriu_envelope_mensageiro" },
+    "texto": "Você não enviou nada. Mas chegou uma resposta. Não pelo correio — estava embaixo da porta de manhã. O envelope tem o mesmo estilo do homem de cinza. Dentro, uma única frase respondendo a um pensamento que você teve ontem à noite. Não uma fala. Um pensamento.",
+    "paragrafos": [
+      "Você não enviou nada. Mas chegou uma resposta.",
+      "Não pelo correio — estava embaixo da porta de manhã.",
+      "O envelope tem o mesmo estilo do homem de cinza.",
+      "Dentro, uma única frase respondendo a um pensamento que você teve ontem à noite.",
+      "Não uma fala.",
+      "Um pensamento."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Aceitar que isso está além da explicação racional",
+        "resumo": "Não é rendição. É outra forma de razão.",
+        "consequencias": {
+          "flag": "aceitou_misterio",
+          "karma": { "fe": 16, "astucia": -4 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Tentar encontrar uma explicação lógica",
+        "resumo": "Você encontrou três. Nenhuma convincente.",
+        "consequencias": {
+          "karma": { "astucia": 12, "fe": -4 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Escrever uma resposta e deixar embaixo da porta",
+        "resumo": "De manhã, sumiu.",
+        "consequencias": {
+          "flag": "respondeu_misterio",
+          "karma": { "coragem": 10, "fe": 12 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_noite_difícil",
+    "titulo": "A Noite Longa",
+    "tipo": "contemplacao",
+    "requer": {},
+    "texto": "Há uma hora desta noite em que você não consegue dormir e não consegue pensar em nada específico. Apenas um peso difuso. A sensação de que você está no meio de algo que você começou mas que não sabe exatamente onde termina.",
+    "paragrafos": [
+      "Há uma hora desta noite em que você não consegue dormir e não consegue pensar em nada específico.",
+      "Apenas um peso difuso.",
+      "A sensação de que você está no meio de algo que você começou mas que não sabe exatamente onde termina."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ficar com o desconforto",
+        "resumo": "Você ficou acordado até as três. Dormiu fundo depois.",
+        "consequencias": {
+          "karma": { "coragem": 8, "fe": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Escrever o que está sentindo",
+        "resumo": "Ficou mais claro no papel. Um pouco.",
+        "consequencias": {
+          "karma": { "astucia": 6, "empatia": 6 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Sair e caminhar até cansar",
+        "resumo": "A cidade de madrugada é outra cidade.",
+        "consequencias": {
+          "flag": "caminhou_madrugada",
+          "karma": { "coragem": 10, "fe": 6 }
+        }
+      }
+    ]
+  }
+]

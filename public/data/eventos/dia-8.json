@@ -1,0 +1,152 @@
+[
+  {
+    "id": "e_caminho_luz_1",
+    "titulo": "O Que Você Construiu",
+    "tipo": "recompensa",
+    "requer": { "flag": "escolheu_servir" },
+    "texto": "Você acorda diferente. Não melhor — diferente. Como se a decisão de ontem tivesse reorganizado alguma coisa interna que estava torta sem você saber. A cidade parece menor. As pessoas, mais reais. O homem da padaria te cumprimenta pelo nome pela primeira vez.",
+    "paragrafos": [
+      "Você acorda diferente. Não melhor — diferente.",
+      "Como se a decisão de ontem tivesse reorganizado alguma coisa interna que estava torta sem você saber.",
+      "A cidade parece menor. As pessoas, mais reais.",
+      "O homem da padaria te cumprimenta pelo nome pela primeira vez."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ir onde puder ser mais útil hoje",
+        "resumo": "Você encontrou três lugares. Escolheu o mais difícil.",
+        "consequencias": {
+          "flag": "age_escolha_servir",
+          "karma": { "empatia": 12, "coragem": 8 },
+          "virtude": 12
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Começar pelas pessoas que você já conhece",
+        "resumo": "Sebastião. Clara. A senhora do mercado. Um dia para cada.",
+        "consequencias": {
+          "flag": "cuida_conhecidos",
+          "karma": { "empatia": 16, "fe": 8 },
+          "virtude": 14
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_caminho_fogo_1",
+    "titulo": "O Primeiro Degrau",
+    "tipo": "acao",
+    "requer": { "flag": "escolheu_construir" },
+    "texto": "A decisão foi clara. Agora vem a parte mais difícil — executar. Você tem recursos limitados, tempo limitado, e uma lista de coisas que precisam acontecer. O primeiro degrau é sempre o mais pesado. Não porque é difícil. Porque é real.",
+    "paragrafos": [
+      "A decisão foi clara. Agora vem a parte mais difícil — executar.",
+      "Você tem recursos limitados, tempo limitado, e uma lista de coisas que precisam acontecer.",
+      "O primeiro degrau é sempre o mais pesado.",
+      "Não porque é difícil. Porque é real."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Começar pelo mais urgente",
+        "resumo": "Terminou. Ficou exausto. Valeu.",
+        "consequencias": {
+          "flag": "age_escolha_construir",
+          "karma": { "coragem": 14, "astucia": 10 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Começar pelo que você sabe fazer melhor",
+        "resumo": "Momentum. A coisa certa feita bem abre espaço para o resto.",
+        "consequencias": {
+          "flag": "age_por_forca",
+          "karma": { "astucia": 14, "coragem": 8 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Começar pelo que ninguém mais vai fazer",
+        "resumo": "A tarefa invisível. Ninguém notou. Você notou.",
+        "consequencias": {
+          "flag": "age_invisivel",
+          "karma": { "empatia": 8, "fe": 10, "coragem": 8 },
+          "virtude": 12
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_caminho_sombra_1",
+    "titulo": "O Espaço do Recuo",
+    "tipo": "contemplacao",
+    "requer": { "flag": "escolheu_recuar" },
+    "texto": "Recuar não é parar. Você descobriu isso hoje. É escolher onde guardar energia. A cidade continua seu ruído sem pedir sua participação. E há algo estranho nisso — um alívio que você não esperava e uma culpa que você não pediu.",
+    "paragrafos": [
+      "Recuar não é parar. Você descobriu isso hoje.",
+      "É escolher onde guardar energia.",
+      "A cidade continua seu ruído sem pedir sua participação.",
+      "E há algo estranho nisso — um alívio que você não esperava e uma culpa que você não pediu."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Aceitar o recuo como estratégia",
+        "resumo": "Você planejou. O plano existe agora.",
+        "consequencias": {
+          "flag": "recuo_consciente",
+          "karma": { "astucia": 12, "fe": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Questionar a decisão",
+        "resumo": "A dúvida é honesta. Honestidade tem peso próprio.",
+        "consequencias": {
+          "flag": "questiona_recuo",
+          "karma": { "fe": 10, "coragem": 6 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_sebastiao_revela",
+    "titulo": "A Origem",
+    "tipo": "arco",
+    "requer": { "flag": "ouviu_segredo_sebastiao" },
+    "texto": "Ele finalmente conta tudo. Levou sete dias para chegar aqui. Sebastião viveu nesta cidade há vinte anos, foi embora, voltou diferente. O que o trouxe de volta foi o mesmo símbolo que você está vendo. Ele passou por tudo que você está passando. E chegou a um ponto que ele chama apenas de 'o oitavo dia'.",
+    "paragrafos": [
+      "Ele finalmente conta tudo.",
+      "Levou sete dias para chegar aqui.",
+      "Sebastião viveu nesta cidade há vinte anos, foi embora, voltou diferente.",
+      "O que o trouxe de volta foi o mesmo símbolo que você está vendo.",
+      "Ele passou por tudo que você está passando.",
+      "E chegou a um ponto que ele chama apenas de 'o oitavo dia'."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "\"O que acontece no oitavo dia?\"",
+        "resumo": "'Você descobre se as escolhas que fez fazem quem você é — ou se você é quem faz as escolhas.'",
+        "consequencias": {
+          "flag": "sabe_oitavo_dia",
+          "relacao": { "sebastiao": 8 },
+          "karma": { "fe": 14, "coragem": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "\"Por que está me contando isso?\"",
+        "resumo": "'Porque alguém me contou. É assim que funciona.'",
+        "consequencias": {
+          "flag": "entende_ciclo_sebastiao",
+          "relacao": { "sebastiao": 10 },
+          "karma": { "fe": 12, "empatia": 10 }
+        }
+      }
+    ]
+  }
+]

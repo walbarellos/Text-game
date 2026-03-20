@@ -1,0 +1,103 @@
+{
+  "id": "q_fogo_no_mercado",
+  "titulo": "Fogo no Mercado",
+  "tipo": "crise",
+  "dia_expira": 7,
+  "aviso_ui": "O mercado arde. Tempo acabando.",
+  "gatilho": {
+    "flag": "foi_mercado_dia1",
+    "dia_min": 4
+  },
+  "descricao": "Um incêndio se alastra pelo mercado da cidade. As pessoas precisam de liderança — ou vão perder tudo.",
+  "etapas": [
+    {
+      "id": "e1",
+      "texto": "Fumaça preta sobe do mercado. Comerciantes fogem com o que conseguem carregar. Uma criança perdida chora no meio da rua.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Salvar a criança primeiro",
+          "resumo": "Você priorizou a vida.",
+          "consequencias": {
+            "flag": "salvou_crianca_fogo",
+            "karma": { "empatia": 15, "coragem": 10 },
+            "proxima_etapa": "e2_crianca"
+          }
+        },
+        {
+          "id": "c2",
+          "texto": "Coordenar os comerciantes para apagar o fogo",
+          "resumo": "Você liderou o combate ao fogo.",
+          "consequencias": {
+            "karma": { "coragem": 12, "astucia": 8 },
+            "proxima_etapa": "e2_lideranca"
+          }
+        },
+        {
+          "id": "c3",
+          "texto": "Aproveitar a confusão para sair ileso",
+          "resumo": "Você se afastou.",
+          "consequencias": {
+            "flag": "fugiu_do_fogo",
+            "karma": { "astucia": 5, "empatia": -12 },
+            "proxima_etapa": "e2_fuga"
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_crianca",
+      "texto": "A criança está salva. Mas o mercado queimou quase todo. Os comerciantes te olham — alguns com gratidão, outros com amargura pela perda.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Aceitar sua escolha",
+          "resumo": "Uma vida vale mais.",
+          "consequencias": {
+            "flag": "mercado_sobreviveu_parcial",
+            "karma": { "fe": 8 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_lideranca",
+      "texto": "Com sua liderança, metade do mercado foi salva. A criança perdida foi encontrada por um comerciante. Você se saiu bem.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Seguir em frente",
+          "resumo": "Você salvou o mercado.",
+          "consequencias": {
+            "flag": "salvou_mercado",
+            "karma": { "coragem": 5 }
+          }
+        }
+      ]
+    },
+    {
+      "id": "e2_fuga",
+      "texto": "De longe, você vê a fumaça subir. A criança foi encontrada por alguém corajoso que você não é. Essa imagem não sai da sua cabeça.",
+      "escolhas": [
+        {
+          "id": "c1",
+          "texto": "Conviver com isso",
+          "resumo": "A culpa ficou.",
+          "consequencias": {
+            "flag": "culpa_do_fogo",
+            "karma": { "empatia": -5 }
+          }
+        }
+      ]
+    }
+  ],
+  "se_expirar": {
+    "flag": "mercado_destruido",
+    "karma": { "empatia": -20, "fe": -10 },
+    "texto_consequencia": "Você não agiu a tempo. O mercado foi destruído. Os comerciantes perderam tudo. A cidade ficou mais silenciosa.",
+    "comentario_dev": "Só chega aqui se o jogador não interagiu com a quest até o dia 7"
+  },
+  "recompensa_final": {
+    "flag": "completou_fogo_mercado"
+  }
+}

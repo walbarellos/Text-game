@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
+    "canvas": "^3.2.1",
     "fast-glob": "^3.3.3",
     "terser": "^5.43.1",
     "vite": "^7.0.4"

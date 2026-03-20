@@ -1,0 +1,67 @@
+[
+  {
+    "id": "e_pivo_dia7",
+    "titulo": "O Sétimo Passo",
+    "tipo": "pivo",
+    "imagem": "pivo",
+    "requer": {},
+    "especial": true,
+    "texto": "Você chegou até aqui. Seis dias de escolhas, de peso, de silêncio e de barulho. Esta manhã, ao acordar, algo mudou no ar. É difícil nomear. Como se o mundo tivesse virado levemente sobre o próprio eixo. Uma voz — não externa, não exatamente interna — diz apenas uma coisa:",
+    "texto_voz": "\"Você sabe quem você é agora. O que vai fazer com isso?\"",
+    "paragrafos": [
+      "Você chegou até aqui.",
+      "Seis dias de escolhas, de peso, de silêncio e de barulho.",
+      "Esta manhã, ao acordar, algo mudou no ar. É difícil nomear.",
+      "Como se o mundo tivesse virado levemente sobre o próprio eixo.",
+      "Uma voz — não externa, não exatamente interna — diz apenas uma coisa:",
+      "\"Você sabe quem você é agora. O que vai fazer com isso?\""
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Servir — o que aprendi pertence aos outros",
+        "resumo": "Você escolheu o caminho de quem dá.",
+        "consequencias": {
+          "flag": "escolheu_servir",
+          "karma": { "empatia": 15, "fe": 10, "coragem": 5 },
+          "virtude": 20,
+          "ativa_caminho": "luz"
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Construir — vou usar o que sei para crescer",
+        "resumo": "Você escolheu o caminho de quem age.",
+        "consequencias": {
+          "flag": "escolheu_construir",
+          "karma": { "coragem": 15, "astucia": 10, "empatia": 5 },
+          "virtude": 10,
+          "ativa_caminho": "fogo"
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Recuar — ainda não estou pronto",
+        "resumo": "Você escolheu o caminho de quem espera.",
+        "consequencias": {
+          "flag": "escolheu_recuar",
+          "karma": { "fe": 12, "astucia": 8 },
+          "virtude": 5,
+          "ativa_caminho": "sombra"
+        }
+      },
+      {
+        "id": "c4",
+        "texto": "Não existe resposta certa",
+        "resumo": "A anomalia. Você quebrou o padrão.",
+        "requer_karma": { "divergencia_minima": 45 },
+        "consequencias": {
+          "flag": "escolheu_anomalia",
+          "karma": { "fe": 8, "coragem": 8, "empatia": 8, "astucia": 8 },
+          "virtude": 15,
+          "ativa_caminho": "anomalia"
+        }
+      }
+    ]
+  }
+]

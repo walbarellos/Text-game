@@ -10,28 +10,10 @@ import {
 // Efeitos de reward
 import { playChoiceReward, rippleOnButton, pulseBuildBadge } from '../ui/rewardChoice.js';
 
+// import { typewriter } from '../ui/typewriter.js'; // REMOVIDO PARA TESTE DE VISIBILIDADE
+
 const eventoContainer = document.getElementById('evento');
 
-/* ---------------------------------------
- * Utilitários de render
- * --------------------------------------*/
-
-/**
- * Substitui o conteúdo do destino de forma segura e performática.
- * Aceita string ou Node/DocumentFragment.
- */
-function renderSafeHTML(destino, html) {
-  if (!destino) return;
-  if (html instanceof Node) {
-    destino.replaceChildren(html);
-    return;
-  }
-  const tpl = document.createElement('template');
-  tpl.innerHTML = String(html ?? '').trim();
-  destino.replaceChildren(tpl.content);
-}
-
-/** Escape básico para strings que irão para HTML */
 function escapeHTML(s) {
   return String(s ?? '')
   .replaceAll('&', '&amp;')
@@ -41,41 +23,8 @@ function escapeHTML(s) {
   .replaceAll("'", '&#39;');
 }
 
-/**
- * Remove metanotas "Se ... → ..." em finais (sem alterar o resto do texto).
- */
-function ocultarMetanotasDeFim(texto) {
-  if (!texto) return '';
-  let t = String(texto);
-
-  // Remove linhas inteiras que contenham "Se ... → ..."
-  t = t.split('\n').filter(l => !/\b[Ss]e\s[^→\n]+→/.test(l)).join('\n');
-
-  // Remove metanota colada no fim da frase (mesma linha)
-  t = t.replace(/\s*[–—-]?\s*\b[Ss]e\s[^→\n]+→[^\n]*/g, '');
-
-  // Normaliza espaços em branco
-  t = t.replace(/\n{3,}/g, '\n\n').trim();
-  return t;
-}
-
-/** Sobe a viewport pro topo do container ao trocar de bloco */
-function scrollToTop(el) {
-  try {
-    (el ?? window).scrollTo?.({ top: 0, behavior: 'smooth' });
-  } catch {}
-}
-
-/** Move o foco para o primeiro botão de opção (acessibilidade) */
-function focusFirstOption(container) {
-  try {
-    const firstBtn = container?.querySelector?.('.opcoes .btn-opcao');
-    (firstBtn ?? container)?.focus?.();
-  } catch {}
-}
-
 /* ---------------------------------------
- * Render principal
+ * Render principal — VERSÃO ULTRA SEGURA
  * --------------------------------------*/
 export function renderizarEvento(evento, destino = eventoContainer) {
   if (!destino || !evento) {
@@ -83,189 +32,87 @@ export function renderizarEvento(evento, destino = eventoContainer) {
     return;
   }
 
-  const {
-    titulo = '—',
-    descricao = '',
-    opcoes = [],
-    tipo = 'padrão',
-    npc
-  } = evento;
+  console.log('[renderer] Renderizando:', evento.id);
 
-  // 🌌 Tela de fim do dia com relatório
-  if (String(tipo).toLowerCase() === 'fim') {
-    const build = buildDominante();
-    const contagem = historicoBuilds();
-    const interacoes = obterInteracoesNPC() || [];
-    const frase = evento.fraseChave && String(evento.fraseChave).trim()
-    ? evento.fraseChave
-    : 'desconhecida';
+  // Normalização total de propriedades
+  const titulo = evento.titulo || evento.nome || '—';
+  const texto = evento.texto || evento.descricao || '';
+  const pRaw = evento.paragrafos || (texto ? [texto] : []);
+  const listaParagrafos = Array.isArray(pRaw) ? pRaw : [String(pRaw)];
+  
+  const escolhasRaw = evento.escolhas || evento.opcoes || [];
+  const escolhas = Array.isArray(escolhasRaw) ? escolhasRaw : [];
+  
+  const tipo = evento.tipo || 'padrão';
+  const npc = evento.npc;
 
-    const reflexao = {
-      virtuoso: 'Você tentou fazer o certo, mesmo sem garantias. Há luz em sua bússola.',
-      profano:  'Você cedeu à rotina e à ausência. Mas ainda há tempo para reacender.',
-      anomalia: 'Você recusou as regras. Talvez tenha visto algo que ninguém viu.'
-    }[build] || 'Você caminhou... mas ainda não se revelou por inteiro.';
+  document.body.dataset.eventoTipo = tipo;
 
-    const sugestao = {
-      virtuoso: 'Amanhã pode ser um dia de coragem.',
-      profano:  'O próximo dia testará sua apatia.',
-      anomalia: 'O inesperado aguarda no escuro.'
-    }[build] || 'A próxima página está em branco.';
-
-    const resumoNPC = interacoes.length
-    ? (() => {
-      const itens = interacoes.map((i) => {
-        const nome =
-        i?.nome ||
-        getNPCNome(i?.idNPC) ||   // <- puxa do cache carregado em npc.js
-        i?.idNPC ||
-        'NPC';
-    const caminho = String(i?.caminho || i?.build || '—').toUpperCase();
-    const fraseFalada = (i?.fala ?? i?.resposta ?? '…'); // evita “undefined”
-    return `<li>${escapeHTML(nome)}: <em>${escapeHTML(fraseFalada)}</em> <small>(${escapeHTML(caminho)})</small></li>`;
-      }).join('');
-      return `
-      <div class="relatorio-npc">
-      <p><strong>📜 Diálogos com NPCs:</strong></p>
-      <ul>${itens}</ul>
-      </div>`;
-    })()
-    : `<p><em>💬 Nenhuma interação com NPC registrada.</em></p>`;
-
-    const html = `
-    <section class="evento-fim fade-in" aria-live="polite" aria-label="Relatório do dia">
-    <h2>🕯️ ${escapeHTML(titulo)}</h2>
-    <p>${escapeHTML(ocultarMetanotasDeFim(descricao))}</p>
-
-    <div class="relatorio-final">
-    <p><strong>🧭 Caminho dominante:</strong> ${escapeHTML(build.toUpperCase())}</p>
-    <p><strong>🧮 Escolhas:</strong> Virtuoso: ${contagem.virtuoso || 0} · Profano: ${contagem.profano || 0} · Anomalia: ${contagem.anomalia || 0}</p>
-    <p><strong>🧩 Frase-chave final:</strong> "${escapeHTML(frase)}"</p>
-    <p><strong>💭 Reflexão:</strong> ${escapeHTML(reflexao)}</p>
-    <p><strong>🔮 Presságio:</strong> ${escapeHTML(sugestao)}</p>
-    ${resumoNPC}
-    </div>
-
-    <button id="btn-proximo-dia" class="ritual-final-btn" type="button" aria-label="Avançar para o próximo dia">
-    ▶️ Avançar para o próximo dia
-    </button>
-    </section>
-    `;
-
-    renderSafeHTML(destino, html);
-    scrollToTop(destino);
-
-    document.getElementById('btn-proximo-dia')?.addEventListener('click', () => {
-      document.dispatchEvent(new CustomEvent('avancarDia'));
-    });
-
-    // micro-reward quando chega ao fim
-    try { playChoiceReward(build); pulseBuildBadge(); } catch {}
-
-    return;
-  }
-
-  // 🎭 Bloco comum (com reward ao clicar)
-  const renderizarBloco = () => {
-    const html = `
-    <section class="evento-bloco fade-in" aria-live="polite">
-    <h2>${escapeHTML(titulo)}</h2>
-    <p>${escapeHTML(descricao)}</p>
-
-    ${
-      Array.isArray(opcoes) && opcoes.length > 0
-      ? `<div class="opcoes" role="group" aria-label="Opções de escolha">
-      ${opcoes.map(opcao => {
-        const dados = {
-          proximo:    opcao.proximo ?? null,
-          build:      opcao.buildImpact ?? null,
-          npc:        opcao.npc ?? null,
-          fraseChave: opcao.fraseChave ?? ''
-        };
-        return `
-        <div class="opcao-bloco">
-        <button type="button"
-        class="btn-opcao efeito-${escapeHTML(opcao.efeitoTexto || 'nenhum')}"
-        title="${escapeHTML(opcao.dica || '')}"
-        aria-label="${escapeHTML(opcao.texto || 'Opção')}"
-        data-id='${encodeURIComponent(JSON.stringify(dados))}'>
-        ${escapeHTML(opcao.texto)}
-        </button>
-        <span class="dica">${escapeHTML(opcao.dica || '')}</span>
-        </div>`;
-      }).join('')}
-      </div>`
-      : `<div class="sem-opcoes"><em>☕ Nada a escolher. Apenas sinta.</em></div>`
-    }
-    </section>
-    `;
-
-    renderSafeHTML(destino, html);
-    scrollToTop(destino);
-
-    // Acessibilidade: foca a primeira opção
-    focusFirstOption(destino);
-
-    // Handlers com reward visual
-    destino.querySelectorAll('.btn-opcao').forEach(botao => {
-      botao.addEventListener('click', (ev) => {
-        // efeito ripple local no botão (tolerante a falhas)
-        try { rippleOnButton(botao, ev); } catch {}
-
-        // despacha escolha
-        const dadosRaw = botao.dataset.id || '';
-        let dados = {};
-        try { dados = JSON.parse(decodeURIComponent(dadosRaw)); } catch {}
-        const buildEscolha = dados.build || buildDominante();
-
-        // reward coerente com a escolha
-        try { playChoiceReward(buildEscolha); pulseBuildBadge(); } catch {}
-
-        document.dispatchEvent(new CustomEvent('opcaoSelecionada', { detail: dados }));
-      }, { once: true }); // evita cliques duplos
-    });
-  };
-
-  // 🗣️ Se houver NPC, mostra antes do bloco
-  if (npc) {
-    const buildAtual = buildDominante();
-
-    let finalizou = false;
-    const seguraRender = () => {
-      if (finalizou) return;
-      finalizou = true;
-      renderizarBloco();
+  // 1. Montar HTML direto (SEM TYPEWRITER PARA TESTE)
+  const htmlNarrativa = listaParagrafos.map(p => `<p class="evento-narrativa" style="margin-bottom: 0.8em; opacity: 1; display: block;">${escapeHTML(p)}</p>`).join('');
+  
+  const htmlEscolhas = escolhas.map((escolha, idx) => {
+    const dados = {
+      id:            escolha.id || `c${idx}`,
+      proximo:       escolha.proximo ?? null,
+      consequencias: escolha.consequencias ?? null,
+      build:         escolha.buildImpact ?? escolha.build ?? null,
+      npc:           escolha.npc ?? null,
+      texto:         escolha.texto,
+      resumo:        escolha.resumo
     };
+    return `
+    <div class="opcao-bloco" style="margin-bottom: 10px;">
+      <button type="button"
+        class="btn-opcao btn-escolha"
+        style="opacity: 1 !important; visibility: visible !important; display: block !important; width: 100%; text-align: left; padding: 14px 18px; cursor: pointer;"
+        data-id='${encodeURIComponent(JSON.stringify(dados))}'>
+        ${escapeHTML(escolha.texto)}
+      </button>
+    </div>`;
+  }).join('');
 
-    try {
-      // Suporta Promise OU callback legado
-      const ret = dispararNPC(npc, buildAtual, seguraRender);
+  const htmlFinal = `
+  <section class="evento-bloco" style="opacity: 1; visibility: visible; display: block;">
+    <h2 class="evento-titulo" style="margin-bottom: 12px;">${escapeHTML(titulo)}</h2>
+    <div class="evento-texto">${htmlNarrativa}</div>
+    <div class="opcoes evento-escolhas" role="group" aria-label="Opções de escolha" style="opacity: 1; visibility: visible; display: flex; flex-direction: column; margin-top: 20px;">
+      ${htmlEscolhas}
+    </div>
+    ${escolhas.length === 0 ? '<div class="sem-opcoes"><em>☕ Nada a escolher.</em></div>' : ''}
+  </section>
+  `;
 
-      if (ret && typeof ret.then === 'function') {
-        ret.then(payload => {
-          if (payload && payload.idNPC) {
-            try {
-              registrarInteracaoNPC({
-                idNPC: payload.idNPC,
-                caminho: payload.caminho || buildAtual,
-                fala: payload.fala || ''
-              });
-            } catch {}
-          }
-        }).finally(seguraRender);
-      } else {
-        // API Legada: o próprio dispararNPC chamará a callback.
-        // Ainda assim, garantimos o bloco se nada vier:
-        setTimeout(() => {
-          const noConteudo = !destino.querySelector('.evento-bloco');
-          if (noConteudo) seguraRender();
-        }, 50);
+  // 2. Injeção direta no DOM
+  destino.innerHTML = htmlFinal;
+  
+  // Força scroll para o topo do container
+  destino.scrollTop = 0;
+
+  // 3. Ativar Handlers
+  destino.querySelectorAll('.btn-opcao').forEach(botao => {
+    botao.onclick = (ev) => {
+      try { rippleOnButton(botao, ev); } catch {}
+      const dadosRaw = botao.dataset.id || '';
+      try {
+        const dados = JSON.parse(decodeURIComponent(dadosRaw));
+        console.log('[renderer] Opção selecionada:', dados.texto);
+        document.dispatchEvent(new CustomEvent('opcaoSelecionada', { detail: dados }));
+      } catch (e) {
+        console.error('Erro ao processar clique:', e);
       }
+    };
+  });
+
+  // Notificar sistema
+  window.dispatchEvent(new CustomEvent('evento:renderizado', { detail: evento }));
+
+  // Se houver NPC, disparar também
+  if (npc) {
+    try {
+      dispararNPC(npc, buildDominante());
     } catch (e) {
-      console.warn('NPC falhou, seguindo sem diálogo.', e);
-      renderizarBloco();
+      console.warn('NPC falhou:', e);
     }
-  } else {
-    renderizarBloco();
   }
 }

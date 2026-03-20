@@ -1,0 +1,172 @@
+[
+  {
+    "id": "e_sebastiao_segredo",
+    "titulo": "O Que Ele Sabe",
+    "tipo": "arco",
+    "requer": { "flag": "dialogou_sebastiao" },
+    "texto": "Sebastião te encontra antes que você o encontre. Está esperando na esquina de sempre, mas desta vez com algo diferente na postura — menos peso, mais propósito. Ele fala antes que você abra a boca: 'Tem algo que você precisa saber sobre esta cidade. E sobre você.'",
+    "paragrafos": [
+      "Sebastião te encontra antes que você o encontre.",
+      "Está esperando na esquina de sempre, mas desta vez com algo diferente na postura — menos peso, mais propósito.",
+      "Ele fala antes que você abra a boca:",
+      "'Tem algo que você precisa saber sobre esta cidade. E sobre você.'"
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "\"Pode falar.\"",
+        "resumo": "O que ele disse mudou a textura do dia inteiro.",
+        "consequencias": {
+          "flag": "ouviu_segredo_sebastiao",
+          "relacao": { "sebastiao": 6 },
+          "karma": { "coragem": 8, "fe": 10 },
+          "proxima_quest": "q_sombra_do_passado"
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "\"Ainda não estou pronto para isso.\"",
+        "resumo": "Ele assentiu. 'Quando estiver, estarei aqui.'",
+        "consequencias": {
+          "karma": { "fe": 5, "astucia": 4 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "\"Como você sabe essas coisas sobre mim?\"",
+        "resumo": "'Porque eu estive onde você está', ele disse.",
+        "consequencias": {
+          "flag": "perguntou_origem_sebastiao",
+          "relacao": { "sebastiao": 4 },
+          "karma": { "coragem": 10, "astucia": 8 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_clara_historia",
+    "titulo": "A Janela Aberta",
+    "tipo": "arco",
+    "requer": { "flag": "visitou_clara" },
+    "texto": "A janela está aberta. É a primeira vez que você vê isso. Clara está do lado de fora — não dentro, mas no parapeito, sentada com os pés para fora como uma criança. Ela acena. Não parece a mesma pessoa que você viu atrás do vidro.",
+    "paragrafos": [
+      "A janela está aberta. É a primeira vez que você vê isso.",
+      "Clara está do lado de fora — não dentro, mas no parapeito, sentada com os pés para fora como uma criança.",
+      "Ela acena.",
+      "Não parece a mesma pessoa que você viu atrás do vidro."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Subir e conversar",
+        "resumo": "Ela contou. Não tudo. Mas o suficiente.",
+        "consequencias": {
+          "flag": "conhece_historia_clara",
+          "relacao": { "clara": 8 },
+          "karma": { "empatia": 12, "coragem": 6 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Acenar de volta e seguir",
+        "resumo": "Às vezes só saber que alguém está melhor já é suficiente.",
+        "consequencias": {
+          "relacao": { "clara": 3 },
+          "karma": { "empatia": 5 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_homem_faca",
+    "titulo": "A Faca no Chão",
+    "tipo": "dilema",
+    "requer": {},
+    "texto": "Fim de tarde. Uma briga no beco lateral — dois homens, um mais velho, um mais jovem. O mais jovem tem uma faca. Ainda não usou. Mas o espaço entre 'não usou' e 'vai usar' é um segundo. Você está a cinco metros.",
+    "paragrafos": [
+      "Fim de tarde.",
+      "Uma briga no beco lateral — dois homens, um mais velho, um mais jovem.",
+      "O mais jovem tem uma faca. Ainda não usou.",
+      "Mas o espaço entre 'não usou' e 'vai usar' é um segundo.",
+      "Você está a cinco metros."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Gritar — chamar atenção para o beco",
+        "resumo": "Eles se dispersaram. O mais jovem correu.",
+        "consequencias": {
+          "flag": "interrompeu_briga",
+          "karma": { "coragem": 12, "empatia": 8 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Entrar entre eles",
+        "resumo": "Funcionou. Com um custo.",
+        "consequencias": {
+          "flag": "entrou_na_briga",
+          "karma": { "coragem": 18, "empatia": 6 },
+          "virtude": 12
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Buscar ajuda rapidamente",
+        "resumo": "Quando voltou já tinha acabado. O mais velho estava sentado no chão.",
+        "consequencias": {
+          "flag": "buscou_ajuda_briga",
+          "karma": { "astucia": 8, "empatia": 5 },
+          "virtude": 6
+        }
+      },
+      {
+        "id": "c4",
+        "texto": "Não interferir",
+        "resumo": "Você ouviu o barulho mesmo depois de dobrar a esquina.",
+        "consequencias": {
+          "flag": "ignorou_briga",
+          "karma": { "astucia": 4 },
+          "virtude": -8
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_diario_encontrado",
+    "titulo": "O Diário",
+    "tipo": "misterio",
+    "requer": { "flag": "leu_carta_misteriosa" },
+    "texto": "O caderno estava entre outros livros velhos numa banca do mercado. O vendedor jura que nunca viu antes, que apareceu do nada. A capa tem o mesmo símbolo da carta — triângulo, quadrado, círculo. As páginas estão em branco. Exceto a última.",
+    "paragrafos": [
+      "O caderno estava entre outros livros velhos numa banca do mercado.",
+      "O vendedor jura que nunca viu antes, que apareceu do nada.",
+      "A capa tem o mesmo símbolo da carta — triângulo, quadrado, círculo.",
+      "As páginas estão em branco.",
+      "Exceto a última."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ler a última página",
+        "resumo": "Quatro palavras. Seu nome. E uma data futura.",
+        "consequencias": {
+          "flag": "leu_ultima_pagina",
+          "item": "diario_do_simbolo",
+          "karma": { "fe": 14, "astucia": 8 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Comprar sem ler",
+        "resumo": "Você pagou mais do que devia. Valeu.",
+        "consequencias": {
+          "flag": "comprou_diario",
+          "item": "diario_do_simbolo",
+          "karma": { "fe": 10, "coragem": 5 }
+        }
+      }
+    ]
+  }
+]

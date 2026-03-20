@@ -1,31 +1,9 @@
-// 🎨 ORDEM IMPORTANTE (do mais genérico → para o mais específico)
+// 📁 src/main.js
+import './performance-guard.js'; // PRIMEIRO
+import './ui/fundo-geom.js'; // stub
+import './ui/fog.js';       // stub
 
-// Base / layout comuns
-import './styles/base.css';
-
-// HUD, evento e botões
-import './styles/hud.css';
-import './styles/evento.css';
-import './styles/botoes.css';
-
-// Utilitários e UI
-import './styles/dicas.css';
-import './styles/titulo-animado.css';
-import './styles/tooltip-hud.css';
-import './styles/intro.css';
-import './styles/reward-choice.css';
-
-// Tema (grimório/caverna) e patch responsivo
-import './styles/tema.css';
-import './styles/patch-responsivo-ritual-v1.css';
-
-// 🔧 Hotfix deve ser sempre o ÚLTIMO para prevalecer
-import './styles/hotfix.css';
-import './styles/embed-fix.css';
-
-
-
-// 🔧 Núcleo
+// Core
 import { renderizarEvento } from './core/renderer.js';
 import { carregarDiaAtual, salvarProgresso, avancarDia } from './core/storage.js';
 import { atualizarHUD } from './ui/hud.js';
@@ -38,39 +16,53 @@ import {
   resetarInteracoesNPC,
 } from './core/buildTracker.js';
 
-import './ui/dicas.js';
-import './ui/fog.js';
+import {
+  criarEstadoNarrativo,
+  serializarEstadoNarrativo,
+  deserializarEstadoNarrativo,
+  aplicarConsequencia,
+  eventoDisponivel,
+  verificarExpiracoes,
+  calcularBuild,
+  registrarHistorico
+} from './core/state-extensions.js';
+import { salvar, carregar, temSave } from './core/save.js';
+import { carregarEventosDoDia, filtrarEventosDisponiveis, carregarQuests } from './core/event-loader.js';
 
-// ✨ UI Rewards
+// UI
+import { iniciarIntro } from './ui/intro.js';
+import { abrirDiario } from './ui/diario.js';
+import { transicaoDia, transicaoFinal } from './ui/dia-transicao.js';
 import { playChoiceReward, pulseBuildBadge } from './ui/rewardChoice.js';
-
-// ✨ UI mostrarCreditos
 import { mostrarCreditos } from './ui/credits.js';
+import { inicializarPatch, processarEscolha, avancarDia as avancarDiaPatch } from './core/renderer-patch.js';
 
-// 📊 Estado global
+// Styles
+import './styles/base.css';
+import './styles/hud.css';
+import './styles/evento.css';
+import './styles/botoes.css';
+import './styles/dicas.css';
+import './styles/titulo-animado.css';
+import './styles/tooltip-hud.css';
+import './styles/intro.css';
+import './styles/reward-choice.css';
+import './styles/tema.css';
+import './styles/patch-responsivo-ritual-v1.css';
+import './styles/hotfix.css';
+import './styles/embed-fix.css';
+
+// 📊 Estado global harmonizado
 let estado = {
-  diaAtual: 1,
+  ...criarEstadoNarrativo(),
+  dia: 1,
+  build: 'anomalia', // Default explícito
+  nomeDia: 'Dia 1',
   eventoAtual: null,
   eventos: [],
-  build: 'profano',
-  nomeDia: '',
 };
 
 const eventoContainer = document.getElementById('evento');
-
-/* ---------------------------------------
- *   Helpers de dados (URLs seguras no dev e no build)
- * ----------------------------------------*/
-// ⇣ Caminho RELATIVO (funciona em Vercel e itch.io)
-const dataUrl = (name) => new URL(`./data/${name}`, document.baseURI).toString();
-
-async function loadJson(name) {
-  const url = dataUrl(name);
-  console.log('[loadJson]', url);
-  const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) throw new Error(`${name} falhou: ${res.status} ${res.statusText}`);
-  return res.json();
-}
 
 /* ---------------------------------------
  *   Boot
@@ -78,35 +70,24 @@ async function loadJson(name) {
 async function iniciarJogo() {
   try {
     console.log('🎮 Iniciando jogo...');
-    const progressoSalvo = carregarDiaAtual();
-    if (progressoSalvo) {
-      estado = progressoSalvo;
-      console.log('📁 Progresso carregado:', progressoSalvo);
+    const raw = await carregar();
+    if (raw) {
+      const carregado = deserializarEstadoNarrativo(raw);
+      Object.assign(estado, carregado);
+      console.log('📁 Progresso carregado:', estado);
     }
 
-    // 🔒 Normalizações leves
-    if (!Number.isFinite(estado.diaAtual) || estado.diaAtual < 1) {
-      estado.diaAtual = 1;
-    }
-    // âncoras tipo "fim", "fim2", "d2_fim" etc. não valem como ponto de partida
-    if (typeof estado.eventoAtualId === 'string' && /(^|[_\W-])fim\d*$/i.test(estado.eventoAtualId)) {
-      estado.eventoAtualId = null;
-      try { salvarProgresso({ diaAtual: estado.diaAtual, eventoAtualId: null }); } catch {}
-    }
+    if (!Number.isFinite(estado.dia) || estado.dia < 1) estado.dia = 1;
+    
+    // Define build baseado no karma carregado (ou padrão)
+    estado.build = calcularBuild(estado.karma);
+    estado.nomeDia = `Dia ${estado.dia}`;
 
-    // 🔑 Preserve a build do save para exibir coerente no novo dia
-    const buildInicial = typeof estado.build === 'string' ? estado.build : 'profano';
+    await inicializarPatch(estado);
+    await carregarDia(estado.dia);
 
-    // Carrega o dia atual (se não existir, o próprio carregamento trata)
-    await carregarDia(estado.diaAtual);
-
-    // HUD/título com a build salva (sem recalcular agora)
-    estado.build = buildInicial;
     atualizarHUD(estado.nomeDia, estado.build);
     atualizarGlowTitulo(estado.build);
-
-    // Zera apenas o acumulador diário
-    try { resetarBuild(); } catch {}
 
   } catch (err) {
     console.error('💥 Falha ao iniciar o jogo:', err);
@@ -118,359 +99,202 @@ async function iniciarJogo() {
  * ----------------------------------------*/
 async function carregarDia(numeroDia) {
   try {
-    console.log('[carregarDia] numeroDia =', numeroDia);
-
-    const url = dataUrl(`dia${numeroDia}.json`);
-    console.log('[carregarDia] URL =', url);
-
-    const resposta = await fetch(url, { cache: 'no-store' });
-    if (!resposta.ok) {
-      // 👉 Dia inexistente
-      throw new Error(`Dia ${numeroDia} indisponível (${resposta.status} ${resposta.statusText}).`);
+    console.log(`[carregarDia] numeroDia = ${numeroDia}`);
+    const eventosValidos = await avancarDiaPatch(numeroDia);
+    
+    if (!eventosValidos || eventosValidos.length === 0) {
+       console.warn('⚠️ Nenhum evento retornado para o dia', numeroDia);
+       return;
     }
 
-    const dadosDia = await resposta.json();
+    estado.eventos = eventosValidos;
+    estado.nomeDia = `Dia ${numeroDia}`;
+    
+    // Reset/Define evento inicial do dia
+    estado.eventoAtual = eventosValidos[0];
 
-    // Eventos do dia
-    const blocos = Array.isArray(dadosDia.blocos) ? dadosDia.blocos : [];
-    estado.eventos = blocos;
-    estado.nomeDia = dadosDia.nome || `Dia ${numeroDia}`;
+    console.log(`[carregarDia] Renderizando evento inicial: ${estado.eventoAtual?.titulo}`);
 
-    // Se o JSON está vazio/sem blocos, trate como inválido
-    if (blocos.length === 0) {
-      throw new Error(`Dia ${numeroDia} sem blocos válidos.`);
-    }
-
-    // Seleção do bloco inicial guiada por âncora (ignorando âncoras "fim*")
-    const ancoraValida =
-    (typeof estado.eventoAtualId === 'string' && !/^fim/i.test(estado.eventoAtualId))
-    ? estado.eventoAtualId
-    : null;
-
-    const blocoInicial = ancoraValida
-    ? (blocos.find(b => b?.id === ancoraValida) || blocos[0] || null)
-    : (blocos[0] || null);
-
-    if (!blocoInicial) {
-      // Sem bloco inicial resolvível
-      throw new Error(`Dia ${numeroDia} sem bloco inicial resolvível.`);
-    }
-
-    estado.eventoAtual = blocoInicial;
-
-    // Tooltip do botão "DIA"
-    const hudDia = document.getElementById('hud-dia');
-    if (hudDia) {
-      if (dadosDia.fraseInspiradora) {
-        hudDia.setAttribute('data-frase', dadosDia.fraseInspiradora);
-      } else {
-        hudDia.removeAttribute('data-frase');
-      }
-    }
-
-    // HUD coerente com a build atual
     atualizarHUD(estado.nomeDia, estado.build);
     atualizarGlowTitulo(estado.build);
-
-    // Persiste âncora leve do bloco atual (se houver)
-    try {
-      const idAtual = typeof blocoInicial.id === 'string' ? blocoInicial.id : null;
-      salvarProgresso({ diaAtual: numeroDia, eventoAtualId: idAtual });
-    } catch {}
-
-    // Renderização
     renderizarEvento(estado.eventoAtual, eventoContainer);
 
   } catch (erro) {
     console.error('❌ Erro ao carregar o dia:', erro);
-
-    // 👉 Dia 1: NÃO enviar aos créditos; mostrar diagnóstico
-    if (numeroDia === 1) {
-      eventoContainer.innerHTML = `
-      <section class="erro fatal">
-      <h3>Dia 1 indisponível ou inválido</h3>
-      <p>Verifique se <code>public/data/dia1.json</code> está no deploy e acessível em <code>/data/dia1.json</code>.</p>
-      </section>`;
-      return;
-    }
-
-    // Demais dias: encerramento elegante com Créditos, respeitando a build atual
-    try {
-      mostrarCreditos({
-        build: estado.build || 'misto',
-        stats: {} // opcional: passe métricas agregadas aqui
-      });
-    } catch (e2) {
-      // Fallback visual
-      eventoContainer.innerHTML = `
-      <div class="erro">
-      <p>⚠️ Dia ${numeroDia} não encontrado ou JSON inválido.</p>
-      <p>Confirme a existência de <code>/data/dia${numeroDia}.json</code>.</p>
-      </div>`;
-    }
+    eventoContainer.innerHTML = `<div class="erro"><p>⚠️ Falha ao carregar o Dia ${numeroDia}.</p></div>`;
   }
 }
 
-/* ---------------------------------------
- *   Visual — título ritualístico
- * ----------------------------------------*/
 function atualizarGlowTitulo(build) {
   document.body.classList.remove('build-virtuoso', 'build-profano', 'build-anomalia');
   document.body.classList.add(`build-${build}`);
-
   const titulo = document.querySelector('.titulo-animado');
   if (titulo) {
-    // reativa o glow para animar transição de cor conforme a build
     titulo.classList.remove('glow');
     setTimeout(() => titulo.classList.add('glow'), 50);
   }
 }
 
-/* ---------------------------------------
- *   Avanço de dia (com trava por catálogo de dias)
- * ----------------------------------------*/
 async function proximoDiaDisponivel(diaAtual) {
   try {
     const r = await fetch(new URL('./data/dias.json', document.baseURI), { cache: 'no-store' });
     if (!r.ok) return null;
     const dias = await r.json();
-    const max = Array.isArray(dias) ? dias.length : 8;
+    const max = Array.isArray(dias) ? dias.length : 13;
     const candidato = Number(diaAtual) + 1;
     return candidato <= max ? candidato : null;
-  } catch {
-    return null;
-  }
+  } catch { return null; }
 }
 
 document.addEventListener('avancarDia', async () => {
   try { resetarInteracoesNPC?.(); } catch {}
-  const prox = await proximoDiaDisponivel(estado.diaAtual);
+  
+  const prox = await proximoDiaDisponivel(estado.dia);
   if (!prox) {
     try { mostrarCreditos({ build: estado.build || 'misto' }); } catch {}
     return;
   }
-  salvarProgresso({ diaAtual: prox, eventoAtualId: null });
-  try { window.location.reload(); } catch {}
+  
+  if (prox === 13) await transicaoFinal();
+  else await transicaoDia(prox);
+  
+  estado.dia = prox;
+  estado.eventoAtual = null;
+  await salvar(serializarEstadoNarrativo(estado));
+  window.location.reload();
 });
 
 /* ---------------------------------------
- *   Escolha do jogador (evento vindo do renderer)
+ *   Escolha do jogador
  * ----------------------------------------*/
-document.addEventListener('opcaoSelecionada', (e) => {
-  // e.detail = { proximo, build, npc, fraseChave }
+document.addEventListener('opcaoSelecionada', async (e) => {
   const dados = { ...e.detail };
+  console.log('[opcaoSelecionada]', dados.texto);
 
-  // 1) registra build e recalcula dominante
-  if (dados.build) registrarEscolha(dados.build);
-  estado.build = buildDominante();
-
-  // 2) feedback visual (reward + pulso no badge)
   try {
+    const { buildAtualizado } = await processarEscolha(dados, estado.eventoAtual);
+    if (buildAtualizado) estado.build = buildAtualizado;
+
     playChoiceReward(estado.build);
     pulseBuildBadge();
-  } catch {}
 
-  // 3) encontra próximo evento
-  let proximoEvento = estado.eventos.find((ev) => ev.id === dados.proximo);
+    let proximoEvento = null;
+    if (dados.proximo) proximoEvento = estado.eventos.find((ev) => ev.id === dados.proximo);
 
-  // se não houver, tenta bloco de FIM
-  if (!proximoEvento) {
-    proximoEvento = estado.eventos.find((ev) => ev.tipo === 'fim');
     if (!proximoEvento) {
-      console.warn('⚠️ Evento de destino e de fim não encontrados.');
-      // avanço apenas se catálogo permitir (via listener separado)
+      const idx = estado.eventos.findIndex(ev => ev.id === estado.eventoAtual?.id);
+      if (idx !== -1 && idx < estado.eventos.length - 1) proximoEvento = estado.eventos[idx + 1];
+    }
+
+    if (!proximoEvento) {
+      console.log('[main] Fim dos eventos do dia.');
       document.dispatchEvent(new CustomEvent('avancarDia'));
       return;
     }
+
+    estado.eventoAtual = proximoEvento;
+    
+    atualizarHUD(estado.nomeDia, estado.build);
+    atualizarGlowTitulo(estado.build);
+    renderizarEvento(estado.eventoAtual, eventoContainer);
+  } catch (err) {
+    console.error('Erro ao processar escolha:', err);
   }
-
-  // 4) atualiza estado, HUD e render
-  estado.eventoAtual = proximoEvento;
-  salvarProgresso(estado);
-  atualizarHUD(estado.nomeDia, estado.build);
-  atualizarGlowTitulo(estado.build);
-
-  // Deixe o renderer decidir se há NPC e disparar o diálogo.
-  renderizarEvento(proximoEvento, eventoContainer);
 });
 
 /* ---------------------------------------
- *   Resposta de NPC (seu sistema de NPC aciona este evento)
+ *   Resposta de NPC
  * ----------------------------------------*/
-const TONE2BUILD = {
-  'virtuoso': 'virtuoso',
-  'firmeza-respeitosa': 'virtuoso',
-  'cético-educado': 'anomalia',
-  'humor-leve': 'anomalia',
-  'pedir-detalhe': 'virtuoso',
-  'silencio-atento': 'virtuoso',
-  'profano': 'profano',
-  'anomalia': 'anomalia'
-};
-
 document.addEventListener('respostaNPC', (event) => {
   const det = event?.detail || {};
-  const buildEscolha = det.build || TONE2BUILD[det.tone] || null;
+  console.log('[respostaNPC]', det.fala);
+
+  const buildEscolha = det.build || null;
   const impacto = det.impacto || null;
 
-  // 1) Aplica moral de forma atômica (se existir API estendida)
-  try {
-    if (typeof registrarEscolhaComImpacto === 'function') {
-      registrarEscolhaComImpacto(buildEscolha || buildDominante(), impacto || undefined);
-    } else {
-      if (buildEscolha) registrarEscolha(buildEscolha);
-      if (impacto && typeof aplicarImpacto === 'function') aplicarImpacto(impacto);
-    }
-  } catch {
-    if (buildEscolha) registrarEscolha(buildEscolha);
-  }
+  if (buildEscolha) registrarEscolha(buildEscolha);
+  if (impacto) aplicarConsequencia(estado, { karma: impacto });
 
-  // 2) Registra a interação completa
-  if (typeof registrarInteracaoNPC === 'function') {
-    registrarInteracaoNPC({
-      idNPC: det.idNPC,
-      nome: det.nome,
-      fala: det.fala,
-      caminho: buildEscolha || det.build || det.caminho || buildDominante(),
-                          tone: det.tone || null,
-                          impacto: impacto || null
-    });
-  }
+  registrarInteracaoNPC({
+    idNPC: det.idNPC,
+    nome: det.nome,
+    fala: det.fala,
+    caminho: buildEscolha || buildDominante()
+  });
 
-  // 3) Recalcula estado visual pós-escolha
-  estado.build = buildDominante();
+  estado.build = calcularBuild(estado.karma);
   atualizarHUD(estado.nomeDia, estado.build);
   atualizarGlowTitulo(estado.build);
 
-  // 4) Decide o próximo bloco
-  const eventoAtual = estado.eventoAtual;
-  if (!eventoAtual?.opcoes?.length) return;
-
-  const prefer = buildEscolha || TONE2BUILD[det.tone] || null;
-
+  const escolhas = estado.eventoAtual?.escolhas || estado.eventoAtual?.opcoes || [];
   let proximoId = null;
-  if (prefer) {
-    const match = eventoAtual.opcoes.find(o => o.buildImpact === prefer);
-    if (match) proximoId = match.proximo || null;
+  if (buildEscolha) {
+    const match = escolhas.find(o => (o.buildImpact || o.build) === buildEscolha);
+    proximoId = match?.proximo || null;
   }
 
-  if (!proximoId) {
-    const fim = eventoAtual.opcoes.find(o => o.proximo && o.proximo.toLowerCase().includes('fim'));
-    proximoId = fim?.proximo || eventoAtual.opcoes[0]?.proximo || null;
+  if (!proximoId && escolhas.length > 0) {
+    const fim = escolhas.find(o => o.proximo?.toLowerCase().includes('fim'));
+    proximoId = fim?.proximo || escolhas[0]?.proximo || null;
   }
-  if (!proximoId) return;
 
-  const proximoEvento = estado.eventos.find((e) => e.id === proximoId);
-  if (!proximoEvento) return;
+  let proximoEvento = proximoId ? estado.eventos.find(e => e.id === proximoId) : null;
+  if (!proximoEvento) {
+    const idx = estado.eventos.findIndex(ev => ev.id === estado.eventoAtual?.id);
+    if (idx !== -1 && idx < estado.eventos.length - 1) proximoEvento = estado.eventos[idx + 1];
+  }
+
+  if (!proximoEvento) {
+    document.dispatchEvent(new CustomEvent('avancarDia'));
+    return;
+  }
 
   estado.eventoAtual = proximoEvento;
-  salvarProgresso(estado);
   renderizarEvento(proximoEvento, eventoContainer);
 });
 
 /* ---------------------------------------
  *   Intro + início
  * ----------------------------------------*/
-document.addEventListener('DOMContentLoaded', () => {
-  // --- Tela inicial com "Iniciar" / "Continuar"
+document.addEventListener('DOMContentLoaded', async () => {
   const telaInicial = document.getElementById('tela-inicial');
   const btnIniciar  = document.getElementById('btn-iniciar');
   const btnContinuar = document.getElementById('btn-continuar');
 
-  // Se houver progresso salvo, mostra "Continuar"
-  const progressoExistente = JSON.parse(localStorage.getItem('progresso') || 'null');
-  if (progressoExistente && progressoExistente.diaAtual >= 1) {
-    btnContinuar?.removeAttribute('hidden');
-  }
+  if (await temSave()) btnContinuar?.removeAttribute('hidden');
 
-  function ocultarTelaInicial(){
+  btnIniciar?.addEventListener('click', async () => {
+    console.log('[main] Iniciar novo jogo');
+    localStorage.clear();
     telaInicial?.classList.add('oculta');
-  }
-
-  btnIniciar?.addEventListener('click', () => {
-    // Começar do zero: limpa intro e save (se quiser reset total, descomente a linha)
-    // localStorage.removeItem('progresso');
-    localStorage.removeItem('introExibida');
-    ocultarTelaInicial();
-
-    // Mostra a intro (se for Dia 1) ou começa direto
-    iniciarJogo();
+    
+    const introCinematica = document.getElementById('intro-cinematica');
+    if (introCinematica) {
+      introCinematica.classList.remove('oculta');
+      
+      // Iniciar carregamento em paralelo com a intro
+      const pJogo = iniciarJogo(); 
+      
+      await iniciarIntro();
+      await pJogo;
+    } else {
+      iniciarJogo();
+    }
   });
 
   btnContinuar?.addEventListener('click', () => {
-    ocultarTelaInicial();
-    // Não mexe na introExibida; apenas retoma do save
+    console.log('[main] Botão Continuar clicado');
+    telaInicial?.classList.add('oculta');
     iniciarJogo();
   });
-  // Título: typing + glow dinâmico
+
+  const btnDiario = document.getElementById('btn-diario');
+  btnDiario?.addEventListener('click', () => abrirDiario(estado));
+
   const titulo = document.querySelector('.titulo-animado');
   if (titulo && !titulo.classList.contains('glow')) {
-    const textoTitulo = titulo.textContent || '';
-    titulo.style.animation = `
-    typing 3.5s steps(${textoTitulo.length || 24}, end) forwards,
-                          blink-caret 0.75s step-end infinite
-                          `;
-                          setTimeout(() => titulo.classList.add('glow'), 3600);
-  }
-
-  // Impede o título de bloquear cliques
-  const tituloRitual = document.querySelector('.titulo-ritual');
-  if (tituloRitual) tituloRitual.style.pointerEvents = 'none';
-
-  // Cinemática de abertura (opcional)
-  const intro = document.getElementById('intro-cinematica');
-  const texto = document.getElementById('intro-texto');
-  const botaoPular = document.getElementById('pular-intro');
-
-  const introExibida = localStorage.getItem('introExibida');
-  // ⇣ Usa o MESMO storage do jogo para decidir o dia da intro
-  let diaAtualIntro = 1;
-  try { diaAtualIntro = (carregarDiaAtual()?.diaAtual) || 1; } catch {}
-  const deveExibirIntro = !introExibida && diaAtualIntro === 1;
-
-  if (deveExibirIntro && intro && texto && botaoPular) {
-    intro.classList.add('mostrar');
-
-    const frases = [
-      '☉ 7 Lives',
-      'Não é apenas um jogo.',
-      'É um espelho de escolhas, de silêncio e de ruínas.',
-      'Cada decisão deixa um traço — visível ou oculto.',
-      'Aqui, virtude, desordem e anomalia não são só caminhos.',
-      'São reflexos de quem você decide ser.',
-      'Respire fundo.',
-      'O julgamento não vem de fora.',
-      'Ele brota de dentro.',
-      'Comece.'
-    ];
-
-    let i = 0;
-    const exibirFrase = () => {
-      if (i >= frases.length) {
-        esconderIntro();
-        iniciarJogo();
-        return;
-      }
-      texto.innerHTML = frases[i++];
-      setTimeout(exibirFrase, 2200);
-    };
-
-    const esconderIntro = () => {
-      intro.classList.add('ocultar');
-      localStorage.setItem('introExibida', 'true');
-    };
-
-    botaoPular.addEventListener('click', () => {
-      esconderIntro();
-      iniciarJogo();
-    });
-
-    exibirFrase();
-  } else {
-    // sem intro — segue o jogo
-    setTimeout(() => {
-      if (intro) intro.classList.add('ocultar');
-      iniciarJogo();
-    }, 30);
+    const txt = titulo.textContent || '';
+    titulo.style.animation = `typing 3.5s steps(${txt.length || 24}, end) forwards, blink-caret 0.75s step-end infinite`;
+    setTimeout(() => titulo.classList.add('glow'), 3600);
   }
 });

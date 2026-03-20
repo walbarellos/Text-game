@@ -1,0 +1,228 @@
+<!-- 
+  NUCLEAR FIX — colar exatamente assim, como ÚLTIMA tag antes de </body>
+  Não precisa de import, não precisa de módulo, funciona standalone.
+-->
+<script>
+(function() {
+  'use strict';
+
+  // ── 1. FORÇA CHOICES VISÍVEIS ──────────────────────────────────────────
+  // Monitora o #evento. Sempre que .opcoes ou botões aparecerem,
+  // força opacity:1 e pointer-events:auto após 100ms.
+  // Isso cobre o caso onde o typewriter trava e nunca chama finalizarRender.
+
+  var MAX_WAIT_MS = 3000; // 3s = timeout máximo para mostrar choices
+
+  function forcarChoicesVisiveis(container) {
+    var candidatos = container.querySelectorAll(
+      '.opcoes, .evento-escolhas, [class*="opcao"], [class*="escolha"], [class*="choice"]'
+    );
+
+    candidatos.forEach(function(el) {
+      el.style.opacity = '1';
+      el.style.pointerEvents = 'auto';
+      el.style.visibility = 'visible';
+      el.style.display = el.style.display === 'none' ? 'flex' : el.style.display;
+    });
+
+    // Também força todos os botões dentro do #evento
+    var botoes = container.querySelectorAll('button.btn-opcao, button.btn-escolha');
+    botoes.forEach(function(btn) {
+      btn.style.opacity = '1';
+      btn.style.pointerEvents = 'auto';
+      btn.style.visibility = 'visible';
+    });
+  }
+
+  var eventoEl = document.getElementById('evento');
+  if (!eventoEl) {
+    // Espera o DOM
+    document.addEventListener('DOMContentLoaded', function() {
+      eventoEl = document.getElementById('evento');
+      if (eventoEl) iniciarObserver(eventoEl);
+    });
+  } else {
+    iniciarObserver(eventoEl);
+  }
+
+  function iniciarObserver(container) {
+    var timer = null;
+
+    var observer = new MutationObserver(function(mutations) {
+      var temNovoBotao = mutations.some(function(m) {
+        return Array.from(m.addedNodes).some(function(n) {
+          return n.nodeType === 1 && (
+            n.querySelector && (
+              n.querySelector('.opcoes') ||
+              n.querySelector('.btn-opcao') ||
+              n.querySelector('.btn-escolha') ||
+              n.querySelector('button')
+            )
+          );
+        });
+      });
+
+      if (temNovoBotao) {
+        // Cancela timer anterior se houver
+        if (timer) clearTimeout(timer);
+
+        // Aguarda o typewriter no máximo MAX_WAIT_MS, depois força
+        timer = setTimeout(function() {
+          forcarChoicesVisiveis(container);
+        }, MAX_WAIT_MS);
+
+        // Também tenta em 500ms — se já apareceram rápido
+        setTimeout(function() {
+          var opcoes = container.querySelector('.opcoes, .evento-escolhas');
+          if (opcoes && opcoes.style.opacity === '0') {
+            // Typewriter ainda não terminou — aguarda mais
+          } else if (opcoes) {
+            forcarChoicesVisiveis(container);
+            if (timer) { clearTimeout(timer); timer = null; }
+          }
+        }, 500);
+      }
+    });
+
+    observer.observe(container, { childList: true, subtree: true });
+
+    // Também força imediatamente se já tem conteúdo
+    forcarChoicesVisiveis(container);
+  }
+
+  // ── 2. FORÇA CHOICES APÓS CLICK ───────────────────────────────────────
+  // Se o jogador clica numa choice e nada acontece (crash no handler),
+  // este fallback renderiza uma mensagem de erro e tenta avançar.
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.btn-opcao, .btn-escolha');
+    if (!btn) return;
+
+    // Após 2s do click, se o #evento não mudou, força próximo estado
+    var eventoEl = document.getElementById('evento');
+    var htmlAntes = eventoEl ? eventoEl.innerHTML : '';
+
+    setTimeout(function() {
+      var eventoAtual = document.getElementById('evento');
+      if (!eventoAtual) return;
+
+      // Se o HTML não mudou em 2s, o handler travou
+      if (eventoAtual.innerHTML === htmlAntes) {
+        console.warn('[nuclear-fix] Click handler travado — forçando visibilidade das choices');
+        forcarChoicesVisiveis(eventoAtual);
+
+        // Tenta disparar o evento de resposta manualmente se possível
+        try {
+          var dadosRaw = btn.getAttribute('data-id');
+          if (dadosRaw) {
+            var dados = JSON.parse(decodeURIComponent(dadosRaw));
+            document.dispatchEvent(new CustomEvent('respostaNPC', { detail: dados }));
+            document.dispatchEvent(new CustomEvent('escolha:feita', { detail: dados }));
+            window.dispatchEvent(new CustomEvent('escolha:feita', { detail: dados }));
+          }
+        } catch(ex) {
+          console.warn('[nuclear-fix] Não conseguiu reparsar dados do botão:', ex);
+        }
+      }
+    }, 2000);
+  });
+
+  // ── 3. FIX DO BOTÃO PULAR ─────────────────────────────────────────────
+  // Garante que o botão pular existe e funciona.
+  document.addEventListener('DOMContentLoaded', function() {
+    var pular = document.getElementById('pular-intro');
+    if (!pular) return;
+
+    // Garante que está sempre visível quando a intro está ativa
+    var intro = document.getElementById('intro-cinematica');
+    if (intro && !intro.classList.contains('oculta')) {
+      pular.style.display = 'block';
+      pular.style.opacity = '0.5';
+    }
+
+    // Se não tiver handler, adiciona um básico
+    pular.addEventListener('click', function() {
+      var cinematica = document.getElementById('intro-cinematica');
+      if (!cinematica) return;
+      cinematica.style.opacity = '0';
+      cinematica.style.transition = 'opacity 0.5s ease';
+      setTimeout(function() {
+        cinematica.style.display = 'none';
+        cinematica.classList.add('oculta');
+      }, 550);
+    });
+  });
+
+  // ── 4. CSS INLINE DE EMERGÊNCIA ───────────────────────────────────────
+  // Garante que choices são visíveis por CSS também, como última linha de defesa.
+  var style = document.createElement('style');
+  style.textContent = [
+    '#evento .opcoes,',
+    '#evento .evento-escolhas,',
+    '#evento [class*="escolha"],',
+    '#evento [class*="opcao"] {',
+    '  display: flex !important;',
+    '  flex-direction: column !important;',
+    '  gap: 10px !important;',
+    '  opacity: 1 !important;',         // override do opacity:0 do renderer
+    '  pointer-events: auto !important;',
+    '  visibility: visible !important;',
+    '}',
+    '',
+    '#evento button.btn-opcao,',
+    '#evento button.btn-escolha {',
+    '  display: block !important;',
+    '  opacity: 1 !important;',
+    '  pointer-events: auto !important;',
+    '  visibility: visible !important;',
+    '  width: 100% !important;',
+    '  text-align: left !important;',
+    '  padding: 14px 18px !important;',
+    '  background: rgba(10,12,14,0.75) !important;',
+    '  border: 1px solid rgba(201,162,39,0.22) !important;',
+    '  border-radius: 8px !important;',
+    '  color: rgba(232,220,200,0.9) !important;',
+    '  font-family: "Share Tech Mono", monospace !important;',
+    '  font-size: clamp(12px,1.8vw,14px) !important;',
+    '  line-height: 1.55 !important;',
+    '  cursor: pointer !important;',
+    '  transition: border-color .2s, background .2s !important;',
+    '}',
+    '',
+    '#evento button.btn-opcao:hover,',
+    '#evento button.btn-escolha:hover {',
+    '  border-color: rgba(201,162,39,0.55) !important;',
+    '  background: rgba(20,15,4,0.9) !important;',
+    '}',
+    '',
+    // Titulo do evento
+    '#evento .evento-titulo,',
+    '#evento h2 {',
+    '  font-family: Georgia, serif !important;',
+    '  font-size: clamp(15px,2.5vw,20px) !important;',
+    '  font-weight: 400 !important;',
+    '  color: rgba(232,220,200,0.92) !important;',
+    '  letter-spacing: .04em !important;',
+    '  margin: 0 0 12px !important;',
+    '}',
+    '',
+    // Texto narrativo
+    '#evento .evento-texto p,',
+    '#evento .evento-narrativa {',
+    '  font-family: "Share Tech Mono", monospace !important;',
+    '  font-size: clamp(13px,1.9vw,15px) !important;',
+    '  line-height: 1.8 !important;',
+    '  color: rgba(218,208,192,0.88) !important;',
+    '  margin: 0 0 .7em !important;',
+    '}',
+    '',
+    // Botão pular sempre visível quando intro ativa
+    '#intro-cinematica:not(.oculta) #pular-intro {',
+    '  display: block !important;',
+    '  opacity: 0.5 !important;',
+    '}',
+  ].join('\n');
+  document.head.appendChild(style);
+
+  console.log('[nuclear-fix] Instalado — choices forçadas visíveis, botão pular garantido.');
+})();
+</script>

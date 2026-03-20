@@ -40,29 +40,21 @@
     #fx-sparks{
       position:fixed; inset:0; pointer-events:none;
       z-index:3; /* acima do canvas de fundo e abaixo do HUD/conteúdo */
+      will-change: opacity;
     }
     /* Anéis/brasas nas bordas */
-    #fx-bordas::before,
-    #fx-bordas::after{
-      content:"";
-      position:absolute; inset:0;
-      background:
-        radial-gradient(120% 120% at 0% 100%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
-        radial-gradient(120% 120% at 100% 100%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
-        radial-gradient(120% 120% at 0% 0%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
-        radial-gradient(120% 120% at 100% 0%, #0000 0 55%, #ff7a001c 68%, #ffb30014 78%, #0000 90%),
-        linear-gradient(180deg, #0000, #ff7a0012 10%, #0000 30%),
-        linear-gradient(0deg,   #0000, #ff7a0012 10%, #0000 30%);
-      filter: var(--fx-glow);
+    #fx-bordas{
+      background-image: url('./assets/fx-bordas.png');
+      background-size: cover;
       mix-blend-mode: screen;
       animation: fx-breath 5.5s ease-in-out infinite;
+      will-change: opacity;
     }
     #fx-bordas::after{
-      opacity:.6; animation-duration:7.5s;
-      background:
-        radial-gradient(130% 90% at 50% 0%,   #ffb30010 15%, #0000 55%),
-        radial-gradient(130% 90% at 50% 100%, #ff7a0010 15%, #0000 55%),
-        var(--fx-fire);
+      content: "";
+      position: absolute; inset: 0;
+      background: var(--fx-fire);
+      opacity:.6; animation: fx-breath 7.5s ease-in-out infinite;
     }
 
     /* Faíscas discretas */
@@ -167,6 +159,11 @@
     .tela-inicial .btn-sec{ opacity:.9; }
     .tela-inicial .btn-sec:hover{ background:#121212; transform: translateY(-1px); }
   </style>
+  <link rel="stylesheet" href="./src/styles/perf.css" />
+  <link rel="stylesheet" href="./src/styles/intro-fix.css" />
+  <link rel="stylesheet" href="./src/styles/emergency-fix.css" />
+  <link rel="stylesheet" href="./src/styles/tela-inicial.css" />
+  <link rel="stylesheet" href="./src/styles/atmosfera.css" />
 </head>
 
 <body class="jogo-corpo theme-grimoire">
@@ -212,6 +209,9 @@
           <div id="hud-dia" class="hud-dia" aria-live="polite"
                data-frase="⚡ A melhor guerra é vencida antes de ser notada.">Dia 1</div>
 
+          <!-- Botão do Diário -->
+          <button id="btn-diario" class="btn-diario" aria-label="Abrir Diário">☉</button>
+
           <span id="hud-build"
                 class="hud-badge badge build virtuoso"
                 tabindex="0"
@@ -230,7 +230,8 @@
               class="evento-container evento-ritual"
               role="main"
               aria-live="polite"
-              aria-label="Narrativa interativa do jogo">
+              aria-label="Narrativa interativa do jogo"
+              style="display: block !important; visibility: visible !important; opacity: 1 !important; z-index: 50 !important;">
         </main>
       </div>
 
@@ -270,6 +271,39 @@
   <!-- Scripts reais -->
   <script type="module" src="./src/ui/fundo-geom.js"></script>
   <script type="module" src="./src/main.js"></script>
+  <script type="module" src="./src/ui/tela-inicial.js"></script>
+
+  <!-- NUCLEAR FIX — doc/Fix-6 (SUPORTE) -->
+  <script>
+  (function() {
+    'use strict';
+    function forcarVisibilidade() {
+      var ev = document.getElementById('evento');
+      if (!ev) return;
+      var el = ev.querySelectorAll('.opcoes, button, p, .evento-narrativa');
+      el.forEach(function(i) {
+        i.style.opacity = '1';
+        i.style.visibility = 'visible';
+        i.style.pointerEvents = 'auto';
+        i.style.display = 'block';
+      });
+    }
+    document.addEventListener('click', function(e) {
+      var btn = e.target.closest('.btn-opcao, .btn-escolha');
+      if (!btn) return;
+      var htmlAntes = document.getElementById('evento').innerHTML;
+      setTimeout(function() {
+        if (document.getElementById('evento').innerHTML === htmlAntes) {
+          try {
+            var d = JSON.parse(decodeURIComponent(btn.getAttribute('data-id')));
+            document.dispatchEvent(new CustomEvent('opcaoSelecionada', { detail: d }));
+          } catch(ex) {}
+        }
+      }, 1000);
+    });
+    setInterval(forcarVisibilidade, 1500);
+  })();
+  </script>
 
   <!-- utilidades (mantidas) -->
   <script>

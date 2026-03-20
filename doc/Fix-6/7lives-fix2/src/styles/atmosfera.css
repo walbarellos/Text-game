@@ -1,0 +1,207 @@
+/**
+ * src/styles/atmosfera.css
+ *
+ * Background atmosférico completo — CSS puro, zero JavaScript,
+ * zero canvas, zero crash, 60fps garantido.
+ *
+ * Replica e supera visualmente o que os dois canvas faziam:
+ * - Vignette dourada nas bordas
+ * - Névoa central quente
+ * - Pulsação suave
+ * - Faíscas sutis
+ *
+ * COMO USAR: adicionar no <head>, DEPOIS de todos os outros CSS:
+ *   <link rel="stylesheet" href="./src/styles/atmosfera.css" />
+ */
+
+/* ═══════════════════════════════════════════════════════════
+   MATAR OS CANVAS — garantia de que não pintam nada
+   ═══════════════════════════════════════════════════════════ */
+
+#background-canvas,
+#etereal-fog {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  width: 1px !important;
+  height: 1px !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   FUNDO BASE
+   ═══════════════════════════════════════════════════════════ */
+
+html, body {
+  background: #07080a !important;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CAMADA 1 — Vignette + névoa central (::before no body)
+   Animação de respiração lenta. Só opacity, zero repaint.
+   ═══════════════════════════════════════════════════════════ */
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    /* Névoa central quente */
+    radial-gradient(ellipse 70% 55% at 50% 42%,
+      rgba(48, 32, 6, 0.65) 0%,
+      rgba(20, 13, 2, 0.85) 50%,
+      transparent 100%),
+    /* Vignette cantos */
+    radial-gradient(ellipse 60% 60% at 0%   0%,   rgba(0,0,0,0.72) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 60% at 100% 0%,   rgba(0,0,0,0.72) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 60% at 0%   100%, rgba(0,0,0,0.72) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 60% at 100% 100%, rgba(0,0,0,0.72) 0%, transparent 55%),
+    /* Borda dourada superior */
+    linear-gradient(to bottom, rgba(201,162,39,0.05) 0%, transparent 12%),
+    /* Borda dourada inferior */
+    linear-gradient(to top,   rgba(201,162,39,0.06) 0%, transparent 12%);
+  animation: atmos-breath 10s ease-in-out infinite alternate;
+  will-change: opacity;
+}
+
+@keyframes atmos-breath {
+  0%   { opacity: 0.80; }
+  100% { opacity: 1.00; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CAMADA 2 — Faíscas fixas (::after no body)
+   Pontos dourados em posições fixas — sem movimento JS.
+   Animação com translate(transform) — compositor only.
+   ═══════════════════════════════════════════════════════════ */
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1.5px 1.5px at 8%  16%, rgba(201,162,39,0.40), transparent 100%),
+    radial-gradient(1px   1px   at 92% 12%, rgba(201,162,39,0.30), transparent 100%),
+    radial-gradient(1.5px 1.5px at 22% 88%, rgba(201,162,39,0.25), transparent 100%),
+    radial-gradient(1px   1px   at 78% 82%, rgba(201,162,39,0.30), transparent 100%),
+    radial-gradient(1.5px 1.5px at 3%  55%, rgba(201,162,39,0.20), transparent 100%),
+    radial-gradient(1px   1px   at 97% 48%, rgba(201,162,39,0.22), transparent 100%),
+    radial-gradient(2px   2px   at 50% 4%,  rgba(201,162,39,0.28), transparent 100%),
+    radial-gradient(1px   1px   at 65% 96%, rgba(201,162,39,0.20), transparent 100%),
+    radial-gradient(1.5px 1.5px at 38% 22%, rgba(201,162,39,0.15), transparent 100%),
+    radial-gradient(1px   1px   at 85% 35%, rgba(201,162,39,0.18), transparent 100%);
+  background-repeat: no-repeat;
+  opacity: 0.55;
+  animation: faiscas-drift 24s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@keyframes faiscas-drift {
+  0%   { transform: translateY(0px)   translateX(0px); }
+  33%  { transform: translateY(-6px)  translateX(2px); }
+  66%  { transform: translateY(-3px)  translateX(-2px); }
+  100% { transform: translateY(-10px) translateX(1px); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CAMADA 3 — Bordas de fogo (substitui #fx-bordas)
+   CSS puro, mix-blend-mode: screen, animação de opacidade.
+   ═══════════════════════════════════════════════════════════ */
+
+#fx-bordas {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  mix-blend-mode: screen !important;
+  background:
+    radial-gradient(ellipse 55% 45% at 0%   100%, rgba(255,122,0,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 55% 45% at 100% 100%, rgba(255,122,0,0.10) 0%, transparent 70%),
+    radial-gradient(ellipse 45% 35% at 0%   0%,   rgba(255,122,0,0.07) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 35% at 100% 0%,   rgba(255,122,0,0.07) 0%, transparent 65%),
+    linear-gradient(to bottom, rgba(255,122,0,0.04) 0%, transparent 8%),
+    linear-gradient(to top,    rgba(255,122,0,0.05) 0%, transparent 8%) !important;
+  /* Remover filter caro — só opacidade */
+  filter: none !important;
+  animation: fogo-respira 7s ease-in-out infinite alternate !important;
+  will-change: opacity !important;
+}
+
+#fx-bordas::before,
+#fx-bordas::after {
+  display: none !important;
+}
+
+@keyframes fogo-respira {
+  0%   { opacity: 0.55; }
+  100% { opacity: 0.90; }
+}
+
+#fx-sparks {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 3 !important;
+  pointer-events: none !important;
+  mix-blend-mode: screen !important;
+  background:
+    radial-gradient(1.5px 1.5px at 10% 5%,  rgba(255,200,100,0.5), transparent),
+    radial-gradient(1px   1px   at 90% 8%,   rgba(255,200,100,0.4), transparent),
+    radial-gradient(1.5px 1.5px at 5%  50%,  rgba(255,200,100,0.3), transparent),
+    radial-gradient(1px   1px   at 95% 55%,  rgba(255,200,100,0.3), transparent),
+    radial-gradient(1.5px 1.5px at 50% 2%,   rgba(255,200,100,0.4), transparent),
+    radial-gradient(1px   1px   at 80% 95%,  rgba(255,200,100,0.3), transparent) !important;
+  background-repeat: no-repeat !important;
+  filter: none !important;
+  animation: sparks-move 11s ease-in-out infinite alternate !important;
+  will-change: transform !important;
+}
+
+#fx-sparks::before,
+#fx-sparks::after {
+  display: none !important;
+}
+
+@keyframes sparks-move {
+  0%   { transform: translateY(0px); opacity: 0.30; }
+  50%  { transform: translateY(-8px); opacity: 0.50; }
+  100% { transform: translateY(-4px); opacity: 0.35; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  body::before,
+  body::after,
+  #fx-bordas,
+  #fx-sparks {
+    animation: none !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   Z-INDEX SEGURO — nada acima do conteúdo do jogo
+   ═══════════════════════════════════════════════════════════ */
+
+body::before { z-index: 0; }
+body::after  { z-index: 0; }
+#fx-bordas   { z-index: 3 !important; }
+#fx-sparks   { z-index: 3 !important; }
+
+/* HUD e evento ficam acima de tudo */
+#hud, .hud          { z-index: 20 !important; position: relative !important; }
+#evento,
+.evento-container   { z-index: 20 !important; position: relative !important; }
+.game-root          { z-index: 10 !important; }
+
+/* Container principal com z-index certo */
+#wrapper-jogo {
+  position: relative !important;
+  z-index: 10 !important;
+  overflow: hidden !important; /* impede qualquer coisa de vazar */
+}

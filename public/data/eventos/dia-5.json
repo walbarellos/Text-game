@@ -1,0 +1,139 @@
+[
+  {
+    "id": "e_fogo_mercado_inicio",
+    "titulo": "Fumaça",
+    "tipo": "crise",
+    "requer": { "flag": "foi_mercado_dia1" },
+    "especial": true,
+    "texto": "Fumaça preta sobe do lado leste do mercado. Alta, densa. Não é a fumaça de uma churrasqueira. As pessoas começam a correr em direções opostas. Uma criança está parada no meio da rua, olhando para cima, sem se mover.",
+    "paragrafos": [
+      "Fumaça preta sobe do lado leste do mercado.",
+      "Alta, densa. Não é a fumaça de uma churrasqueira.",
+      "As pessoas começam a correr em direções opostas.",
+      "Uma criança está parada no meio da rua, olhando para cima, sem se mover."
+    ],
+    "ativa_quest": "q_fogo_no_mercado",
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Pegar a criança primeiro",
+        "resumo": "Ela não pesava nada. Seus olhos eram enormes.",
+        "consequencias": {
+          "flag": "salvou_crianca_fogo",
+          "karma": { "empatia": 16, "coragem": 10 },
+          "virtude": 14
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Organizar fila de balde",
+        "resumo": "Cinco pessoas seguiram. O fogo diminuiu antes de chegar ao centro.",
+        "consequencias": {
+          "flag": "organizou_combate_fogo",
+          "karma": { "coragem": 14, "astucia": 12 },
+          "virtude": 12
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Evacuar os feirantes mais velhos",
+        "resumo": "A senhora do peso errado estava entre eles. Ela te reconheceu.",
+        "consequencias": {
+          "flag": "evacuou_idosos_fogo",
+          "relacao": { "idosa": 8 },
+          "karma": { "empatia": 14, "coragem": 8 },
+          "virtude": 12
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_depois_do_fogo",
+    "titulo": "As Cinzas do Mercado",
+    "tipo": "reflexao",
+    "requer": { "flag": "foi_mercado_dia1" },
+    "texto": "O fogo foi controlado. Metade do mercado ficou. A outra metade é fumaça e silêncio. Os feirantes olham para o que sobrou com aquela expressão específica de pessoas que estão calculando se vale recomeçar. Você está no meio disso.",
+    "paragrafos": [
+      "O fogo foi controlado.",
+      "Metade do mercado ficou. A outra metade é fumaça e silêncio.",
+      "Os feirantes olham para o que sobrou com aquela expressão específica de pessoas que estão calculando se vale recomeçar.",
+      "Você está no meio disso."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ajudar a limpar os escombros",
+        "resumo": "Horas de trabalho. Ninguém perguntou seu nome.",
+        "consequencias": {
+          "flag": "ajudou_reconstrucao",
+          "relacao": { "aldeia": 8 },
+          "karma": { "empatia": 12, "coragem": 6 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Sentar com os feirantes que perderam tudo",
+        "resumo": "Não tinha o que dizer. Você ficou assim mesmo.",
+        "consequencias": {
+          "flag": "consolou_feirantes",
+          "karma": { "empatia": 16, "fe": 8 },
+          "virtude": 9
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Ir embora — a dor deles não é sua",
+        "resumo": "Você se convenceu disso até o fim do dia.",
+        "consequencias": {
+          "karma": { "astucia": 5 },
+          "virtude": -4
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_sonho_simbolo",
+    "titulo": "O Sonho que Não Foi",
+    "tipo": "espiritual",
+    "requer": {},
+    "texto": "Você não dormiu bem. Mas no espaço entre acordar e reconhecer onde está — aquele segundo exato — você viu o símbolo de novo. Desta vez com mais clareza. Triângulo: o que foi. Quadrado: o que é. Círculo: o que pode ser. Ou o que sempre foi.",
+    "paragrafos": [
+      "Você não dormiu bem.",
+      "Mas no espaço entre acordar e reconhecer onde está — aquele segundo exato — você viu o símbolo de novo.",
+      "Desta vez com mais clareza.",
+      "Triângulo: o que foi.",
+      "Quadrado: o que é.",
+      "Círculo: o que pode ser.",
+      "Ou o que sempre foi."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Escrever no diário",
+        "resumo": "As palavras ficaram menores que a visão. Mas ficaram.",
+        "consequencias": {
+          "flag": "registrou_interpretacao",
+          "karma": { "fe": 10, "astucia": 6 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Deixar passar — só um sonho",
+        "resumo": "Ficou na cabeça o dia todo assim mesmo.",
+        "consequencias": {
+          "karma": { "fe": 3 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Ir ao templo antes do café",
+        "resumo": "As cinzas estavam frescas. A guardiã não estava.",
+        "consequencias": {
+          "flag": "buscou_templo_dia5",
+          "karma": { "fe": 14, "coragem": 5 }
+        }
+      }
+    ]
+  }
+]

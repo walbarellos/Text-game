@@ -1,0 +1,171 @@
+/**
+ * src/styles/intro-fix.css
+ * Corrige todos os problemas visuais da tela de abertura.
+ * Importar DEPOIS dos outros CSS no index.html.
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   1. BOTÃO PULAR — alinhado à identidade gold
+   O verde-menta original quebra a identidade visual inteira.
+   ═══════════════════════════════════════════════════════════════ */
+#pular-intro,
+.pular-intro {
+  background: transparent !important;
+  border: 1px solid rgba(201, 162, 39, 0.32) !important;
+  color: rgba(201, 162, 39, 0.7) !important;
+  padding: 9px 28px !important;
+  border-radius: 6px !important;
+  font-size: 11px !important;
+  letter-spacing: 0.14em !important;
+  text-transform: lowercase !important;
+  cursor: pointer !important;
+  transition: border-color 0.25s ease, color 0.25s ease, background 0.25s ease !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  display: none; /* começa oculto — intro.js controla */
+}
+
+#pular-intro:hover,
+.pular-intro:hover {
+  border-color: rgba(201, 162, 39, 0.65) !important;
+  color: rgba(201, 162, 39, 1) !important;
+  background: rgba(201, 162, 39, 0.05) !important;
+}
+
+#pular-intro:active,
+.pular-intro:active {
+  transform: scale(0.97);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2. FADE SUAVE DA IMAGEM → FUNDO PRETO
+   Usa CSS mask para eliminar o corte duro.
+   ═══════════════════════════════════════════════════════════════ */
+.intro-stack {
+  background: #080a0b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#intro-banner,
+.intro-banner {
+  width: 100%;
+  display: block;
+  /* Mask: imagem sólida no topo, desvanece para transparente */
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 60%,
+    rgba(0, 0, 0, 0.5) 80%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    black 0%,
+    black 60%,
+    rgba(0, 0, 0, 0.5) 80%,
+    transparent 100%
+  );
+  /* Começa invisível — intro.js faz o fade-in */
+  opacity: 0;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. ÁREA DE TEXTO — hierarquia e centralização
+   ═══════════════════════════════════════════════════════════════ */
+#intro-texto {
+  margin-top: -48px; /* sobe para sobrepor levemente a imagem */
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 28px 0;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4. WRAPPER DA CINEMATICA — fullscreen seguro
+   ═══════════════════════════════════════════════════════════════ */
+#intro-cinematica {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  background: #080a0b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
+#intro-cinematica .intro-stack {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   5. ÁREA DO BOTÃO — centralizado, espaçamento correto
+   ═══════════════════════════════════════════════════════════════ */
+#intro-cinematica #pular-intro {
+  margin-top: 28px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   6. ANIMAÇÃO DE SAÍDA DA CINEMATICA
+   ═══════════════════════════════════════════════════════════════ */
+#intro-cinematica.saindo {
+  opacity: 0;
+  transition: opacity 0.6s ease;
+  pointer-events: none;
+}
+
+#intro-cinematica.oculta {
+  display: none !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   7. TELA INICIAL — botões alinhados ao tema
+   ═══════════════════════════════════════════════════════════════ */
+.tela-inicial .btn-prim {
+  background: transparent !important;
+  border: 1px solid rgba(201, 162, 39, 0.45) !important;
+  color: rgba(201, 162, 39, 0.9) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  letter-spacing: 0.1em !important;
+  font-size: 13px !important;
+  padding: 11px 32px !important;
+  border-radius: 6px !important;
+  text-transform: lowercase !important;
+  transition: all 0.2s ease !important;
+}
+
+.tela-inicial .btn-prim:hover {
+  background: rgba(201, 162, 39, 0.07) !important;
+  border-color: rgba(201, 162, 39, 0.75) !important;
+  color: rgba(201, 162, 39, 1) !important;
+  transform: translateY(-1px) !important;
+}
+
+.tela-inicial .btn-sec {
+  background: transparent !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: rgba(255, 255, 255, 0.45) !important;
+  font-family: 'Share Tech Mono', monospace !important;
+  letter-spacing: 0.08em !important;
+  font-size: 12px !important;
+  padding: 9px 28px !important;
+  border-radius: 6px !important;
+  text-transform: lowercase !important;
+  transition: all 0.2s ease !important;
+}
+
+.tela-inicial .btn-sec:hover {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  color: rgba(255, 255, 255, 0.75) !important;
+}

@@ -1,0 +1,169 @@
+/**
+ * src/styles/perf.css
+ * Patch de performance — importar DEPOIS dos outros CSS no index.html:
+ *   <link rel="stylesheet" href="./src/styles/perf.css" />
+ *
+ * Este arquivo NÃO quebra nada — só adiciona regras que sobrescrevem
+ * comportamentos caros em devices que não aguenta.
+ */
+
+/* ═══════════════════════════════════════════════════════════════
+   1. MODO LOW-END — elimina efeitos que causam 0 FPS
+   ═══════════════════════════════════════════════════════════════ */
+.perf-low #fx-bordas,
+.perf-low #fx-sparks {
+  display: none;
+}
+
+.perf-low canvas#etereal-fog {
+  display: none;
+}
+
+/* Substitui backdrop-filter por um fundo sólido semi-opaco */
+.perf-low .evento-bloco,
+.perf-low .footer-jogo,
+.perf-low #hud-build,
+.perf-low .tela-inicial .wrap {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  background: rgba(10, 12, 14, 0.88) !important;
+}
+
+/* Pausa todas as animações CSS */
+.perf-low *,
+.perf-low *::before,
+.perf-low *::after {
+  animation-play-state: paused !important;
+  transition-duration: 0.1s !important;
+}
+
+/* Exceto animações essenciais de UI (fade de tela, etc) */
+.perf-low .tela-inicial,
+.perf-low .evento-container {
+  animation-play-state: running !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2. MODO MID — reduz mas não elimina
+   ═══════════════════════════════════════════════════════════════ */
+.perf-mid #fx-sparks {
+  display: none;
+}
+
+.perf-mid #fx-bordas::before,
+.perf-mid #fx-bordas::after {
+  animation-duration: 12s !important; /* animação mais lenta = menos frames computados */
+}
+
+.perf-mid .evento-bloco,
+.perf-mid .footer-jogo {
+  backdrop-filter: blur(1px) !important;
+  -webkit-backdrop-filter: blur(1px) !important;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3. FIX UNIVERSAL — backdrop-filter isolado via pseudo-elemento
+   Isso limita o "read-back" de pixels a um único layer composto
+   em vez de contaminar todo o stacking context.
+   ═══════════════════════════════════════════════════════════════ */
+.evento-bloco {
+  /* Cria novo stacking context isolado */
+  isolation: isolate;
+  position: relative;
+  /* Remove backdrop-filter do elemento em si */
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+.evento-bloco::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  /* Blur mínimo ainda visível mas muito mais barato */
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index: -1;
+  /* Não herda pointer-events */
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   4. will-change estratégico — só nos elementos que realmente animam
+   ═══════════════════════════════════════════════════════════════ */
+#fx-bordas,
+#fx-sparks {
+  will-change: opacity;
+  /* Forçar compositing layer separado para não contaminar outros */
+  transform: translateZ(0);
+}
+
+canvas#etereal-fog {
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   5. content-visibility — elementos fora da tela não são renderizados
+   ═══════════════════════════════════════════════════════════════ */
+.evento-bloco {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 280px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   6. prefers-reduced-motion — acessibilidade
+   ═══════════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  #fx-bordas,
+  #fx-sparks,
+  canvas#etereal-fog {
+    display: none;
+  }
+
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.1s !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   7. Temas dinâmicos por tipo de evento
+   Adicionar data-evento-tipo="batalha" no body ao renderizar evento
+   ═══════════════════════════════════════════════════════════════ */
+:root {
+  --fx-cor-primaria: #ff7a00;
+  --fx-cor-secundaria: rgba(255, 122, 0, 0.14);
+  --fx-tema-transition: 1.4s ease;
+}
+
+body {
+  transition:
+    --fx-cor-primaria var(--fx-tema-transition),
+    background-color var(--fx-tema-transition);
+}
+
+[data-evento-tipo="batalha"] {
+  --fx-cor-primaria: #e02020;
+  --fx-cor-secundaria: rgba(220, 30, 30, 0.18);
+}
+
+[data-evento-tipo="misterio"] {
+  --fx-cor-primaria: #7a30ff;
+  --fx-cor-secundaria: rgba(122, 48, 255, 0.16);
+}
+
+[data-evento-tipo="recompensa"] {
+  --fx-cor-primaria: #20c060;
+  --fx-cor-secundaria: rgba(32, 192, 96, 0.16);
+}
+
+[data-evento-tipo="dilema"] {
+  --fx-cor-primaria: #c0a020;
+  --fx-cor-secundaria: rgba(192, 160, 32, 0.16);
+}
+
+[data-evento-tipo="espiritual"] {
+  --fx-cor-primaria: #4080ff;
+  --fx-cor-secundaria: rgba(64, 128, 255, 0.16);
+}

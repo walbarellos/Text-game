@@ -1,0 +1,140 @@
+[
+  {
+    "id": "e_mendigo_da_praca",
+    "titulo": "O Homem da Praça",
+    "tipo": "dilema",
+    "imagem": "mendigo",
+    "requer": {},
+    "texto": "Um homem de roupas puídas está parado no meio da praça. Não pede nada. Apenas fica. As pessoas desviam. Você sente o peso do silêncio dele antes mesmo de chegar perto.",
+    "paragrafos": [
+      "Um homem de roupas puídas está parado no meio da praça.",
+      "Não pede nada. Apenas fica.",
+      "As pessoas desviam. Você sente o peso do silêncio dele antes mesmo de chegar perto."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Oferecer o que tenho",
+        "resumo": "Você parou. Você deu.",
+        "consequencias": {
+          "flag": "ajudou_mendigo",
+          "relacao": { "sebastiao": 4 },
+          "karma": { "empatia": 10, "fe": 5 },
+          "virtude": 8
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Seguir sem olhar",
+        "resumo": "Você desviou como os outros.",
+        "consequencias": {
+          "flag": "ignorou_mendigo",
+          "relacao": { "sebastiao": -1 },
+          "karma": { "astucia": 4 },
+          "virtude": -3
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Sentar ao lado sem dizer nada",
+        "resumo": "Você ficou. Sem palavras.",
+        "consequencias": {
+          "flag": "ficou_com_mendigo",
+          "relacao": { "sebastiao": 6 },
+          "karma": { "empatia": 8, "fe": 8 },
+          "virtude": 6
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_bifurcacao_dia1",
+    "titulo": "A Bifurcação",
+    "tipo": "espiritual",
+    "imagem": "caminho",
+    "requer": {},
+    "texto": "Dois caminhos. Um desce até o mercado — barulho, cheiro de pão e especiaria, a vida que acontece sem pedir permissão. O outro sobe a colina. Lá no alto, as paredes de pedra de um templo que ninguém visita mais.",
+    "paragrafos": [
+      "Dois caminhos.",
+      "Um desce até o mercado — barulho, cheiro de pão e especiaria, a vida que acontece sem pedir permissão.",
+      "O outro sobe a colina. Lá no alto, as paredes de pedra de um templo que ninguém visita mais."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Descer ao mercado",
+        "resumo": "O mundo dos homens te chamou.",
+        "consequencias": {
+          "flag": "foi_mercado_dia1",
+          "karma": { "astucia": 8, "coragem": 6 },
+          "virtude": 3
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Subir ao templo",
+        "resumo": "Você buscou o que não tem barulho.",
+        "consequencias": {
+          "flag": "foi_templo_dia1",
+          "karma": { "fe": 14, "empatia": 6 },
+          "virtude": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_crianca_pedra",
+    "titulo": "A Pedra",
+    "tipo": "dilema",
+    "imagem": "crianca",
+    "requer": {},
+    "texto": "Uma criança atira pedras num cachorro magro encurralado contra a parede. O cachorro não late. Apenas abaixa a cabeça. A criança ri. Dois adultos passam sem ver.",
+    "paragrafos": [
+      "Uma criança atira pedras num cachorro magro encurralado contra a parede.",
+      "O cachorro não late. Apenas abaixa a cabeça.",
+      "A criança ri. Dois adultos passam sem ver."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Intervir diretamente",
+        "resumo": "Você falou. A criança parou.",
+        "consequencias": {
+          "flag": "protegeu_animal",
+          "karma": { "coragem": 10, "empatia": 8 },
+          "virtude": 7
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Distrair a criança com outra coisa",
+        "resumo": "Você resolveu sem confronto.",
+        "consequencias": {
+          "flag": "redirecionou_crianca",
+          "karma": { "empatia": 6, "astucia": 8 },
+          "virtude": 5
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Afastar o cachorro sem repreender",
+        "resumo": "Você protegeu sem julgamento.",
+        "consequencias": {
+          "flag": "silencioso_dia1",
+          "karma": { "empatia": 10, "fe": 4 },
+          "virtude": 6
+        }
+      },
+      {
+        "id": "c4",
+        "texto": "Continuar andando",
+        "resumo": "Não era sua batalha.",
+        "consequencias": {
+          "flag": "se_omitiu_dia1",
+          "karma": { "astucia": 3 },
+          "virtude": -5
+        }
+      }
+    ]
+  }
+]

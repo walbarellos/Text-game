@@ -1,0 +1,148 @@
+[
+  {
+    "id": "e_mensageiro",
+    "titulo": "O Homem de Cinza",
+    "tipo": "misterio",
+    "requer": {},
+    "texto": "Ele não é Sebastião. Não é ninguém que você viu antes. Veste tudo cinza, chapéu na cabeça mesmo no calor. Para na sua frente com a precisão de quem conhece seu caminho melhor que você. Entrega um envelope sem falar nada. Quando você levanta os olhos do envelope, ele foi.",
+    "paragrafos": [
+      "Ele não é Sebastião. Não é ninguém que você viu antes.",
+      "Veste tudo cinza, chapéu na cabeça mesmo no calor.",
+      "Para na sua frente com a precisão de quem conhece seu caminho melhor que você.",
+      "Entrega um envelope sem falar nada.",
+      "Quando você levanta os olhos do envelope, ele foi."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Abrir o envelope agora",
+        "resumo": "Uma lista. Nomes. Um deles é seu.",
+        "consequencias": {
+          "flag": "abriu_envelope_mensageiro",
+          "item": "lista_dos_sete",
+          "karma": { "coragem": 10, "fe": 12 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Correr atrás dele",
+        "resumo": "Nenhum beco, nenhuma rua o tinha. Como se nunca tivesse existido.",
+        "consequencias": {
+          "flag": "buscou_mensageiro",
+          "karma": { "coragem": 12, "astucia": 6 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Guardar sem abrir",
+        "resumo": "Você carregou o peso do não-saber o dia inteiro.",
+        "consequencias": {
+          "flag": "guardou_envelope_fechado",
+          "karma": { "fe": 8, "astucia": 8 }
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_clara_confissao",
+    "titulo": "O Que Ela Guardou",
+    "tipo": "arco",
+    "requer": { "flag": "conhece_historia_clara" },
+    "texto": "Clara te espera desta vez. Não na janela — na porta. Tem um chá pronto. Isso é diferente. Ela diz que quer contar algo que não contou para ninguém em três anos. Você sente o peso do que vem antes mesmo de começar.",
+    "paragrafos": [
+      "Clara te espera desta vez. Não na janela — na porta.",
+      "Tem um chá pronto. Isso é diferente.",
+      "Ela diz que quer contar algo que não contou para ninguém em três anos.",
+      "Você sente o peso do que vem antes mesmo de começar."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ouvir sem interromper",
+        "resumo": "Ela falou por quarenta minutos. Você não disse uma palavra. Foi exatamente o que ela precisava.",
+        "consequencias": {
+          "flag": "ouviu_confissao_clara",
+          "relacao": { "clara": 12 },
+          "karma": { "empatia": 16, "fe": 8 },
+          "virtude": 14
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Ouvir e fazer perguntas",
+        "resumo": "As perguntas certas. Ela parou de chorar no meio e disse 'você é estranho. Obrigada.'",
+        "consequencias": {
+          "flag": "dialogou_confissao_clara",
+          "relacao": { "clara": 10 },
+          "karma": { "empatia": 12, "astucia": 8 },
+          "virtude": 12
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Contar algo seu em troca",
+        "resumo": "Ela ficou surpresa. Depois ficou mais tranquila. Troca justa.",
+        "consequencias": {
+          "flag": "abriu_para_clara",
+          "relacao": { "clara": 14 },
+          "karma": { "coragem": 12, "empatia": 14 },
+          "virtude": 14
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_tentacao",
+    "titulo": "A Oferta",
+    "tipo": "dilema",
+    "requer": {},
+    "texto": "Um homem de negócios que você nunca viu. Mesa reservada no melhor restaurante da cidade. Ele sabe seu nome, seu histórico, suas habilidades. Quer fazer uma proposta — legítima, ele garante. O valor é alto. As condições não estão claras.",
+    "paragrafos": [
+      "Um homem de negócios que você nunca viu.",
+      "Mesa reservada no melhor restaurante da cidade.",
+      "Ele sabe seu nome, seu histórico, suas habilidades.",
+      "Quer fazer uma proposta — legítima, ele garante.",
+      "O valor é alto. As condições não estão claras."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Ouvir a proposta completa antes de decidir",
+        "resumo": "Duas horas depois você saiu sem ter dito sim nem não.",
+        "consequencias": {
+          "flag": "ouviu_proposta",
+          "karma": { "astucia": 12, "coragem": 6 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Recusar antes de ouvir",
+        "resumo": "Ele ficou surpreso. Poucos fazem isso.",
+        "consequencias": {
+          "flag": "recusou_proposta",
+          "karma": { "fe": 10, "coragem": 8 },
+          "virtude": 8
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Perguntar quem o mandou",
+        "resumo": "Ele hesitou. Meio segundo. Suficiente.",
+        "consequencias": {
+          "flag": "questionou_origem_proposta",
+          "karma": { "astucia": 14, "coragem": 10 }
+        }
+      },
+      {
+        "id": "c4",
+        "texto": "Aceitar",
+        "resumo": "Você assinou algo que não releu completamente.",
+        "consequencias": {
+          "flag": "aceitou_proposta",
+          "karma": { "astucia": 8, "empatia": -8, "fe": -6 },
+          "virtude": -6
+        }
+      }
+    ]
+  }
+]

@@ -1,0 +1,128 @@
+[
+  {
+    "id": "e_clara_partida",
+    "titulo": "A Janela Fechada",
+    "tipo": "arco",
+    "requer": { "relacao_min": { "clara": 6 } },
+    "texto": "A janela está fechada de manhã. Você sobe assim mesmo. Ela está fazendo malas. Não está triste — está firme. Diz que vai embora da cidade, que ficou tempo demais parada na mesma janela olhando para o mesmo lugar. Ela te agradece por ter subido aquela primeira vez.",
+    "paragrafos": [
+      "A janela está fechada de manhã.",
+      "Você sobe assim mesmo.",
+      "Ela está fazendo malas. Não está triste — está firme.",
+      "Diz que vai embora da cidade, que ficou tempo demais parada na mesma janela olhando para o mesmo lugar.",
+      "Ela te agradece por ter subido aquela primeira vez."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Dizer que ela vai fazer falta",
+        "resumo": "Ela disse 'eu sei. Mas ficar não é a resposta para isso.'",
+        "consequencias": {
+          "flag": "despediu_clara",
+          "relacao": { "clara": 8 },
+          "karma": { "empatia": 10 },
+          "virtude": 10
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Ajudar a carregar as malas",
+        "resumo": "Vocês desceram as escadas em silêncio. O tipo bom.",
+        "consequencias": {
+          "flag": "despediu_clara",
+          "relacao": { "clara": 10 },
+          "karma": { "empatia": 12, "coragem": 6 },
+          "virtude": 12
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_peso_acumulado",
+    "titulo": "O Inventário",
+    "tipo": "contemplacao",
+    "requer": {},
+    "texto": "Onze dias. Você tenta fazer uma lista do que carregou. O que ganhou. O que perdeu. O que ainda não sabe classificar. A lista do terceiro grupo é a mais longa.",
+    "paragrafos": [
+      "Onze dias.",
+      "Você tenta fazer uma lista do que carregou.",
+      "O que ganhou. O que perdeu.",
+      "O que ainda não sabe classificar.",
+      "A lista do terceiro grupo é a mais longa."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Focar no que ganhou",
+        "resumo": "Perspectiva escolhida conscientemente.",
+        "consequencias": {
+          "karma": { "fe": 8, "coragem": 6 }
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Focar no que perdeu",
+        "resumo": "Luto também faz parte.",
+        "consequencias": {
+          "karma": { "empatia": 10, "fe": 6 }
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Focar no que não sabe classificar",
+        "resumo": "A lista mais verdadeira. E mais fértil.",
+        "consequencias": {
+          "flag": "habita_incerteza",
+          "karma": { "fe": 14, "astucia": 8 },
+          "virtude": 10
+        }
+      }
+    ]
+  },
+  {
+    "id": "e_proposta_retorna",
+    "titulo": "A Segunda Oferta",
+    "tipo": "dilema",
+    "requer": { "flag": "aceitou_proposta" },
+    "texto": "O homem de negócios volta. O acordo que você assinou está ativo. Ele quer que você faça algo que está no contrato mas que você não releu. É tecnicamente legal. É eticamente ambíguo. Você está preso num compromisso que fez sem ler completo.",
+    "paragrafos": [
+      "O homem de negócios volta.",
+      "O acordo que você assinou está ativo.",
+      "Ele quer que você faça algo que está no contrato mas que você não releu.",
+      "É tecnicamente legal.",
+      "É eticamente ambíguo.",
+      "Você está preso num compromisso que fez sem ler completo."
+    ],
+    "escolhas": [
+      {
+        "id": "c1",
+        "texto": "Cumprir — você assinou",
+        "resumo": "Honrar um erro também tem nome.",
+        "consequencias": {
+          "karma": { "astucia": 6, "fe": -8 },
+          "virtude": -8
+        }
+      },
+      {
+        "id": "c2",
+        "texto": "Recusar e arcar com as consequências",
+        "resumo": "Custou. Mas você saiu limpo.",
+        "consequencias": {
+          "flag": "saiu_do_acordo",
+          "karma": { "coragem": 16, "fe": 10 },
+          "virtude": 14
+        }
+      },
+      {
+        "id": "c3",
+        "texto": "Renegociar os termos",
+        "resumo": "Ele concordou parcialmente. Você conseguiu mais do que esperava.",
+        "consequencias": {
+          "flag": "renegociou_acordo",
+          "karma": { "astucia": 16, "coragem": 8 },
+          "virtude": 6
+        }
+      }
+    ]
+  }
+]
